@@ -6,4 +6,5 @@ group :development do
   gem "bundler", "~> 1.1.5"
   gem "jeweler", "~> 1.8.4"
   gem "simplecov"
+  gem "debugger"
 end
