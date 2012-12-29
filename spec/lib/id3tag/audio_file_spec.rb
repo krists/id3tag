@@ -30,4 +30,11 @@ describe ID3Tag::AudioFile do
       subject.v1_tag_body.should == File.read(mp3_with_v1_tag, 125, 579)
     end
   end
+
+  describe "#v2_tag_body" do
+    subject { described_class.new(mp3_with_v2_tag) }
+    it "should return frame and padding bytes" do
+      subject.v2_tag_body.should == File.read(mp3_with_v2_tag, 246, 10)
+    end
+  end
 end

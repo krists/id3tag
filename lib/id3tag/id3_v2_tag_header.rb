@@ -5,12 +5,12 @@ module ID3Tag
     end
 
     def major_version_number
-      @content.seek(3, IO::SEEK_SET)
+      @content.seek(3)
       @content.readbyte
     end
 
     def minor_version_number
-      @content.seek(4, IO::SEEK_SET)
+      @content.seek(4)
       @content.readbyte
     end
 
@@ -41,14 +41,17 @@ module ID3Tag
     end
 
     def get_flags_byte
-      @content.seek(5, IO::SEEK_SET)
+      @content.seek(5)
       @content.readbyte
     end
 
     def get_tag_size
-      @content.seek(6, IO::SEEK_SET)
-      integers = @content.read(4).unpack('N') #TODO: Raise error if read less than 4 bytes
-      SynchsafeInteger.decode(integers.first)
+      SynchsafeInteger.decode(NumberUtils.convert_string_to_32bit_integer(tag_size_bytes))
+    end
+
+    def tag_size_bytes
+      @content.seek(6)
+      @content.read(4)
     end
   end
 end
