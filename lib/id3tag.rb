@@ -7,6 +7,7 @@ module ID3Tag
   autoload :ID3v2TagHeader, File.join(LIBRARY_PATH, 'id3_v2_tag_header')
   autoload :NumberUtils, File.join(LIBRARY_PATH, 'number_utils')
   autoload :ID3V1FrameParser, File.join(LIBRARY_PATH, 'id3_v1_frame_parser')
+  autoload :ID3V2FrameParser, File.join(LIBRARY_PATH, 'id3_v2_frame_parser')
   autoload :Genre, File.join(LIBRARY_PATH, 'genre')
   autoload :Tag, File.join(LIBRARY_PATH, 'tag')
   module Frames
