@@ -55,7 +55,7 @@ module ID3Tag
 
     def get_all_frames
       if audio_file.v2_tag_present?
-        ID3V2FrameParser.new(audio_file.v2_tag_body).frames
+        ID3V2FrameParser.new(audio_file.v2_tag_body, audio_file.v2_tag_major_version_number).frames
       elsif audio_file.v1_tag_present?
         ID3V1FrameParser.new(audio_file.v1_tag_body).frames
       end
