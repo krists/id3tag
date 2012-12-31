@@ -14,6 +14,10 @@ module ID3Tag
       @content.readbyte
     end
 
+    def version_number
+      sprintf("%s.%s", major_version_number, minor_version_number)
+    end
+
     def unsynchronisation?
       flags_byte[7] == 1
     end

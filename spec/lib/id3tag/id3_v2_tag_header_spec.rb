@@ -17,6 +17,11 @@ describe ID3Tag::ID3v2TagHeader do
     end
   end
 
+  describe "#version_number" do
+    let(:header_data) { "ID3\02\03..." }
+    its(:version_number) { should == "2.3" }
+  end
+
   describe "header flags" do
     context "when flags bite is 0b10000000" do
       let(:header_data) { "ID3\03\00#{0b10000000.chr}" }

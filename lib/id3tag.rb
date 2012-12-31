@@ -15,5 +15,10 @@ module ID3Tag
       autoload :TextFrame, File.join(LIBRARY_PATH, 'frames/v1/text_frame')
       autoload :GenreFrame, File.join(LIBRARY_PATH, 'frames/v1/genre_frame')
     end
+    module V2
+      autoload :FrameFabricator, File.join(LIBRARY_PATH, 'frames/v2/frame_fabricator')
+      autoload :BasicFrame, File.join(LIBRARY_PATH, 'frames/v2/basic_frame')
+      autoload :TextFrame, File.join(LIBRARY_PATH, 'frames/v2/text_frame')
+    end
   end
 end

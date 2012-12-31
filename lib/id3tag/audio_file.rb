@@ -29,6 +29,18 @@ module ID3Tag
       @file.read(v2_tag_frame_and_padding_size)
     end
 
+    def v2_tag_version
+      v2_tag_header.version_number
+    end
+
+    def v2_tag_major_version_number
+      v2_tag_header.major_version_number
+    end
+
+    def v2_tag_minor_version_number
+      v2_tag_header.minor_version_number
+    end
+
     private
 
     def v2_tag_frame_and_padding_position
