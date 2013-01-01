@@ -11,7 +11,6 @@ describe ID3Tag::ID3V2FrameParser do
 
     describe "text frames" do
       it "should parse text frames and initialize as TextFrame objects" do
-        debugger
         subject.select { |x| x.id == :TIT2 }.first.should be_kind_of(ID3Tag::Frames::V2::TextFrame)
       end
     end
