@@ -13,17 +13,12 @@ module  ID3Tag
         end
 
         def fabricate
-          if id_starts_with_t?
+          case @id
+          when /^T/
             TextFrame.new(@id, @content, @flags)
           else
             BasicFrame.new(@id, @content, @flags)
           end
-        end
-
-        private
-
-        def id_starts_with_t?
-          @id.getbyte(0).chr == 'T'
         end
       end
     end
