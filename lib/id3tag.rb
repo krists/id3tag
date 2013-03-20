@@ -1,4 +1,5 @@
 require "set"
+require "stringio"
 
 module ID3Tag
   LIBRARY_PATH = File.join(File.dirname(__FILE__), 'id3tag')
@@ -19,6 +20,7 @@ module ID3Tag
       autoload :FrameFabricator, File.join(LIBRARY_PATH, 'frames/v2/frame_fabricator')
       autoload :BasicFrame, File.join(LIBRARY_PATH, 'frames/v2/basic_frame')
       autoload :TextFrame, File.join(LIBRARY_PATH, 'frames/v2/text_frame')
+      autoload :UniqueFileIdFrame, File.join(LIBRARY_PATH, 'frames/v2/unique_file_id_frame')
     end
   end
 end

@@ -16,6 +16,8 @@ module  ID3Tag
           case @id
           when /^T/
             TextFrame.new(@id, @content, @flags)
+          when /^UFID/
+            UniqueFileIdFrame.new(@id, content, @flags)
           else
             BasicFrame.new(@id, @content, @flags)
           end
