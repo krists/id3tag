@@ -25,6 +25,11 @@ module ID3Tag
       define_method(method_name) { get_content_of_text_frame(frame_id) }
     end
 
+    def ufi(owner_id)
+      maching_frame = get_frames(:UFI).select { |frame| frame.owner_identifier == owner_id }.first
+      maching_frame && maching_frame.identifier
+    end
+
     def get_content_of_text_frame(frame_id)
       frame = get_frame(frame_id)
       frame && frame.content
@@ -58,6 +63,8 @@ module ID3Tag
         ID3V2FrameParser.new(audio_file.v2_tag_body, audio_file.v2_tag_major_version_number).frames
       elsif audio_file.v1_tag_present?
         ID3V1FrameParser.new(audio_file.v1_tag_body).frames
+      else
+        []
       end
     end
 
