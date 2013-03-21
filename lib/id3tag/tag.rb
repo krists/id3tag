@@ -1,14 +1,43 @@
 module ID3Tag
   class Tag
     class MultipleFrameError < StandardError; end
-    EASY_TEXT_FRAME_ACCESSOR_MAP = {
-      :title => :TIT2,
-      :artist => :TPE1,
-      :album => :TALB,
-      :year => :TYER,
-      :comment => :TCOM,
-      :genre => :TCON,
-      :track_nr => :TRCK
+    COMMON_FRAME_IDS_BY_VERSION = {
+      'v1.x' => {
+        :artist => :artist,
+        :title => :title,
+        :album => :album,
+        :year => :year,
+        :comments => :comments,
+        :genre => :genre,
+        :track_nr => :track_nr
+      },
+      'v2.2' => {
+        :artist => :TP1,
+        :title => :TT2,
+        :album => :TAL,
+        :year => :TYE,
+        :comments => :COM,
+        :genre => :TCO,
+        :track_nr => :TRK
+      },
+      'v2.3' => {
+        :artist => :TPE1,
+        :title => :TIT2,
+        :album => :TALB,
+        :year => :TYER,
+        :comments => :COMM,
+        :genre => :TCON,
+        :track_nr => :TRCK
+      },
+      'v2.4' => {
+        :artist => :TPE1,
+        :title => :TIT2,
+        :album => :TALB,
+        :year => :TDRC,
+        :comments => :COMM,
+        :genre => :TCON,
+        :track_nr => :TRCK
+      }
     }
 
     class << self
@@ -21,18 +50,39 @@ module ID3Tag
       @source = source
     end
 
-    EASY_TEXT_FRAME_ACCESSOR_MAP.each_pair do |method_name, frame_id|
-      define_method(method_name) { get_content_of_text_frame(frame_id) }
+    def artist
+      get_frame_content(frame_name(:artist))
     end
 
-    def ufi(owner_id)
-      maching_frame = get_frames(:UFI).select { |frame| frame.owner_identifier == owner_id }.first
-      maching_frame && maching_frame.identifier
+    def title
+      get_frame_content(frame_name(:title))
     end
 
-    def get_content_of_text_frame(frame_id)
-      frame = get_frame(frame_id)
-      frame && frame.content
+    def album
+      get_frame_content(frame_name(:album))
+    end
+
+    def year
+      get_frame_content(frame_name(:year))
+    end
+
+    def comments(language = nil)
+      all_comments_frames = get_frames(frame_name(:comments))
+      comments_frame = if language
+        all_comments_frames.select { |frame| frame.language == language.to_s.downcase }.first
+      else
+        in_english = all_comments_frames.select { |frame| frame.language == 'eng' }
+        in_english.first || all_comments_frames.first
+      end
+      comments_frame && comments_frame.content
+    end
+
+    def track_nr
+      get_frame_content(frame_name(:track_nr))
+    end
+
+    def genre
+      get_frame_content(frame_name(:genre))
     end
 
     def get_frame(frame_id)
@@ -45,20 +95,35 @@ module ID3Tag
     end
 
     def get_frames(frame_id)
-      all_frames.select { |frame| frame.id == frame_id }
+      frames.select { |frame| frame.id == frame_id }
     end
 
     def frame_ids
-      all_frames.map { |frame| frame.id }
+      frames.map { |frame| frame.id }
     end
 
-    def all_frames
-      @all_frames ||= get_all_frames
+    def frames
+      @frames ||= read_frames
     end
 
     private
 
-    def get_all_frames
+    def get_frame_content(frame_id)
+      frame = get_frame(frame_id)
+      frame && frame.content
+    end
+
+    def frame_name(id)
+      if audio_file.v2_tag_present?
+        COMMON_FRAME_IDS_BY_VERSION["v2.#{audio_file.v2_tag_major_version_number}"][id]
+      elsif audio_file.v1_tag_present?
+        COMMON_FRAME_IDS_BY_VERSION["v1.x"][id]
+      else
+        nil
+      end
+    end
+
+    def read_frames
       if audio_file.v2_tag_present?
         ID3V2FrameParser.new(audio_file.v2_tag_body, audio_file.v2_tag_major_version_number).frames
       elsif audio_file.v1_tag_present?

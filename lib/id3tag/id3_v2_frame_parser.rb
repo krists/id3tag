@@ -18,7 +18,7 @@ module ID3Tag
         frame_size = read_next_frame_size
         frame_flags = read_next_frame_flags
         frame_content = read_next_bytes(frame_size)
-        frames << Frames::V2::FrameFabricator.fabricate(frame_id, frame_content, frame_flags)
+        frames << Frames::V2::FrameFabricator.fabricate(frame_id, frame_content, frame_flags, @major_version_number)
         break if padding_or_eof_reached?
       end
       frames

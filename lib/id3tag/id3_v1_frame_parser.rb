@@ -24,31 +24,31 @@ module ID3Tag
     end
 
     def title_frame
-      Frames::V1::TextFrame.new(:TIT2, read_from_pos_till_null_byte_or_limit(0, 30))
+      Frames::V1::TextFrame.new(:title, read_from_pos_till_null_byte_or_limit(0, 30))
     end
 
     def artist_frame
-      Frames::V1::TextFrame.new(:TPE1, read_from_pos_till_null_byte_or_limit(30, 30))
+      Frames::V1::TextFrame.new(:artist, read_from_pos_till_null_byte_or_limit(30, 30))
     end
 
     def album_frame
-      Frames::V1::TextFrame.new(:TALB, read_from_pos_till_null_byte_or_limit(60, 30))
+      Frames::V1::TextFrame.new(:album, read_from_pos_till_null_byte_or_limit(60, 30))
     end
 
     def year_frame
-      Frames::V1::TextFrame.new(:TYER, read_from_pos_till_null_byte_or_limit(90, 4))
+      Frames::V1::TextFrame.new(:year, read_from_pos_till_null_byte_or_limit(90, 4))
     end
 
     def comment_frame
-      Frames::V1::TextFrame.new(:TCOM, read_from_pos_till_null_byte_or_limit(94, comment_frame_size))
+      Frames::V1::CommentsFrame.new(:comments, read_from_pos_till_null_byte_or_limit(94, comment_frame_size))
     end
 
     def genre_frame
-      Frames::V1::GenreFrame.new(:TCON, read_from_pos_till_limit(124, 1))
+      Frames::V1::GenreFrame.new(:genre, read_from_pos_till_limit(124, 1))
     end
 
     def track_nr_frame
-      Frames::V1::TextFrame.new(:TRCK, read_from_pos_till_null_byte_or_limit(123, 1).unpack("c").first.to_s)
+      Frames::V1::TrackNrFrame.new(:track_nr, read_from_pos_till_null_byte_or_limit(123, 1))
     end
 
     def comment_frame_size
