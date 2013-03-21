@@ -14,51 +14,51 @@ describe ID3Tag::ID3V1FrameParser do
     describe "common frames between v1.0 and v.1.1" do
 
       it "should contain title frame" do
-        frame = subject.select { |frame| frame.id == :TIT2 }.first
+        frame = subject.select { |frame| frame.id == :title }.first
         frame.content.should == "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaA"
       end
 
       it "should contain artist frame" do
-        frame = subject.select { |frame| frame.id == :TPE1 }.first
+        frame = subject.select { |frame| frame.id == :artist }.first
         frame.content.should == "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbB"
       end
 
       it "should contain album frame" do
-        frame = subject.select { |frame| frame.id == :TALB }.first
+        frame = subject.select { |frame| frame.id == :album }.first
         frame.content.should == "cccccccccccccccccccccccccccccC"
       end
 
       it "should contain year frame" do
-        frame = subject.select { |frame| frame.id == :TYER }.first
+        frame = subject.select { |frame| frame.id == :year }.first
         frame.content.should == "2003"
       end
     end
 
     describe "frames with differences in v1.0 and v1.1" do
       context "when reading v1.0 tag" do
-        it "should contain comment frame" do
-          frame = subject.select { |frame| frame.id == :TCOM }.first
+        it "should contain comments frame" do
+          frame = subject.select { |frame| frame.id == :comments }.first
           frame.content.should == "dddddddddddddddddddddddddddddD"
         end
 
         it "should contain genre frame" do
-          frame = subject.select { |frame| frame.id == :TCON }.first
+          frame = subject.select { |frame| frame.id == :genre }.first
           frame.content.should == "Blues"
         end
 
         it "should not contain track nr frame" do
-          subject.select { |frame| frame.id == :TRCK }.first.should be_nil
+          subject.select { |frame| frame.id == :track_nr }.first.should be_nil
         end
       end
       context "when reading v1.1 tag" do
         subject { described_class.new(frame_bytes_v1_1).frames }
-        it "should contain comment frame" do
-          frame = subject.select { |frame| frame.id == :TCOM }.first
+        it "should contain comments frame" do
+          frame = subject.select { |frame| frame.id == :comments }.first
           frame.content.should == "dddddddddddddddddddddddddddD"
         end
 
         it "should contain track nr frame" do
-          frame = subject.select { |frame| frame.id == :TRCK }.first
+          frame = subject.select { |frame| frame.id == :track_nr }.first
           frame.content.should == "1"
         end
       end

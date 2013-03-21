@@ -11,7 +11,7 @@ module  ID3Tag
         }
 
         def content
-          @content ||= get_content
+          @content ||= content_without_encoding_byte.encode(destination_encoding, source_encoding)
         end
 
         private
@@ -28,8 +28,8 @@ module  ID3Tag
           @raw_content.getbyte(0)
         end
 
-        def get_content
-          @raw_content.byteslice(1, @raw_content.bytesize).encode(destination_encoding, source_encoding)
+        def content_without_encoding_byte
+          @raw_content.byteslice(1, @raw_content.bytesize)
         end
       end
     end

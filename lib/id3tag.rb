@@ -1,26 +1,25 @@
 require "set"
 require "stringio"
 
-module ID3Tag
-  LIBRARY_PATH = File.join(File.dirname(__FILE__), 'id3tag')
-  autoload :SynchsafeInteger, File.join(LIBRARY_PATH, 'synchsafe_integer')
-  autoload :AudioFile, File.join(LIBRARY_PATH, 'audio_file')
-  autoload :ID3v2TagHeader, File.join(LIBRARY_PATH, 'id3_v2_tag_header')
-  autoload :NumberUtils, File.join(LIBRARY_PATH, 'number_utils')
-  autoload :ID3V1FrameParser, File.join(LIBRARY_PATH, 'id3_v1_frame_parser')
-  autoload :ID3V2FrameParser, File.join(LIBRARY_PATH, 'id3_v2_frame_parser')
-  autoload :Genre, File.join(LIBRARY_PATH, 'genre')
-  autoload :Tag, File.join(LIBRARY_PATH, 'tag')
-  module Frames
-    module V1
-      autoload :TextFrame, File.join(LIBRARY_PATH, 'frames/v1/text_frame')
-      autoload :GenreFrame, File.join(LIBRARY_PATH, 'frames/v1/genre_frame')
-    end
-    module V2
-      autoload :FrameFabricator, File.join(LIBRARY_PATH, 'frames/v2/frame_fabricator')
-      autoload :BasicFrame, File.join(LIBRARY_PATH, 'frames/v2/basic_frame')
-      autoload :TextFrame, File.join(LIBRARY_PATH, 'frames/v2/text_frame')
-      autoload :UniqueFileIdFrame, File.join(LIBRARY_PATH, 'frames/v2/unique_file_id_frame')
-    end
-  end
-end
+require "id3tag/synchsafe_integer"
+require "id3tag/audio_file"
+require "id3tag/id3_v2_tag_header"
+require "id3tag/number_utils"
+require "id3tag/string_utils"
+require "id3tag/id3_v1_frame_parser"
+require "id3tag/id3_v2_frame_parser"
+require "id3tag/tag"
+require "id3tag/frames/util/genre_names"
+require "id3tag/frames/v1/text_frame"
+require "id3tag/frames/v1/genre_frame"
+require "id3tag/frames/v1/comments_frame"
+require "id3tag/frames/v1/track_nr_frame"
+require "id3tag/frames/v2/basic_frame"
+require "id3tag/frames/v2/text_frame"
+require "id3tag/frames/v2/unique_file_id_frame"
+require "id3tag/frames/v2/comments_frame"
+require "id3tag/frames/v2/genre_frame"
+require "id3tag/frames/v2/genre_frame/genre_parser"
+require "id3tag/frames/v2/genre_frame/genre_parser_pre_24"
+require "id3tag/frames/v2/genre_frame/genre_parser_24"
+require "id3tag/frames/v2/frame_fabricator"
