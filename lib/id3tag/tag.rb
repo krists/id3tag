@@ -103,7 +103,7 @@ module ID3Tag
     end
 
     def frames
-      @frames ||= read_frames
+      @frames ||= parse_frames
     end
 
     private
@@ -114,19 +114,21 @@ module ID3Tag
     end
 
     def frame_name(id)
-      if audio_file.v2_tag_present?
+      case audio_file.greatest_tag_version
+      when 2
         COMMON_FRAME_IDS_BY_VERSION["v2.#{audio_file.v2_tag_major_version_number}"][id]
-      elsif audio_file.v1_tag_present?
+      when 1
         COMMON_FRAME_IDS_BY_VERSION["v1.x"][id]
       else
         nil
       end
     end
 
-    def read_frames
-      if audio_file.v2_tag_present?
+    def parse_frames
+      case audio_file.greatest_tag_version
+      when 2
         ID3V2FrameParser.new(audio_file.v2_tag_body, audio_file.v2_tag_major_version_number).frames
-      elsif audio_file.v1_tag_present?
+      when 1
         ID3V1FrameParser.new(audio_file.v1_tag_body).frames
       else
         []

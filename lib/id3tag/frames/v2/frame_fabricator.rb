@@ -13,17 +13,21 @@ module  ID3Tag
         end
 
         def fabricate
+          frame_class.new(@id, @content, @flags, @major_version_number)
+        end
+
+        def frame_class
           case @id
           when /^(TCON|TCO)$/
-            GenreFrame.new(@id, @content, @flags, @major_version_number)
+            GenreFrame
           when /^T/
-            TextFrame.new(@id, @content, @flags, @major_version_number)
+            TextFrame
           when /^(COM|COMM)$/
-            CommentsFrame.new(@id, @content, @flags, @major_version_number)
+            CommentsFrame
           when /^UFID$/
-            UniqueFileIdFrame.new(@id, @content, @flags, @major_version_number)
+            UniqueFileIdFrame
           else
-            BasicFrame.new(@id, @content, @flags, @major_version_number)
+            BasicFrame
           end
         end
       end
