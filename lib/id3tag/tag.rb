@@ -1,73 +1,35 @@
 module ID3Tag
   class Tag
     class MultipleFrameError < StandardError; end
-    COMMON_FRAME_IDS_BY_VERSION = {
-      'v1.x' => {
-        :artist => :artist,
-        :title => :title,
-        :album => :album,
-        :year => :year,
-        :comments => :comments,
-        :genre => :genre,
-        :track_nr => :track_nr
-      },
-      'v2.2' => {
-        :artist => :TP1,
-        :title => :TT2,
-        :album => :TAL,
-        :year => :TYE,
-        :comments => :COM,
-        :genre => :TCO,
-        :track_nr => :TRK
-      },
-      'v2.3' => {
-        :artist => :TPE1,
-        :title => :TIT2,
-        :album => :TALB,
-        :year => :TYER,
-        :comments => :COMM,
-        :genre => :TCON,
-        :track_nr => :TRCK
-      },
-      'v2.4' => {
-        :artist => :TPE1,
-        :title => :TIT2,
-        :album => :TALB,
-        :year => :TDRC,
-        :comments => :COMM,
-        :genre => :TCON,
-        :track_nr => :TRCK
-      }
-    }
 
     class << self
-      def read(source)
-        new(source)
+      def read(source, version = nil)
+        new(source, version)
       end
     end
 
-    def initialize(source)
-      @source = source
+    def initialize(source, version = nil)
+      @source, @version = source, version
     end
 
     def artist
-      get_frame_content(frame_name(:artist))
+      get_frame_content(frame_id_by_name(:artist))
     end
 
     def title
-      get_frame_content(frame_name(:title))
+      get_frame_content(frame_id_by_name(:title))
     end
 
     def album
-      get_frame_content(frame_name(:album))
+      get_frame_content(frame_id_by_name(:album))
     end
 
     def year
-      get_frame_content(frame_name(:year))
+      get_frame_content(frame_id_by_name(:year))
     end
 
     def comments(language = nil)
-      all_comments_frames = get_frames(frame_name(:comments))
+      all_comments_frames = get_frames(frame_id_by_name(:comments))
       comments_frame = if language
         all_comments_frames.select { |frame| frame.language == language.to_s.downcase }.first
       else
@@ -78,11 +40,11 @@ module ID3Tag
     end
 
     def track_nr
-      get_frame_content(frame_name(:track_nr))
+      get_frame_content(frame_id_by_name(:track_nr))
     end
 
     def genre
-      get_frame_content(frame_name(:genre))
+      get_frame_content(frame_id_by_name(:genre))
     end
 
     def get_frame(frame_id)
@@ -106,32 +68,49 @@ module ID3Tag
       @frames ||= parse_frames
     end
 
-    private
-
     def get_frame_content(frame_id)
       frame = get_frame(frame_id)
       frame && frame.content
     end
 
-    def frame_name(id)
-      case audio_file.greatest_tag_version
+    def parsable_version
+      @parsable_version ||= calc_parsable_version
+    end
+
+    private
+
+    def frame_id_by_name(name)
+      case parsable_version
       when 2
-        COMMON_FRAME_IDS_BY_VERSION["v2.#{audio_file.v2_tag_major_version_number}"][id]
+        FrameIdAdvisor.new(2, audio_file.v2_tag_major_version_number).advise(id)
       when 1
-        COMMON_FRAME_IDS_BY_VERSION["v1.x"][id]
+        FrameIdAdvisor.new(1, 'x').advise(id)
       else
         nil
       end
     end
 
     def parse_frames
-      case audio_file.greatest_tag_version
+      case parsable_version
       when 2
         ID3V2FrameParser.new(audio_file.v2_tag_body, audio_file.v2_tag_major_version_number).frames
       when 1
         ID3V1FrameParser.new(audio_file.v1_tag_body).frames
       else
         []
+      end
+    end
+
+    def calc_parsable_version
+      if @version
+        method = "v#{@version}_tag_present?"
+        if audio_file.respond_to?(method) && audio_file.send(method)
+          @version
+        else
+          nil
+        end
+      else
+        audio_file.greatest_tag_version
       end
     end
 

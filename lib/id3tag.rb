@@ -8,6 +8,7 @@ require "id3tag/number_utils"
 require "id3tag/string_utils"
 require "id3tag/id3_v1_frame_parser"
 require "id3tag/id3_v2_frame_parser"
+require "id3tag/frame_id_advisor"
 require "id3tag/tag"
 require "id3tag/frames/util/genre_names"
 require "id3tag/frames/v1/text_frame"
@@ -23,3 +24,9 @@ require "id3tag/frames/v2/genre_frame/genre_parser"
 require "id3tag/frames/v2/genre_frame/genre_parser_pre_24"
 require "id3tag/frames/v2/genre_frame/genre_parser_24"
 require "id3tag/frames/v2/frame_fabricator"
+
+module ID3Tag
+  def self.read(source, version = nil)
+    Tag.read(source, version)
+  end
+end
