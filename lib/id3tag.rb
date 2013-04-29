@@ -27,6 +27,8 @@ require "id3tag/frames/v2/frame_fabricator"
 
 module ID3Tag
   def self.read(source, version = nil)
-    Tag.read(source, version)
+    tag = Tag.read(source, version)
+    yield tag if block_given?
+    tag
   end
 end
