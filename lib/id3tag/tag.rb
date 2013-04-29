@@ -82,9 +82,9 @@ module ID3Tag
     def frame_id_by_name(name)
       case parsable_version
       when 2
-        FrameIdAdvisor.new(2, audio_file.v2_tag_major_version_number).advise(id)
+        FrameIdAdvisor.new(2, audio_file.v2_tag_major_version_number).advise(name)
       when 1
-        FrameIdAdvisor.new(1, 'x').advise(id)
+        FrameIdAdvisor.new(1, 'x').advise(name)
       else
         nil
       end
