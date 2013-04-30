@@ -17,6 +17,9 @@ Description goes here.
 {<img src="https://codeclimate.com/badge.png" />}[https://codeclimate.com/github/krists/id3tag]
 
 {<img src="https://travis-ci.org/krists/id3tag.png?branch=master" alt="Build Status" />}[https://travis-ci.org/krists/id3tag]
+
+{<img src="https://coveralls.io/repos/krists/id3tag/badge.png?branch=master" alt="Coverage Status" />}[https://coveralls.io/r/krists/id3tag]
+
 == Copyright
 
 Copyright (c) 2012 Krists Ozols. See LICENSE.txt for
