@@ -10,4 +10,5 @@ group :development, :test do
   gem "rdoc", "~> 3.12"
   gem "rspec", "~> 2.13.0"
   gem "simplecov", :require => false
+  gem 'coveralls', :require => false
 end
