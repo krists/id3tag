@@ -1,4 +1,7 @@
-unless ENV['CI']
+if ENV['CI']
+  require 'coveralls'
+  Coveralls.wear!
+else
   require 'simplecov'
   SimpleCov.start
   require 'debugger'
