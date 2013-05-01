@@ -4,7 +4,6 @@ if ENV['CI']
 else
   require 'simplecov'
   SimpleCov.start
-  require 'debugger'
 end
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
