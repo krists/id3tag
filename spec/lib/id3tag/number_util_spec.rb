@@ -1,5 +1,5 @@
 require "spec_helper"
-describe ID3Tag::NumberUtils do
+describe ID3Tag::NumberUtil do
   describe "#convert_string_to_32bit_integer" do
     context "when string with 4 bytes given" do
       it "should return integer" do

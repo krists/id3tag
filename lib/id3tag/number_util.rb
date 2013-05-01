@@ -1,5 +1,6 @@
 module ID3Tag
-  module NumberUtils
+  module NumberUtil
+    FORMAT_FOR_8_BIT_SIGNED_INTEGER = 'c'
     FORMAT_FOR_32BIT_INTEGER = 'N'
     def self.convert_string_to_32bit_integer(string)
       integers = string.unpack(FORMAT_FOR_32BIT_INTEGER)

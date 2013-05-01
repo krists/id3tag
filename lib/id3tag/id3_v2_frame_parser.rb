@@ -35,7 +35,7 @@ module ID3Tag
       when 3
         "\x00" + read_next_bytes(frame_size_length)
       end
-      SynchsafeInteger.decode(NumberUtils.convert_string_to_32bit_integer(size_bytes))
+      SynchsafeInteger.decode(NumberUtil.convert_string_to_32bit_integer(size_bytes))
     end
 
     def read_next_frame_flags

@@ -1,5 +1,5 @@
 module ID3Tag
-  module StringUtils
+  module StringUtil
     def self.blank?(string)
       string !~ /[^[:space:]]/
     end

@@ -50,7 +50,7 @@ module ID3Tag
     end
 
     def get_tag_size
-      SynchsafeInteger.decode(NumberUtils.convert_string_to_32bit_integer(tag_size_bytes))
+      SynchsafeInteger.decode(NumberUtil.convert_string_to_32bit_integer(tag_size_bytes))
     end
 
     def tag_size_bytes
