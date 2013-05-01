@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe ID3Tag::StringUtils do
+describe ID3Tag::StringUtil do
   describe "#blank?" do
     subject { described_class.blank?(test_string) }
     context "when test string is like ''" do

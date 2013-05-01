@@ -10,7 +10,7 @@ module ID3Tag
           def genres
             result = []
             just_genres.each_with_index do |genre, index|
-              if ID3Tag::StringUtils.blank?(just_requirements[index])
+              if ID3Tag::StringUtil.blank?(just_requirements[index])
                 result << expand_abbreviation(genre)
               else
                 result << just_requirements[index]
