@@ -31,11 +31,11 @@ module  ID3Tag
         end
 
         def raw_text_and_content
-          content_without_encoding_byte.byteslice(3, content_without_encoding_byte.bytesize)
+          content_without_encoding_byte[3..-1]
         end
 
         def get_language
-          content_without_encoding_byte.byteslice(0, 3).downcase
+          content_without_encoding_byte[0..2].downcase
         end
       end
     end

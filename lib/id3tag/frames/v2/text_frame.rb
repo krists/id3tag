@@ -29,7 +29,7 @@ module  ID3Tag
         end
 
         def content_without_encoding_byte
-          @raw_content.byteslice(1, @raw_content.bytesize)
+          @raw_content.byteslice(1, @raw_content.bytesize - 1)
         end
       end
     end

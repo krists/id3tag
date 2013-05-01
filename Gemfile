@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
 group :development do
-  gem "debugger"
+  gem "debugger", :require => false, :platforms => :mri
 end
 
 group :development, :test do
