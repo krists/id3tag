@@ -5,59 +5,115 @@
 
 Gem::Specification.new do |s|
   s.name = "id3tag"
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Krists Ozols"]
-  s.date = "2012-12-25"
-  s.description = "Native Ruby ID3 tag reader/writer."
+  s.date = "2013-05-01"
+  s.description = "Native Ruby ID3 tag reader that aims for 100% covarage of ID3v2.x and ID3v1.x standards"
   s.email = "krists@iesals.lv"
   s.extra_rdoc_files = [
     "LICENSE.txt",
-    "README.rdoc"
+    "README.md"
   ]
   s.files = [
     ".document",
     ".rspec",
+    ".travis.yml",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
-    "README.rdoc",
+    "README.md",
     "Rakefile",
     "VERSION",
     "id3tag.gemspec",
     "lib/id3tag.rb",
-    "spec/id3tag_spec.rb",
-    "spec/spec_helper.rb"
+    "lib/id3tag/audio_file.rb",
+    "lib/id3tag/frame_id_advisor.rb",
+    "lib/id3tag/frames/util/genre_names.rb",
+    "lib/id3tag/frames/v1/comments_frame.rb",
+    "lib/id3tag/frames/v1/genre_frame.rb",
+    "lib/id3tag/frames/v1/text_frame.rb",
+    "lib/id3tag/frames/v1/track_nr_frame.rb",
+    "lib/id3tag/frames/v2/basic_frame.rb",
+    "lib/id3tag/frames/v2/comments_frame.rb",
+    "lib/id3tag/frames/v2/frame_fabricator.rb",
+    "lib/id3tag/frames/v2/genre_frame.rb",
+    "lib/id3tag/frames/v2/genre_frame/genre_parser.rb",
+    "lib/id3tag/frames/v2/genre_frame/genre_parser_24.rb",
+    "lib/id3tag/frames/v2/genre_frame/genre_parser_pre_24.rb",
+    "lib/id3tag/frames/v2/text_frame.rb",
+    "lib/id3tag/frames/v2/unique_file_id_frame.rb",
+    "lib/id3tag/id3_v1_frame_parser.rb",
+    "lib/id3tag/id3_v2_frame_parser.rb",
+    "lib/id3tag/id3_v2_tag_header.rb",
+    "lib/id3tag/number_util.rb",
+    "lib/id3tag/string_util.rb",
+    "lib/id3tag/synchsafe_integer.rb",
+    "lib/id3tag/tag.rb",
+    "spec/fixtures/id3v1_and_v2.mp3",
+    "spec/fixtures/id3v1_with_track_nr.mp3",
+    "spec/fixtures/id3v1_without_track_nr.mp3",
+    "spec/fixtures/id3v2.mp3",
+    "spec/lib/id3tag/audio_file_spec.rb",
+    "spec/lib/id3tag/frames/util/genre_name_by_id_finder_spec.rb",
+    "spec/lib/id3tag/frames/v1/comments_frame_spec.rb",
+    "spec/lib/id3tag/frames/v1/genre_frame_spec.rb",
+    "spec/lib/id3tag/frames/v1/text_frame_spec.rb",
+    "spec/lib/id3tag/frames/v1/track_nr_frame_spec.rb",
+    "spec/lib/id3tag/frames/v2/basic_frame_spec.rb",
+    "spec/lib/id3tag/frames/v2/comments_frame_spec.rb",
+    "spec/lib/id3tag/frames/v2/genre_frame/genre_parser_24_spec.rb",
+    "spec/lib/id3tag/frames/v2/genre_frame/genre_parser_pre_24_spec.rb",
+    "spec/lib/id3tag/frames/v2/genre_frame_spec.rb",
+    "spec/lib/id3tag/frames/v2/text_frame_spec.rb",
+    "spec/lib/id3tag/frames/v2/unique_file_id_frame_spec.rb",
+    "spec/lib/id3tag/id3_v1_frame_parser_spec.rb",
+    "spec/lib/id3tag/id3_v2_frame_parser_spec.rb",
+    "spec/lib/id3tag/id3_v2_tag_header_spec.rb",
+    "spec/lib/id3tag/id3tag_spec.rb",
+    "spec/lib/id3tag/number_util_spec.rb",
+    "spec/lib/id3tag/string_util_spec.rb",
+    "spec/lib/id3tag/synchsafe_integer_spec.rb",
+    "spec/lib/id3tag/tag_spec.rb",
+    "spec/spec_helper.rb",
+    "spec/support/mp3_fixtures.rb"
   ]
   s.homepage = "http://github.com/krists/id3tag"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.24"
-  s.summary = "Native Ruby ID3 tag reader/writer."
+  s.required_ruby_version = Gem::Requirement.new(">= 1.9.2")
+  s.rubygems_version = "2.0.3"
+  s.summary = "Native Ruby ID3 tag reader that aims for 100% covarage of ID3v2.x and ID3v1.x standards"
 
   if s.respond_to? :specification_version then
-    s.specification_version = 3
+    s.specification_version = 4
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<rspec>, ["~> 2.8.0"])
-      s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
-      s.add_development_dependency(%q<bundler>, ["~> 1.1.5"])
+      s.add_development_dependency(%q<debugger>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.4"])
+      s.add_development_dependency(%q<rake>, [">= 0"])
+      s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
+      s.add_development_dependency(%q<rspec>, ["~> 2.13.0"])
       s.add_development_dependency(%q<simplecov>, [">= 0"])
+      s.add_development_dependency(%q<coveralls>, [">= 0"])
     else
-      s.add_dependency(%q<rspec>, ["~> 2.8.0"])
-      s.add_dependency(%q<rdoc>, ["~> 3.12"])
-      s.add_dependency(%q<bundler>, ["~> 1.1.5"])
+      s.add_dependency(%q<debugger>, [">= 0"])
       s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
+      s.add_dependency(%q<rake>, [">= 0"])
+      s.add_dependency(%q<rdoc>, ["~> 3.12"])
+      s.add_dependency(%q<rspec>, ["~> 2.13.0"])
       s.add_dependency(%q<simplecov>, [">= 0"])
+      s.add_dependency(%q<coveralls>, [">= 0"])
     end
   else
-    s.add_dependency(%q<rspec>, ["~> 2.8.0"])
-    s.add_dependency(%q<rdoc>, ["~> 3.12"])
-    s.add_dependency(%q<bundler>, ["~> 1.1.5"])
+    s.add_dependency(%q<debugger>, [">= 0"])
     s.add_dependency(%q<jeweler>, ["~> 1.8.4"])
+    s.add_dependency(%q<rake>, [">= 0"])
+    s.add_dependency(%q<rdoc>, ["~> 3.12"])
+    s.add_dependency(%q<rspec>, ["~> 2.13.0"])
     s.add_dependency(%q<simplecov>, [">= 0"])
+    s.add_dependency(%q<coveralls>, [">= 0"])
   end
 end
 
