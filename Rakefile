@@ -17,10 +17,10 @@ Jeweler::Tasks.new do |gem|
   gem.name = "id3tag"
   gem.homepage = "http://github.com/krists/id3tag"
   gem.license = "MIT"
-  gem.summary = %Q{Native Ruby ID3 tag reader/writer.}
-  gem.description = %Q{Native Ruby ID3 tag reader/writer.}
+  gem.summary = %Q{Native Ruby ID3 tag reader that aims for 100% covarage of ID3v2.x and ID3v1.x standards}
   gem.email = "krists@iesals.lv"
   gem.authors = ["Krists Ozols"]
+  gem.required_ruby_version = '>= 1.9.2'
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
