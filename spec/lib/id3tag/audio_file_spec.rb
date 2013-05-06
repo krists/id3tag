@@ -32,9 +32,24 @@ describe ID3Tag::AudioFile do
   end
 
   describe "#v2_tag_body" do
-    subject { described_class.new(mp3_with_v2_tag) }
-    it "should return frame and padding bytes" do
-      subject.v2_tag_body.should == File.read(mp3_with_v2_tag, 246, 10)
+    context "when extended header is not present" do
+      subject { described_class.new(StringIO.new("ID3\u0003\u0000\u0000\u0000\u0000\u0000\u0003ABC")) }
+      it "should return frame and padding bytes" do
+        subject.v2_tag_body.should == "ABC"
+      end
     end
+    context "when extended header is present" do
+      subject { described_class.new(StringIO.new("ID3\u0003\u0000\u0040\u0000\u0000\u0000\u0011" + "\u0000\u0000\u0000\u000E" + ("\u0000" * 10) + "ABC")) }
+      it "should return frame and padding bytes" do
+        subject.v2_tag_body.should == "ABC"
+      end
+    end
+  end
+
+  context "when reading file with v2.3.0 tag" do
+    subject { described_class.new(StringIO.new("ID3\u0003\u0000")) }
+    its(:v2_tag_version) { should eq '3.0' }
+    its(:v2_tag_major_version_number) { should eq 3 }
+    its(:v2_tag_minor_version_number) { should eq 0 }
   end
 end

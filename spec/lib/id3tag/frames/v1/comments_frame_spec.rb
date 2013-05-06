@@ -17,6 +17,14 @@ describe ID3Tag::Frames::V1::CommentsFrame do
     end
   end
 
+  describe "#text" do
+    subject { described_class.new('comments', 'some comment about the song') }
+    it "should be the same as #content" do
+      subject.stub(:content) { "ZXC" }
+      subject.text.should == subject.content
+    end
+  end
+
   describe '#language' do
     it 'should be unknown' do
       described_class.new('comments', '').language.should eq('unknown')

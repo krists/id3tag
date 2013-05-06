@@ -38,6 +38,10 @@ module ID3Tag
       @tag_size ||= get_tag_size
     end
 
+    def inspect
+      "<#{self.class.name} version:2.#{version_number} size:#{tag_size} unsync:#{unsynchronisation?} ext.header:#{extended_header?} experimental:#{experimental?} footer:#{footer_present?}>"
+    end
+
     private
 
     def flags_byte
