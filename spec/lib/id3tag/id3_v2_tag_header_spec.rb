@@ -57,4 +57,9 @@ describe ID3Tag::ID3v2TagHeader do
     let(:header_data) { "ID3abc\x00\x00\x01\x7F" }
     its(:tag_size) { should == 255 }
   end
+
+  describe "#inspect" do
+    let(:header_data) { "ID3\u0003\u0000\u0000\u0000\u0000\u0000\u0000" }
+    its(:inspect) { should eq "<ID3Tag::ID3v2TagHeader version:2.3.0 size:0 unsync:false ext.header:false experimental:false footer:false>" }
+  end
 end
