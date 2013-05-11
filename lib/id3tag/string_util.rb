@@ -15,7 +15,7 @@ module ID3Tag
           output_bytes << 0
         end
       end
-      output_bytes.pack("C*")
+      output_bytes.pack("C*").force_encoding(input.encoding)
     end
 
     def self.undo_unsynchronization(input)
@@ -30,7 +30,7 @@ module ID3Tag
         end
         prev_byte = current_byte
       end
-      output_bytes.pack("C*")
+      output_bytes.pack("C*").force_encoding(input.encoding)
     end
   end
 end
