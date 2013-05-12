@@ -44,7 +44,13 @@ module ID3Tag
     end
 
     def advise(frame_name)
-      COMMON_FRAME_IDS_BY_VERSION["v#{@version}.#{@major_version}"][frame_name]
+      version_ids && version_ids[frame_name]
+    end
+
+    private
+
+    def version_ids
+      COMMON_FRAME_IDS_BY_VERSION["v#{@version}.#{@major_version}"]
     end
   end
 end

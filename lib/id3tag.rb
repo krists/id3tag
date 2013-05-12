@@ -1,6 +1,4 @@
-require "set"
 require "stringio"
-
 require "id3tag/synchsafe_integer"
 require "id3tag/audio_file"
 require "id3tag/id3_v2_tag_header"
@@ -27,7 +25,7 @@ require "id3tag/frames/v2/genre_frame/genre_parser_24"
 require "id3tag/frames/v2/frame_fabricator"
 
 module ID3Tag
-  def self.read(source, version = nil)
+  def self.read(source, version = :all)
     tag = Tag.read(source, version)
     yield tag if block_given?
     tag

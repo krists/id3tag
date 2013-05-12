@@ -7,10 +7,6 @@ describe ID3Tag::ID3V1FrameParser do
   describe "#frames" do
     subject { described_class.new(frame_bytes_v1_0).frames }
 
-    it "should return array or frames" do
-      subject.should be_kind_of(Set)
-    end
-
     describe "common frames between v1.0 and v.1.1" do
 
       it "should contain title frame" do
