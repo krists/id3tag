@@ -41,16 +41,6 @@ module ID3Tag
       v2_tag_header.minor_version_number
     end
 
-    def greatest_tag_version
-      if v2_tag_present?
-        2
-      elsif v1_tag_present?
-        1
-      else
-        nil
-      end
-    end
-
     private
 
     def v2_tag_frame_and_padding_position

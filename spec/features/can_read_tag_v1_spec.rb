@@ -8,7 +8,6 @@ describe 'can read v1 info from file' do
     subject.title.should == "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaA"
     subject.artist.should == "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbB"
     subject.album.should == "cccccccccccccccccccccccccccccC"
-    subject.comments.should == "dddddddddddddddddddddddddddD"
     subject.genre.should == "Blues"
     subject.year.should == "2003"
     subject.track_nr.should == "1"

@@ -12,7 +12,7 @@ module ID3Tag
     private
 
     def get_frames
-      frames = Set.new
+      frames = []
       frames << title_frame
       frames << artist_frame
       frames << album_frame
