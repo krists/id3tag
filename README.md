@@ -25,7 +25,8 @@ mp3_file = File.open('/path/to/your/favorite_song.mp3')
 tag = ID3Tag.read(mp3_file)
 puts "#{tag.artist} - #{tag.title}"
 ```
-`ID3Tag::Tag` class provides easy accessors to frames like `artist`, `title`, `album`, `year`, `comments`, `track_nr`, `genre` but you can read any frame by using `get_frame` or `get_frame_content`.
+`ID3Tag::Tag` class provides easy accessors to frames like `artist`, `title`, `album`, `year`, `track_nr`, `genre` but you can read any frame by using `get_frame(id)` or `get_frame_content(id)` or browsing all frames by calling `frames`.
+When using easy accessors to frames like `artist` the reader will look for v.2.x tags artist frame first and if it can not find it artist frame from v1.x will be returned (if v1.x tag exists)
 
 ```ruby
 mp3s = Dir.entries("/some/dir").select { |filename| filename =~ /\.mp3/i }
@@ -37,7 +38,6 @@ mp3s.each do |file|
     puts tag.title
     puts tag.album
     puts tag.year
-    puts tag.comments
     puts tag.track_nr
     puts tag.genre
     puts "---"
@@ -45,7 +45,15 @@ mp3s.each do |file|
   end
 end
 ```
+By default `ID3Tag` reads both v1.x and v2.x tags but it is possible to specify only one of them:
+```ruby
+ID3Tag.read(file,:all) # default behaviour
+ID3Tag.read(file,:v1) # Reads only v1.x tag
+ID3Tag.read(file,:v2) # Reads only v2.x tag
+```
+
 You can inspect tag by calling `frame_ids` to see available frame ids or `frames` to return all frames
+
 
 ## Features
 
