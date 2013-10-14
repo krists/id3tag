@@ -1,9 +1,7 @@
 require "spec_helper"
 
 describe ID3Tag::Tag do
-  describe "class method #read" do
-
-  end
+  describe "class method #read"
 
   context "when file has v2.4.x tag and v.1.x tag" do
     subject { described_class.read(nil) }
