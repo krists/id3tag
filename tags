@@ -71,7 +71,6 @@ TextFrame	lib/id3tag/frames/v1/text_frame.rb	/^      class TextFrame$/;"	c	class
 TextFrame	lib/id3tag/frames/v2/text_frame.rb	/^      class TextFrame < BasicFrame$/;"	c	class:ID3Tag.Frames.V2
 TrackNrFrame	lib/id3tag/frames/v1/track_nr_frame.rb	/^      class TrackNrFrame$/;"	c	class:ID3Tag.Frames.V1
 UniqueFileIdFrame	lib/id3tag/frames/v2/unique_file_id_frame.rb	/^      class UniqueFileIdFrame < BasicFrame$/;"	c	class:ID3Tag.Frames.V2
-UnsupportedTextEncoding	lib/id3tag/frames/v2/text_frame.rb	/^        class UnsupportedTextEncoding < StandardError; end$/;"	c	class:ID3Tag.Frames.V2.TextFrame
 Unsynchronization	lib/id3tag/unsynchronization.rb	/^  class Unsynchronization$/;"	c	class:ID3Tag
 Util	lib/id3tag/frames/util/genre_names.rb	/^    module Util$/;"	m	class:ID3Tag.Frames
 V1	lib/id3tag/frames/v1/comments_frame.rb	/^    module V1$/;"	m	class:ID3Tag.Frames
@@ -97,6 +96,7 @@ audio_file	lib/id3tag/tag.rb	/^    def audio_file$/;"	f	class:ID3Tag
 blank	lib/id3tag/string_util.rb	/^    def self.blank?(string)$/;"	F	class:ID3Tag.StringUtil
 comment_frame	lib/id3tag/id3_v1_frame_parser.rb	/^    def comment_frame$/;"	f	class:ID3Tag.ID3V1FrameParser
 comment_frame_size	lib/id3tag/id3_v1_frame_parser.rb	/^    def comment_frame_size$/;"	f	class:ID3Tag.ID3V1FrameParser
+compressed?	lib/id3tag/frames/v2/basic_frame.rb	/^        def compressed?$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 content	lib/id3tag/frames/v1/comments_frame.rb	/^        def content$/;"	f	class:ID3Tag.Frames.V1.CommentsFrame
 content	lib/id3tag/frames/v1/genre_frame.rb	/^        def content$/;"	f	class:ID3Tag.Frames.V1.GenreFrame
 content	lib/id3tag/frames/v1/text_frame.rb	/^        def content$/;"	f	class:ID3Tag.Frames.V1.TextFrame
@@ -111,6 +111,7 @@ content_without_encoding_byte	lib/id3tag/frames/v2/text_frame.rb	/^        def c
 convert_32bit_integer_to_string	lib/id3tag/number_util.rb	/^    def self.convert_32bit_integer_to_string(integer)$/;"	F	class:ID3Tag.NumberUtil
 convert_string_to_32bit_integer	lib/id3tag/number_util.rb	/^    def self.convert_string_to_32bit_integer(string)$/;"	F	class:ID3Tag.NumberUtil
 decode	lib/id3tag/synchsafe_integer.rb	/^      def decode(synchsafe_int)$/;"	f	class:ID3Tag.SynchsafeInteger.encode
+decompressed_size	lib/id3tag/frames/v2/basic_frame.rb	/^        def decompressed_size$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 desciption	lib/id3tag/frames/v1/comments_frame.rb	/^        def desciption$/;"	f	class:ID3Tag.Frames.V1.CommentsFrame
 description	lib/id3tag/frames/v2/comments_frame.rb	/^        def description$/;"	f	class:ID3Tag.Frames.V2.CommentsFrame
 destination_encoding	lib/id3tag/frames/v1/text_frame.rb	/^        def destination_encoding$/;"	f	class:ID3Tag.Frames.V1.TextFrame
@@ -119,6 +120,8 @@ do_unsynchronization	lib/id3tag/string_util.rb	/^    def self.do_unsynchronizati
 encode	lib/id3tag/synchsafe_integer.rb	/^      def encode(int)$/;"	f	class:ID3Tag.SynchsafeInteger
 encoded_text_and_content	lib/id3tag/frames/v2/comments_frame.rb	/^        def encoded_text_and_content$/;"	f	class:ID3Tag.Frames.V2.CommentsFrame
 encoded_text_and_content_parts	lib/id3tag/frames/v2/comments_frame.rb	/^        def encoded_text_and_content_parts$/;"	f	class:ID3Tag.Frames.V2.CommentsFrame
+encoding_byte_from_flags	lib/id3tag/frames/v2/basic_frame.rb	/^        def encoding_byte_from_flags$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
+encrypted?	lib/id3tag/frames/v2/basic_frame.rb	/^        def encrypted?$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 expand_abbreviation	lib/id3tag/frames/v2/genre_frame/genre_parser.rb	/^          def expand_abbreviation(abbreviation)$/;"	f	class:ID3Tag.Frames.V2.GenreFrame.GenreParser
 experimental?	lib/id3tag/id3_v2_tag_header.rb	/^    def experimental?$/;"	f	class:ID3Tag.ID3v2TagHeader
 extended_header?	lib/id3tag/id3_v2_tag_header.rb	/^    def extended_header?$/;"	f	class:ID3Tag.ID3v2TagHeader
@@ -126,6 +129,7 @@ fabricate	lib/id3tag/frames/v2/frame_fabricator.rb	/^          def fabricate(id,
 fabricate	lib/id3tag/frames/v2/frame_fabricator.rb	/^        def fabricate$/;"	f	class:ID3Tag.Frames.V2
 find_by_id	lib/id3tag/frames/util/genre_names.rb	/^        def self.find_by_id(id)$/;"	F	class:ID3Tag.Frames.Util.GenreNames
 flags_byte	lib/id3tag/id3_v2_tag_header.rb	/^    def flags_byte$/;"	f	class:ID3Tag.ID3v2TagHeader
+flags_byte_pair	lib/id3tag/frames/v2/basic_frame.rb	/^        def flags_byte_pair$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 footer_present?	lib/id3tag/id3_v2_tag_header.rb	/^    def footer_present?$/;"	f	class:ID3Tag.ID3v2TagHeader
 frame_class	lib/id3tag/frames/v2/frame_fabricator.rb	/^        def frame_class$/;"	f	class:ID3Tag.Frames.V2
 frame_id	lib/id3tag/tag.rb	/^    def frame_id(version, name)$/;"	f	class:ID3Tag
@@ -156,6 +160,8 @@ get_tag_size	lib/id3tag/id3_v2_tag_header.rb	/^    def get_tag_size$/;"	f	class:
 get_tag_version_1_1?	lib/id3tag/id3_v1_frame_parser.rb	/^    def get_tag_version_1_1?$/;"	f	class:ID3Tag.ID3V1FrameParser
 get_v2_extended_header_size	lib/id3tag/audio_file.rb	/^    def get_v2_extended_header_size$/;"	f	class:ID3Tag.AudioFile
 get_v2_tag_header	lib/id3tag/audio_file.rb	/^    def get_v2_tag_header$/;"	f	class:ID3Tag.AudioFile
+group_id	lib/id3tag/frames/v2/basic_frame.rb	/^        def group_id$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
+grouped?	lib/id3tag/frames/v2/basic_frame.rb	/^        def grouped?$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 initialize	lib/id3tag/audio_file.rb	/^    def initialize(file)$/;"	f	class:ID3Tag.AudioFile
 initialize	lib/id3tag/frame_id_advisor.rb	/^    def initialize(version, major_version)$/;"	f	class:ID3Tag.FrameIdAdvisor
 initialize	lib/id3tag/frames/v1/genre_frame.rb	/^        def initialize(id, content)$/;"	f	class:ID3Tag.Frames.V1.GenreFrame
@@ -185,6 +191,9 @@ output	lib/id3tag/unsynchronization.rb	/^    def output$/;"	f	class:ID3Tag.Unsyn
 output_bytes	lib/id3tag/unsynchronization.rb	/^    def output_bytes$/;"	f	class:ID3Tag.Unsynchronization
 owner_identifier	lib/id3tag/frames/v2/unique_file_id_frame.rb	/^        def owner_identifier$/;"	f	class:ID3Tag.Frames.V2.UniqueFileIdFrame
 padding_or_eof_reached?	lib/id3tag/id3_v2_frame_parser.rb	/^    def padding_or_eof_reached?$/;"	f	class:ID3Tag
+preserve_on_file_alteration?	lib/id3tag/frames/v2/basic_frame.rb	/^        def preserve_on_file_alteration?$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
+preserve_on_tag_alteration?	lib/id3tag/frames/v2/basic_frame.rb	/^        def preserve_on_tag_alteration?$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
+raw_content_io	lib/id3tag/frames/v2/basic_frame.rb	/^        def raw_content_io$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 raw_text_and_content	lib/id3tag/frames/v2/comments_frame.rb	/^        def raw_text_and_content$/;"	f	class:ID3Tag.Frames.V2.CommentsFrame
 read	lib/id3tag.rb	/^  def self.read(source, version = :all)$/;"	F	class:ID3Tag
 read	lib/id3tag/tag.rb	/^      def read(source, version = :all)$/;"	f	class:ID3Tag.Tag
@@ -194,10 +203,12 @@ read_next_bytes	lib/id3tag/id3_v2_frame_parser.rb	/^    def read_next_bytes(limi
 read_next_frame_flags	lib/id3tag/id3_v2_frame_parser.rb	/^    def read_next_frame_flags$/;"	f	class:ID3Tag
 read_next_frame_id	lib/id3tag/id3_v2_frame_parser.rb	/^    def read_next_frame_id$/;"	f	class:ID3Tag.ID3V2FrameParser
 read_next_frame_size	lib/id3tag/id3_v2_frame_parser.rb	/^    def read_next_frame_size$/;"	f	class:ID3Tag.ID3V2FrameParser
+read_only?	lib/id3tag/frames/v2/basic_frame.rb	/^        def read_only?$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 remove	lib/id3tag/unsynchronization.rb	/^    def remove$/;"	f	class:ID3Tag.Unsynchronization
 rewind_input	lib/id3tag/id3_v2_frame_parser.rb	/^    def rewind_input$/;"	f	class:ID3Tag
 source_encoding	lib/id3tag/frames/v1/text_frame.rb	/^        def source_encoding$/;"	f	class:ID3Tag.Frames.V1.TextFrame
 source_encoding	lib/id3tag/frames/v2/text_frame.rb	/^        def source_encoding$/;"	f	class:ID3Tag.Frames.V2.TextFrame
+status_byte_from_flags	lib/id3tag/frames/v2/basic_frame.rb	/^        def status_byte_from_flags$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 tag_size	lib/id3tag/id3_v2_tag_header.rb	/^    def tag_size$/;"	f	class:ID3Tag.ID3v2TagHeader
 tag_size_bytes	lib/id3tag/id3_v2_tag_header.rb	/^    def tag_size_bytes$/;"	f	class:ID3Tag.ID3v2TagHeader
 tag_version_1_1?	lib/id3tag/id3_v1_frame_parser.rb	/^    def tag_version_1_1?$/;"	f	class:ID3Tag.ID3V1FrameParser
@@ -208,7 +219,10 @@ title_frame	lib/id3tag/id3_v1_frame_parser.rb	/^    def title_frame$/;"	f	class:
 track_nr	lib/id3tag/tag.rb	/^    def track_nr$/;"	f	class:ID3Tag
 track_nr_frame	lib/id3tag/id3_v1_frame_parser.rb	/^    def track_nr_frame$/;"	f	class:ID3Tag.ID3V1FrameParser
 undo_unsynchronization	lib/id3tag/string_util.rb	/^    def self.undo_unsynchronization(input)$/;"	F	class:ID3Tag.StringUtil
+unpacked_content	lib/id3tag/frames/v2/basic_frame.rb	/^        def unpacked_content$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 unsynchronisation?	lib/id3tag/id3_v2_tag_header.rb	/^    def unsynchronisation?$/;"	f	class:ID3Tag.ID3v2TagHeader
+usable_encoding_byte_from_flags?	lib/id3tag/frames/v2/basic_frame.rb	/^        def usable_encoding_byte_from_flags?$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
+usable_status_byte_from_flags?	lib/id3tag/frames/v2/basic_frame.rb	/^        def usable_status_byte_from_flags?$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 v1_frames	lib/id3tag/tag.rb	/^    def v1_frames$/;"	f	class:ID3Tag
 v1_tag_body	lib/id3tag/audio_file.rb	/^    def v1_tag_body$/;"	f	class:ID3Tag.AudioFile
 v1_tag_present?	lib/id3tag/audio_file.rb	/^    def v1_tag_present?$/;"	f	class:ID3Tag.AudioFile
@@ -225,5 +239,6 @@ v2_tag_present?	lib/id3tag/audio_file.rb	/^    def v2_tag_present?$/;"	f	class:I
 v2_tag_version	lib/id3tag/audio_file.rb	/^    def v2_tag_version$/;"	f	class:ID3Tag.AudioFile
 version_ids	lib/id3tag/frame_id_advisor.rb	/^    def version_ids$/;"	f	class:ID3Tag.FrameIdAdvisor
 version_number	lib/id3tag/id3_v2_tag_header.rb	/^    def version_number$/;"	f	class:ID3Tag.ID3v2TagHeader
+version_of_interest	lib/id3tag/frame_id_advisor.rb	/^    def version_of_interest$/;"	f	class:ID3Tag.FrameIdAdvisor
 year	lib/id3tag/tag.rb	/^    def year$/;"	f	class:ID3Tag
 year_frame	lib/id3tag/id3_v1_frame_parser.rb	/^    def year_frame$/;"	f	class:ID3Tag.ID3V1FrameParser

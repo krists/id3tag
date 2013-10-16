@@ -47,10 +47,14 @@ module ID3Tag
       version_ids && version_ids[frame_name]
     end
 
+    def version_of_interest
+      "v#{@version}.#{@major_version}"
+    end
+
     private
 
     def version_ids
-      COMMON_FRAME_IDS_BY_VERSION["v#{@version}.#{@major_version}"]
+      COMMON_FRAME_IDS_BY_VERSION.fetch(version_of_interest)
     end
   end
 end

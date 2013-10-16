@@ -2,7 +2,7 @@ module  ID3Tag
   module Frames
     module  V2
       class TextFrame < BasicFrame
-        class UnsupportedTextEncoding < StandardError; end
+        UnsupportedTextEncoding = Class.new(StandardError)
         ENCODING_MAP = {
           0b0 => Encoding::ISO8859_1,
           0b1 => Encoding::UTF_16,
@@ -25,11 +25,11 @@ module  ID3Tag
         end
 
         def get_encoding_byte
-          @raw_content.getbyte(0)
+          unpacked_content.getbyte(0)
         end
 
         def content_without_encoding_byte
-          @raw_content.byteslice(1, @raw_content.bytesize - 1)
+          unpacked_content.byteslice(1, unpacked_content.bytesize - 1)
         end
       end
     end
