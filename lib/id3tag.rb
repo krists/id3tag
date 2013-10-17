@@ -23,6 +23,7 @@ require "id3tag/frames/v2/genre_frame/genre_parser"
 require "id3tag/frames/v2/genre_frame/genre_parser_pre_24"
 require "id3tag/frames/v2/genre_frame/genre_parser_24"
 require "id3tag/frames/v2/frame_fabricator"
+require "id3tag/frames/v2/frame_flags"
 
 module ID3Tag
   def self.read(source, version = :all)
