@@ -55,61 +55,59 @@ module  ID3Tag
         end
 
         def preserve_on_tag_alteration?
-          status_flag(:preserve_on_tag_alteration) != 1
+          flag(:status_flags, :preserve_on_tag_alteration) != 1
         end
 
         def preserve_on_file_alteration?
-          status_flag(:preserve_on_file_alteration) != 1
+          flag(:status_flags, :preserve_on_file_alteration) != 1
         end
 
         def read_only?
-          status_flag(:read_only) == 1
+          flag(:status_flags, :read_only) == 1
         end
 
         def compressed?
-          format_flag(:compressed) == 1
+          flag(:format_flags, :compressed) == 1
         end
 
         def encrypted?
-          format_flag(:encrypted) == 1
+          flag(:format_flags, :encrypted) == 1
         end
 
         def grouped?
-          format_flag(:grouped) == 1
+          flag(:format_flags, :grouped) == 1
+        end
+
+        def unsynchronised?
+          flag(:format_flags, :unsynchronised) == 1
         end
 
         def data_length_indicator?
-          format_flag(:data_length_indicator) == 1
+          flag(:format_flags, :data_length_indicator) == 1
         end
 
         private
 
-        def status_flag(name)
-          index = index_of_status_flag(name)
+        def flag(scope, name)
+          index = index_of_flag(scope, name)
           if index
-            flags = flags_byte_pair.first
+            flags = flags_for_scope(scope)
             flags && flags[7 - index]
           end
         end
 
-        def format_flag(name)
-          index = index_of_format_flag(name)
-          if index
-            flags = flags_byte_pair.last
-            flags && flags[7 - index]
+        def flags_for_scope(scope)
+          pair = @flag_bytes.to_s.unpack("C2")
+          case scope
+          when :status_flags
+            pair.first
+          when :format_flags
+            pair.last
           end
         end
 
-        def flags_byte_pair
-          @flag_bytes.to_s.unpack("C2")
-        end
-
-        def index_of_status_flag(name)
-          current_version_map[:status_flags].find_index(name)
-        end
-
-        def index_of_format_flag(name)
-          current_version_map[:format_flags].find_index(name)
+        def index_of_flag(scope, name)
+          current_version_map[scope].find_index(name)
         end
 
         def current_version_map

@@ -46,6 +46,8 @@ describe ID3Tag::Frames::V2::BasicFrame do
       its(:compressed?) { should be_true }
       its(:encrypted?) { should be_true }
       its(:grouped?) { should be_true }
+      its(:unsynchronised?) { should be_false }
+      its(:data_length_indicator?) { should be_false }
     end
 
     context "when frags are mixed" do
@@ -90,6 +92,18 @@ describe ID3Tag::Frames::V2::BasicFrame do
   end
 
   context "when using v.2.4" do
-    # TODO: write specs..
+    let(:major_version_number) { 4 }
+    context "when all frags set to 1" do
+      let(:flags) { [0b01110000,0b01001111].pack("C2") }
+      subject { frame }
+      its(:preserve_on_tag_alteration?) { should be_false }
+      its(:preserve_on_file_alteration?) { should be_false }
+      its(:read_only?) { should be_true }
+      its(:compressed?) { should be_true }
+      its(:encrypted?) { should be_true }
+      its(:grouped?) { should be_true }
+      its(:unsynchronised?) { should be_true }
+      its(:data_length_indicator?) { should be_true }
+    end
   end
 end

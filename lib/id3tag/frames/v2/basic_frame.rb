@@ -77,6 +77,10 @@ module  ID3Tag
           frame_flags.unsynchronised?
         end
 
+        def data_length_indicator?
+          frame_flags.data_length_indicator?
+        end
+
         private
 
         def frame_flags
