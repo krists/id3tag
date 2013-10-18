@@ -36,10 +36,6 @@ module  ID3Tag
           end
         end
 
-        def inspect
-          "<#{self.class.name} #{id}: #{inspect_content}>"
-        end
-
         def decompressed_size
           if compressed?
             raw_content_io.rewind
@@ -79,6 +75,14 @@ module  ID3Tag
 
         def data_length_indicator?
           frame_flags.data_length_indicator?
+        end
+
+        def additional_info_byte_count
+          frame_flags.additional_info_byte_count
+        end
+
+        def inspect
+          "<#{self.class.name} #{id}: #{inspect_content}>"
         end
 
         private
