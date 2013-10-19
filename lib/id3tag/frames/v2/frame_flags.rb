@@ -2,7 +2,6 @@ module  ID3Tag
   module Frames
     module  V2
       class FrameFlags
-        EXCLUDE_END_TRUE = true
         FLAG_MAP_IN_APPEARANCE_ORDER_BY_VERSION = {
           3 => {
             :status_flags => [ :preserve_on_tag_alteration, :preserve_on_file_alteration, :read_only, nil, nil, nil, nil, nil ],
@@ -61,55 +60,45 @@ module  ID3Tag
         end
 
         def additional_info_byte_count
-          current_additional_info_map.inject(0) do |total, query|
-            total += query.last if self.send(query.first)
+          additional_info_flags_in_effect.inject(0) do |total, query|
+            total += query.last
             total
           end
         end
 
-        def range_of_data_length_bytes
-          if data_length_indicator?
-            cursor = 0
-            length = 0
-            current_additional_info_map.reject { |q| !self.send(q.first) }.map do |q|
-              cursor += q.last if q.first != :data_length_indicator?
-              if q.first == :data_length_indicator?
-                length = q.last
-                break
-              end
-            end
-            Range.new(cursor,cursor + length, EXCLUDE_END_TRUE)
+        def position_and_count_of_data_length_bytes
+          if data_length_indicator? || compressed?
+            find_position_and_length_for_additional_info(:data_length_indicator?, :compressed?)
           end
         end
 
-        def range_of_group_id
+        def position_and_count_of_group_id_bytes
           if grouped?
-            cursor = 0
-            length = 0
-            current_additional_info_map.reject { |q| !self.send(q.first) }.map do |q|
-              cursor += q.last if q.first != :grouped?
-              if q.first == :grouped?
-                length = q.last
-                break
-              end
-            end
-            Range.new(cursor, cursor + length, EXCLUDE_END_TRUE)
+            find_position_and_length_for_additional_info(:grouped?)
           end
         end
 
-        def range_of_encryption_id
+        def position_and_count_of_encryption_id_bytes
           if encrypted?
-            cursor = 0
-            length = 0
-            current_additional_info_map.reject { |q| !self.send(q.first) }.map do |q|
-              cursor += q.last if q.first != :encrypted?
-              if q.first == :encrypted?
-                length = q.last
-                break
-              end
-            end
-            Range.new(cursor, cursor + length, EXCLUDE_END_TRUE)
+            find_position_and_length_for_additional_info(:encrypted?)
           end
+        end
+
+        def find_position_and_length_for_additional_info(*methods_of_interest)
+          start_position = 0
+          target_info_byte_count = nil
+          additional_info_flags_in_effect.map do |query_method, byte_count|
+            start_position += (byte_count) unless methods_of_interest.include?(query_method)
+            if methods_of_interest.include?(query_method)
+              target_info_byte_count = byte_count
+              break
+            end
+          end
+          [start_position, target_info_byte_count]
+        end
+
+        def additional_info_flags_in_effect
+          current_additional_info_map.reject { |q| !self.send(q.first) }
         end
 
         private

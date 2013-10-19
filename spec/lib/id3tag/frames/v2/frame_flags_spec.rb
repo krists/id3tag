@@ -16,9 +16,9 @@ describe ID3Tag::Frames::V2::FrameFlags do
     its(:unsynchronised?) { should be_false }
     its(:data_length_indicator?) { should be_false }
     its(:additional_info_byte_count) { should eq 0 }
-    its(:range_of_data_length_bytes) { should eq nil }
-    its(:range_of_group_id) { should eq nil }
-    its(:range_of_encryption_id) { should eq nil }
+    its(:position_and_count_of_data_length_bytes) { should eq nil }
+    its(:position_and_count_of_group_id_bytes) { should eq nil }
+    its(:position_and_count_of_encryption_id_bytes) { should eq nil }
   end
 
   context "when major version is 3" do
@@ -34,9 +34,9 @@ describe ID3Tag::Frames::V2::FrameFlags do
       its(:unsynchronised?) { should be_false }
       its(:data_length_indicator?) { should be_false }
       its(:additional_info_byte_count) { should eq 0 }
-      its(:range_of_data_length_bytes) { should eq nil }
-      its(:range_of_group_id) { should eq nil }
-      its(:range_of_encryption_id) { should eq nil }
+      its(:position_and_count_of_data_length_bytes) { should eq nil }
+      its(:position_and_count_of_group_id_bytes) { should eq nil }
+      its(:position_and_count_of_encryption_id_bytes) { should eq nil }
     end
 
     context "when compression is on" do
@@ -50,9 +50,9 @@ describe ID3Tag::Frames::V2::FrameFlags do
       its(:unsynchronised?) { should be_false }
       its(:data_length_indicator?) { should be_false }
       its(:additional_info_byte_count) { should eq 4 }
-      its(:range_of_data_length_bytes) { should eq 0...4 }
-      its(:range_of_group_id) { should eq nil }
-      its(:range_of_encryption_id) { should eq nil }
+      its(:position_and_count_of_data_length_bytes) { should eq [0, 4] }
+      its(:position_and_count_of_group_id_bytes) { should eq nil }
+      its(:position_and_count_of_encryption_id_bytes) { should eq nil }
     end
 
     context "when compression and group id is on" do
@@ -66,9 +66,9 @@ describe ID3Tag::Frames::V2::FrameFlags do
       its(:unsynchronised?) { should be_false }
       its(:data_length_indicator?) { should be_false }
       its(:additional_info_byte_count) { should eq 5 }
-      its(:range_of_data_length_bytes) { should eq 0...4 }
-      its(:range_of_group_id) { should eq 3...4 }
-      its(:range_of_encryption_id) { should eq nil }
+      its(:position_and_count_of_data_length_bytes) { should eq [0, 4] }
+      its(:position_and_count_of_group_id_bytes) { should eq [4, 1] }
+      its(:position_and_count_of_encryption_id_bytes) { should eq nil }
     end
 
     context "when all flags are 1" do
@@ -82,9 +82,9 @@ describe ID3Tag::Frames::V2::FrameFlags do
       its(:unsynchronised?) { should be_false }
       its(:data_length_indicator?) { should be_false }
       its(:additional_info_byte_count) { should eq 6 }
-      its(:range_of_data_length_bytes) { should eq 0...4 }
-      its(:range_of_group_id) { should eq 3...4 }
-      its(:range_of_encryption_id) { should eq 4...5 }
+      its(:position_and_count_of_data_length_bytes) { should eq [0, 4] }
+      its(:position_and_count_of_group_id_bytes) { should eq [5, 1] }
+      its(:position_and_count_of_encryption_id_bytes) { should eq [4, 1] }
     end
   end
 
@@ -101,9 +101,9 @@ describe ID3Tag::Frames::V2::FrameFlags do
       its(:unsynchronised?) { should be_false }
       its(:data_length_indicator?) { should be_false }
       its(:additional_info_byte_count) { should eq 0 }
-      its(:range_of_data_length_bytes) { should eq nil }
-      its(:range_of_group_id) { should eq nil }
-      its(:range_of_encryption_id) { should eq nil }
+      its(:position_and_count_of_data_length_bytes) { should eq nil }
+      its(:position_and_count_of_group_id_bytes) { should eq nil }
+      its(:position_and_count_of_encryption_id_bytes) { should eq nil }
     end
 
     context "when compression is on" do
@@ -117,9 +117,9 @@ describe ID3Tag::Frames::V2::FrameFlags do
       its(:unsynchronised?) { should be_false }
       its(:data_length_indicator?) { should be_true }
       its(:additional_info_byte_count) { should eq 4 }
-      its(:range_of_data_length_bytes) { should eq 0...4 }
-      its(:range_of_group_id) { should eq nil }
-      its(:range_of_encryption_id) { should eq nil }
+      its(:position_and_count_of_data_length_bytes) { should eq [0, 4] }
+      its(:position_and_count_of_group_id_bytes) { should eq nil }
+      its(:position_and_count_of_encryption_id_bytes) { should eq nil }
     end
 
     context "when compression and group id is on" do
@@ -133,9 +133,9 @@ describe ID3Tag::Frames::V2::FrameFlags do
       its(:unsynchronised?) { should be_false }
       its(:data_length_indicator?) { should be_true }
       its(:additional_info_byte_count) { should eq 5 }
-      its(:range_of_data_length_bytes) { should eq 1...5 }
-      its(:range_of_group_id) { should eq 0...1 }
-      its(:range_of_encryption_id) { should eq nil }
+      its(:position_and_count_of_data_length_bytes) { should eq [1, 4] }
+      its(:position_and_count_of_group_id_bytes) { should eq [0, 1] }
+      its(:position_and_count_of_encryption_id_bytes) { should eq nil }
     end
 
     context "when all flags are 1" do
@@ -149,9 +149,9 @@ describe ID3Tag::Frames::V2::FrameFlags do
       its(:unsynchronised?) { should be_true }
       its(:data_length_indicator?) { should be_true }
       its(:additional_info_byte_count) { should eq 6 }
-      its(:range_of_data_length_bytes) { should eq 2...6 }
-      its(:range_of_group_id) { should eq 0...1 }
-      its(:range_of_encryption_id) { should eq 1...2 }
+      its(:position_and_count_of_data_length_bytes) { should eq [2, 4] }
+      its(:position_and_count_of_group_id_bytes) { should eq [0, 1] }
+      its(:position_and_count_of_encryption_id_bytes) { should eq [1, 1] }
     end
   end
 end

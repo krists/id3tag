@@ -16,30 +16,27 @@ module  ID3Tag
         end
 
         def unpacked_content
-          raw_content_io.rewind
-          offset = 0
-          offset += DECOMPRESSED_SIZE_BYTE_COUNT if compressed?
-          offset += GROUP_BYTE_COUNT if grouped?
-          raw_content_io.seek(offset)
+          count = additional_info_byte_count
+          pos = count > 0 ? (count - 1) : 0
+          raw_content_io.seek(pos)
           raw_content_io.read
         end
 
         def group_id
-          if grouped?
-            raw_content_io.rewind
-            offset = 0
-            offset += DECOMPRESSED_SIZE_BYTE_COUNT if compressed?
-            raw_content_io.seek(offset)
-            raw_content_io.read(GROUP_BYTE_COUNT).unpack("C").first
+          pos, count = position_and_count_of_group_id_bytes
+          if grouped? && pos && count
+            raw_content_io.seek(pos)
+            raw_content_io.read(count).unpack("C").first
           else
             nil
           end
         end
 
         def decompressed_size
-          if compressed?
-            raw_content_io.rewind
-            raw_content_io.read(DECOMPRESSED_SIZE_BYTE_COUNT).unpack("N").first
+          pos, count = position_and_count_of_data_length_bytes
+          if compressed? && pos && count
+            raw_content_io.seek(pos)
+            raw_content_io.read(count).unpack("N").first
           else
             raw_content_io.size
           end
@@ -77,15 +74,27 @@ module  ID3Tag
           frame_flags.data_length_indicator?
         end
 
-        def additional_info_byte_count
-          frame_flags.additional_info_byte_count
-        end
-
         def inspect
           "<#{self.class.name} #{id}: #{inspect_content}>"
         end
 
         private
+
+        def additional_info_byte_count
+          frame_flags.additional_info_byte_count
+        end
+
+        def position_and_count_of_data_length_bytes
+          frame_flags.position_and_count_of_data_length_bytes
+        end
+
+        def position_and_count_of_group_id_bytes
+          frame_flags.position_and_count_of_group_id_bytes
+        end
+
+        def position_and_count_of_encryption_id_bytes
+          frame_flags.position_and_count_of_encryption_id_bytes
+        end
 
         def frame_flags
           @frame_flags ||= FrameFlags.new(@flags, @major_version_number)
