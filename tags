@@ -236,6 +236,7 @@ raw_content_io	lib/id3tag/frames/v2/basic_frame.rb	/^        def raw_content_io$
 raw_text_and_content	lib/id3tag/frames/v2/comments_frame.rb	/^        def raw_text_and_content$/;"	f	class:ID3Tag.Frames.V2.CommentsFrame
 read	lib/id3tag.rb	/^  def self.read(source, version = :all)$/;"	F	class:ID3Tag
 read	lib/id3tag/tag.rb	/^      def read(source, version = :all)$/;"	f	class:ID3Tag.Tag
+read_additional_info_byte	lib/id3tag/frames/v2/basic_frame.rb	/^        def read_additional_info_byte(position, byte_count)$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 read_from_pos_till_limit	lib/id3tag/id3_v1_frame_parser.rb	/^    def read_from_pos_till_limit(position, limit)$/;"	f	class:ID3Tag.ID3V1FrameParser
 read_from_pos_till_null_byte_or_limit	lib/id3tag/id3_v1_frame_parser.rb	/^    def read_from_pos_till_null_byte_or_limit(position, limit)$/;"	f	class:ID3Tag.ID3V1FrameParser
 read_next_bytes	lib/id3tag/id3_v2_frame_parser.rb	/^    def read_next_bytes(limit)$/;"	f	class:ID3Tag
