@@ -12,10 +12,10 @@ module  ID3Tag
         end
 
         def content
-          unpacked_content
+          usable_content
         end
 
-        def unpacked_content
+        def usable_content
           raw_content_io.seek(additional_info_byte_count)
           if unsynchronised?
             StringUtil.undo_unsynchronization(raw_content_io.read)
