@@ -207,8 +207,8 @@ initialize	lib/id3tag/unsynchronization.rb	/^    def initialize(input)$/;"	f	cla
 input_bytes	lib/id3tag/unsynchronization.rb	/^    def input_bytes$/;"	f	class:ID3Tag.Unsynchronization
 inspect	lib/id3tag/frames/v2/basic_frame.rb	/^        def inspect$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 inspect	lib/id3tag/id3_v2_tag_header.rb	/^    def inspect$/;"	f	class:ID3Tag.ID3v2TagHeader
-inspect_content	lib/id3tag/frames/v2/basic_frame.rb	/^        def inspect_content$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
-inspect_content	lib/id3tag/frames/v2/unique_file_id_frame.rb	/^        def inspect_content$/;"	f	class:ID3Tag.Frames.V2.UniqueFileIdFrame
+inspectable_content	lib/id3tag/frames/v2/basic_frame.rb	/^        def inspectable_content$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
+inspectable_content	lib/id3tag/frames/v2/unique_file_id_frame.rb	/^        def inspectable_content$/;"	f	class:ID3Tag.Frames.V2.UniqueFileIdFrame
 just_genres	lib/id3tag/frames/v2/genre_frame/genre_parser_pre_24.rb	/^          def just_genres$/;"	f	class:ID3Tag.Frames.V2.GenreFrame.GenreParserPre24
 just_requirements	lib/id3tag/frames/v2/genre_frame/genre_parser_pre_24.rb	/^          def just_requirements$/;"	f	class:ID3Tag.Frames.V2.GenreFrame.GenreParserPre24
 language	lib/id3tag/frames/v1/comments_frame.rb	/^        def language$/;"	f	class:ID3Tag.Frames.V1.CommentsFrame

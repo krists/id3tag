@@ -10,14 +10,14 @@ module  ID3Tag
           content_split_apart_by_null_byte.last
         end
 
+        def inspectable_content
+          "#{owner_identifier}"
+        end
+
         private
 
         def content_split_apart_by_null_byte
           usable_content.split("\x00", 2)
-        end
-
-        def inspect_content
-          "#{owner_identifier}"
         end
       end
     end
