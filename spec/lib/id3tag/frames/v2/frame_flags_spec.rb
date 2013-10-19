@@ -107,7 +107,7 @@ describe ID3Tag::Frames::V2::FrameFlags do
     end
 
     context "when compression is on" do
-      let(:flag_bytes) { [0b00000000, 0b10001001].pack("C2") }
+      let(:flag_bytes) { [0b00000000, 0b00001001].pack("C2") }
       its(:preserve_on_tag_alteration?) { should be_true }
       its(:preserve_on_file_alteration?) { should be_true }
       its(:read_only?) { should be_false }
