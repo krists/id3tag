@@ -25,11 +25,11 @@ module  ID3Tag
         end
 
         def get_encoding_byte
-          unpacked_content.getbyte(0)
+          usable_content.getbyte(0)
         end
 
         def content_without_encoding_byte
-          unpacked_content.byteslice(1, unpacked_content.bytesize - 1)
+          usable_content.byteslice(1, usable_content.bytesize - 1)
         end
       end
     end

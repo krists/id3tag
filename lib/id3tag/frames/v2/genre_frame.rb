@@ -15,7 +15,7 @@ module ID3Tag
         private
 
         def get_genres
-          genre_parser.new(unpacked_content).genres
+          genre_parser.new(usable_content).genres
         end
 
         def genre_parser

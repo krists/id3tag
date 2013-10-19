@@ -13,7 +13,7 @@ module  ID3Tag
         private
 
         def content_split_apart_by_null_byte
-          unpacked_content.split("\x00", 2)
+          usable_content.split("\x00", 2)
         end
 
         def inspect_content
