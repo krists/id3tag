@@ -128,7 +128,6 @@ current_flag_map	lib/id3tag/frames/v2/frame_flags.rb	/^        def current_flag_
 data_length_indicator?	lib/id3tag/frames/v2/basic_frame.rb	/^        def data_length_indicator?$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 data_length_indicator?	lib/id3tag/frames/v2/frame_flags.rb	/^        def data_length_indicator?$/;"	f	class:ID3Tag.Frames.V2.FrameFlags
 decode	lib/id3tag/synchsafe_integer.rb	/^      def decode(synchsafe_int)$/;"	f	class:ID3Tag.SynchsafeInteger.encode
-decompressed_size	lib/id3tag/frames/v2/basic_frame.rb	/^        def decompressed_size$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 desciption	lib/id3tag/frames/v1/comments_frame.rb	/^        def desciption$/;"	f	class:ID3Tag.Frames.V1.CommentsFrame
 description	lib/id3tag/frames/v2/comments_frame.rb	/^        def description$/;"	f	class:ID3Tag.Frames.V2.CommentsFrame
 destination_encoding	lib/id3tag/frames/v1/text_frame.rb	/^        def destination_encoding$/;"	f	class:ID3Tag.Frames.V1.TextFrame
@@ -141,11 +140,13 @@ encoding_byte_from_flags	lib/id3tag/frames/v2/frame_header_flags.rb	/^        de
 encrypted?	lib/id3tag/frames/v2/basic_frame.rb	/^        def encrypted?$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 encrypted?	lib/id3tag/frames/v2/frame_flags.rb	/^        def encrypted?$/;"	f	class:ID3Tag.Frames.V2.FrameFlags
 encrypted?	lib/id3tag/frames/v2/frame_header_flags.rb	/^        def encrypted?$/;"	f	class:ID3Tag.Frames.V2.FrameFlags
+encryption_id	lib/id3tag/frames/v2/basic_frame.rb	/^        def encryption_id$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 expand_abbreviation	lib/id3tag/frames/v2/genre_frame/genre_parser.rb	/^          def expand_abbreviation(abbreviation)$/;"	f	class:ID3Tag.Frames.V2.GenreFrame.GenreParser
 experimental?	lib/id3tag/id3_v2_tag_header.rb	/^    def experimental?$/;"	f	class:ID3Tag.ID3v2TagHeader
 extended_header?	lib/id3tag/id3_v2_tag_header.rb	/^    def extended_header?$/;"	f	class:ID3Tag.ID3v2TagHeader
 fabricate	lib/id3tag/frames/v2/frame_fabricator.rb	/^          def fabricate(id, content, flags, major_version_number)$/;"	f	class:ID3Tag.Frames.V2.FrameFabricator
 fabricate	lib/id3tag/frames/v2/frame_fabricator.rb	/^        def fabricate$/;"	f	class:ID3Tag.Frames.V2
+final_size	lib/id3tag/frames/v2/basic_frame.rb	/^        def final_size$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 find_by_id	lib/id3tag/frames/util/genre_names.rb	/^        def self.find_by_id(id)$/;"	F	class:ID3Tag.Frames.Util.GenreNames
 find_position_and_length_for_additional_info	lib/id3tag/frames/v2/frame_flags.rb	/^        def find_position_and_length_for_additional_info(*methods_of_interest)$/;"	f	class:ID3Tag.Frames.V2.FrameFlags
 flag	lib/id3tag/frames/v2/frame_flags.rb	/^        def flag(scope, name)$/;"	f	class:ID3Tag.Frames.V2.FrameFlags

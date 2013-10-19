@@ -16,10 +16,12 @@ module  ID3Tag
         end
 
         def unpacked_content
-          count = additional_info_byte_count
-          pos = count > 0 ? (count - 1) : 0
-          raw_content_io.seek(pos)
-          raw_content_io.read
+          raw_content_io.seek(additional_info_byte_count)
+          if unsynchronised?
+            StringUtil.undo_unsynchronization(raw_content_io.read)
+          else
+            raw_content_io.read
+          end
         end
 
         def group_id
@@ -32,9 +34,19 @@ module  ID3Tag
           end
         end
 
-        def decompressed_size
+        def encryption_id
+          pos, count = position_and_count_of_encryption_id_bytes
+          if encrypted? && pos && count
+            raw_content_io.seek(pos)
+            raw_content_io.read(count).unpack("C").first
+          else
+            nil
+          end
+        end
+
+        def final_size
           pos, count = position_and_count_of_data_length_bytes
-          if compressed? && pos && count
+          if (compressed? || data_length_indicator?) && pos && count
             raw_content_io.seek(pos)
             raw_content_io.read(count).unpack("N").first
           else
