@@ -87,7 +87,11 @@ module  ID3Tag
         end
 
         def inspect
-          "<#{self.class.name} #{id}: #{inspect_content}>"
+          "<#{self.class.name} #{id}: #{inspectable_content}>"
+        end
+
+        def inspectable_content
+          content
         end
 
         private
@@ -114,10 +118,6 @@ module  ID3Tag
 
         def raw_content_io
           @raw_content_io ||= StringIO.new(raw_content)
-        end
-
-        def inspect_content
-          content
         end
       end
     end
