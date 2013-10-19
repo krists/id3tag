@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "id3tag"
-  s.version = "0.1.1"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Krists Ozols"]
-  s.date = "2013-05-13"
+  s.date = "2013-10-19"
   s.description = "Native Ruby ID3 tag reader that aims for 100% covarage of ID3v2.x and ID3v1.x standards"
   s.email = "krists@iesals.lv"
   s.extra_rdoc_files = [
@@ -38,6 +38,7 @@ Gem::Specification.new do |s|
     "lib/id3tag/frames/v2/basic_frame.rb",
     "lib/id3tag/frames/v2/comments_frame.rb",
     "lib/id3tag/frames/v2/frame_fabricator.rb",
+    "lib/id3tag/frames/v2/frame_flags.rb",
     "lib/id3tag/frames/v2/genre_frame.rb",
     "lib/id3tag/frames/v2/genre_frame/genre_parser.rb",
     "lib/id3tag/frames/v2/genre_frame/genre_parser_24.rb",
@@ -67,6 +68,7 @@ Gem::Specification.new do |s|
     "spec/lib/id3tag/frames/v2/basic_frame_spec.rb",
     "spec/lib/id3tag/frames/v2/comments_frame_spec.rb",
     "spec/lib/id3tag/frames/v2/frame_fabricator_spec.rb",
+    "spec/lib/id3tag/frames/v2/frame_flags_spec.rb",
     "spec/lib/id3tag/frames/v2/genre_frame/genre_parser_24_spec.rb",
     "spec/lib/id3tag/frames/v2/genre_frame/genre_parser_pre_24_spec.rb",
     "spec/lib/id3tag/frames/v2/genre_frame/genre_parser_spec.rb",
@@ -82,7 +84,12 @@ Gem::Specification.new do |s|
     "spec/lib/id3tag/synchsafe_integer_spec.rb",
     "spec/lib/id3tag/tag_spec.rb",
     "spec/spec_helper.rb",
-    "spec/support/mp3_fixtures.rb"
+    "spec/support/mp3_fixtures.rb",
+    "standard_documents/id3v2-00.txt",
+    "standard_documents/id3v2.3.0.txt",
+    "standard_documents/id3v2.4.0-frames.txt",
+    "standard_documents/id3v2.4.0-structure.txt",
+    "tags"
   ]
   s.homepage = "http://github.com/krists/id3tag"
   s.licenses = ["MIT"]
