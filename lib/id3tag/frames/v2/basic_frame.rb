@@ -48,7 +48,7 @@ module  ID3Tag
           pos, count = position_and_count_of_data_length_bytes
           if (compressed? || data_length_indicator?) && pos && count
             raw_content_io.seek(pos)
-            raw_content_io.read(count).unpack("N").first
+            SynchsafeInteger.decode(NumberUtil.convert_string_to_32bit_integer(raw_content_io.read(count)))
           else
             raw_content_io.size
           end
