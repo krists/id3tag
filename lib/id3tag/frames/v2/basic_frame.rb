@@ -25,22 +25,17 @@ module  ID3Tag
         end
 
         def group_id
-          pos, count = position_and_count_of_group_id_bytes
-          if grouped? && pos && count
-            raw_content_io.seek(pos)
-            raw_content_io.read(count).unpack("C").first
-          else
-            nil
-          end
+          read_additional_info_byte(*position_and_count_of_group_id_bytes) if grouped?
         end
 
         def encryption_id
-          pos, count = position_and_count_of_encryption_id_bytes
-          if encrypted? && pos && count
-            raw_content_io.seek(pos)
-            raw_content_io.read(count).unpack("C").first
-          else
-            nil
+          read_additional_info_byte(*position_and_count_of_encryption_id_bytes) if encrypted?
+        end
+
+        def read_additional_info_byte(position, byte_count)
+          if position && byte_count
+            raw_content_io.seek(position)
+            raw_content_io.read(byte_count).unpack("C").first
           end
         end
 
