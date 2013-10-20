@@ -29,13 +29,14 @@ module ID3Tag
     end
 
     def read_next_frame_size
-      size_bytes = case frame_size_length
+      case @major_version_number
       when 4
-        read_next_bytes(frame_size_length)
+        SynchsafeInteger.decode(NumberUtil.convert_string_to_32bit_integer(read_next_bytes(4)))
       when 3
-        "\x00" + read_next_bytes(frame_size_length)
+        NumberUtil.convert_string_to_32bit_integer(read_next_bytes(4))
+      when 2
+        NumberUtil.convert_string_to_32bit_integer("\x00" + read_next_bytes(3))
       end
-      SynchsafeInteger.decode(NumberUtil.convert_string_to_32bit_integer(size_bytes))
     end
 
     def read_next_frame_flags
@@ -48,10 +49,6 @@ module ID3Tag
 
     def frames_has_flags?
       @major_version_number > 2
-    end
-
-    def frame_size_length
-      @major_version_number <= 2 ? 3 : 4
     end
 
     def read_next_bytes(limit)
