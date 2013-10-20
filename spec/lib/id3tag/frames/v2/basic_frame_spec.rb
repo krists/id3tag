@@ -94,7 +94,7 @@ describe ID3Tag::Frames::V2::BasicFrame do
 
   describe '#inspect' do
     it 'should be pretty inspectable' do
-      frame.inspect.should eq('<ID3Tag::Frames::V2::BasicFrame foo: bar>')
+      frame.inspect.should eq('<ID3Tag::Frames::V2::BasicFrame foo>')
     end
   end
 end
