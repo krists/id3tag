@@ -20,6 +20,10 @@ module  ID3Tag
           text
         end
 
+        def inspectable_content
+          content
+        end
+
         private
 
         def encoded_text_and_content_parts

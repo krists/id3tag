@@ -82,11 +82,15 @@ module  ID3Tag
         end
 
         def inspect
-          "<#{self.class.name} #{id}: #{inspectable_content}>"
+          if inspectable_content
+            "<#{self.class.name} #{id}: #{inspectable_content}>"
+          else
+            "<#{self.class.name} #{id}>"
+          end
         end
 
         def inspectable_content
-          content
+          nil
         end
 
         private

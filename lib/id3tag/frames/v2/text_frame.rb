@@ -14,6 +14,8 @@ module  ID3Tag
           @content ||= content_without_encoding_byte.encode(destination_encoding, source_encoding)
         end
 
+        alias inspectable_content content
+
         private
 
         def source_encoding

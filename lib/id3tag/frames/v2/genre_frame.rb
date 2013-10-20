@@ -12,6 +12,8 @@ module ID3Tag
           genres.join(", ")
         end
 
+        alias inspectable_content content
+
         private
 
         def get_genres
