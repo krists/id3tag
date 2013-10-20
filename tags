@@ -124,6 +124,7 @@ content_without_encoding_byte	lib/id3tag/frames/v2/text_frame.rb	/^        def c
 convert_32bit_integer_to_string	lib/id3tag/number_util.rb	/^    def self.convert_32bit_integer_to_string(integer)$/;"	F	class:ID3Tag.NumberUtil
 convert_string_to_32bit_integer	lib/id3tag/number_util.rb	/^    def self.convert_string_to_32bit_integer(string)$/;"	F	class:ID3Tag.NumberUtil
 current_additional_info_map	lib/id3tag/frames/v2/frame_flags.rb	/^        def current_additional_info_map$/;"	f	class:ID3Tag.Frames.V2.FrameFlags
+current_encoding_map	lib/id3tag/frames/v2/text_frame.rb	/^        def current_encoding_map$/;"	f	class:ID3Tag.Frames.V2.TextFrame
 current_flag_map	lib/id3tag/frames/v2/frame_flags.rb	/^        def current_flag_map$/;"	f	class:ID3Tag.Frames.V2.FrameFlags
 data_length_indicator?	lib/id3tag/frames/v2/basic_frame.rb	/^        def data_length_indicator?$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 data_length_indicator?	lib/id3tag/frames/v2/frame_flags.rb	/^        def data_length_indicator?$/;"	f	class:ID3Tag.Frames.V2.FrameFlags
