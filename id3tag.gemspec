@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "id3tag"
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Krists Ozols"]
-  s.date = "2013-10-19"
+  s.date = "2013-10-20"
   s.description = "Native Ruby ID3 tag reader that aims for 100% covarage of ID3v2.x and ID3v1.x standards"
   s.email = "krists@iesals.lv"
   s.extra_rdoc_files = [
