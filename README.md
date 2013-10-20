@@ -72,8 +72,7 @@ You can inspect tag by calling `frame_ids` to see available frame ids or `frames
 * Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
 
 ## Code Status
-[![Code Climate](https://codeclimate.com/github/krists/id3tag.png)](https://codeclimate.com/github/krists/id3tag) [![Build Status](https://travis-ci.org/krists/id3tag.png?branch=master)](https://travis-ci.org/krists/id3tag) [![Coverage Status](https://coveralls.io/repos/krists/id3tag/badge.png?branch=master)](https://coveralls.io/r/krists/id3tag)
-
+[![Code Climate](https://codeclimate.com/github/krists/id3tag.png)](https://codeclimate.com/github/krists/id3tag) [![Build Status](https://travis-ci.org/krists/id3tag.png?branch=master)](https://travis-ci.org/krists/id3tag) [![Coverage Status](https://coveralls.io/repos/krists/id3tag/badge.png?branch=master)](https://coveralls.io/r/krists/id3tag) [![Gem Version](https://badge.fury.io/rb/id3tag.png)](http://badge.fury.io/rb/id3tag)
 ## Copyright
 
 Copyright (c) 2013 Krists Ozols. See LICENSE.txt for
