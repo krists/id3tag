@@ -2,12 +2,13 @@ module  ID3Tag
   module Frames
     module  V2
       class TextFrame < BasicFrame
+        NULL_BYTE = "\x00"
         UnsupportedTextEncoding = Class.new(StandardError)
         ENCODING_MAP = {
-          0b0 => Encoding::ISO8859_1,
-          0b1 => Encoding::UTF_16,
-          0b10 => Encoding::UTF_16BE,
-          0b11 => Encoding::UTF_8
+          0b0 => { :encoding => Encoding::ISO8859_1, :terminator => NULL_BYTE },
+          0b1 => { :encoding => Encoding::UTF_16, :terminator => NULL_BYTE * 2 },
+          0b10 =>{ :encoding => Encoding::UTF_16BE, :terminator => NULL_BYTE * 2 },
+          0b11 =>{ :encoding => Encoding::UTF_8, :terminator => NULL_BYTE }
         }
 
         def content
@@ -19,7 +20,11 @@ module  ID3Tag
         private
 
         def source_encoding
-          ENCODING_MAP[get_encoding_byte] || raise(UnsupportedTextEncoding)
+          current_encoding_map[:encoding]
+        end
+
+        def current_encoding_map
+          ENCODING_MAP.fetch(get_encoding_byte) { raise UnsupportedTextEncoding }
         end
 
         def destination_encoding
