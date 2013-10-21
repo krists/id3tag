@@ -64,6 +64,7 @@ This way you can avoid Encoding::InvalidByteSequenceError when tag contains inva
 ```ruby
 ID3Tag.configuration do |c|
   c.string_encode_options = { :invalid => :replace, :undef => :replace }
+  c.string_source_encoding = Encoding::UTF_16LE
 end
 ```
 
