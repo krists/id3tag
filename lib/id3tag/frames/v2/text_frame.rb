@@ -5,10 +5,10 @@ module  ID3Tag
         NULL_BYTE = "\x00"
         UnsupportedTextEncoding = Class.new(StandardError)
         ENCODING_MAP = {
-          0b0 => { :encoding => Encoding::ISO8859_1, :terminator => NULL_BYTE },
-          0b1 => { :encoding => Encoding::UTF_16, :terminator => NULL_BYTE * 2 },
-          0b10 =>{ :encoding => Encoding::UTF_16BE, :terminator => NULL_BYTE * 2 },
-          0b11 =>{ :encoding => Encoding::UTF_8, :terminator => NULL_BYTE }
+          0b0 => Encoding::ISO8859_1,
+          0b1 => Encoding::UTF_16,
+          0b10 => Encoding::UTF_16BE,
+          0b11 => Encoding::UTF_8
         }
 
         def content
@@ -20,11 +20,10 @@ module  ID3Tag
         private
 
         def source_encoding
-          current_encoding_map[:encoding]
+          ENCODING_MAP.fetch(get_encoding_byte) { raise UnsupportedTextEncoding }
         end
 
         def current_encoding_map
-          ENCODING_MAP.fetch(get_encoding_byte) { raise UnsupportedTextEncoding }
         end
 
         def destination_encoding

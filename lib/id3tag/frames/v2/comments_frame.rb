@@ -27,7 +27,7 @@ module  ID3Tag
         private
 
         def encoded_text_and_content_parts
-          @encoded_text_and_content_parts ||= encoded_text_and_content.split(current_encoding_map[:terminator], 2)
+          @encoded_text_and_content_parts ||= encoded_text_and_content.split(NULL_BYTE)
         end
 
         def encoded_text_and_content
