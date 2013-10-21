@@ -24,6 +24,8 @@ module  ID3Tag
             TextFrame
           when /^(COM|COMM)$/
             CommentsFrame
+          when /^(ULT|USLT)$/
+            UnsychronizedTranscriptionFrame
           when /^UFID$/
             UniqueFileIdFrame
           else

@@ -17,7 +17,8 @@ module ID3Tag
         :year => :TYE,
         :comments => :COM,
         :genre => :TCO,
-        :track_nr => :TRK
+        :track_nr => :TRK,
+        :unsychronized_transcription => :ULT
       },
       'v2.3' => {
         :artist => :TPE1,
@@ -26,7 +27,8 @@ module ID3Tag
         :year => :TYER,
         :comments => :COMM,
         :genre => :TCON,
-        :track_nr => :TRCK
+        :track_nr => :TRCK,
+        :unsychronized_transcription => :USLT
       },
       'v2.4' => {
         :artist => :TPE1,
@@ -35,7 +37,8 @@ module ID3Tag
         :year => :TDRC,
         :comments => :COMM,
         :genre => :TCON,
-        :track_nr => :TRCK
+        :track_nr => :TRCK,
+        :unsychronized_transcription => :USLT
       }
     }
 

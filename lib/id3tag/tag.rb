@@ -36,6 +36,14 @@ module ID3Tag
       get_frame_content(frame_id(:v2, :genre), frame_id(:v1, :genre))
     end
 
+    def comments
+      get_frame_content(frame_id(:v2, :comments), frame_id(:v1, :comments))
+    end
+
+    def unsychronized_transcription
+      get_frame_content(frame_id(:v2, :unsychronized_transcription))
+    end
+
     def get_frame(frame_id)
       frames = get_frames(frame_id)
       if frames.count > 1
