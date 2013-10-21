@@ -12,10 +12,14 @@ module  ID3Tag
         }
 
         def content
-          @content ||= content_without_encoding_byte.encode(destination_encoding, source_encoding)
+          @content ||= cut_at_null_byte(content_without_encoding_byte.encode(destination_encoding, source_encoding))
         end
 
         alias inspectable_content content
+
+        def cut_at_null_byte(string)
+          string.split(NULL_BYTE, 2).first
+        end
 
         private
 
