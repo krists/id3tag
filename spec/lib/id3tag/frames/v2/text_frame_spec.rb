@@ -20,6 +20,13 @@ describe ID3Tag::Frames::V2::TextFrame do
   describe '#content' do
     subject { frame.content }
 
+    context "when text's last char is null byte" do
+      let(:target_encoding) { Encoding::UTF_8 }
+      let(:encoding_byte) { "\x03" }
+      let(:text) { "Glāzšķūņrūķīši\x00" }
+      it { should == 'Glāzšķūņrūķīši' }
+    end
+
     context "when encoding byte is not present" do
       let(:encoding_byte) { "" }
       it { expect { subject }.to raise_error(ID3Tag::Frames::V2::TextFrame::UnsupportedTextEncoding) }

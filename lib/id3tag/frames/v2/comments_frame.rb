@@ -13,7 +13,7 @@ module  ID3Tag
         end
 
         def text
-          @text ||= encoded_text_and_content_parts.last
+          @text ||= cut_at_null_byte(encoded_text_and_content_parts.last)
         end
 
         def content
