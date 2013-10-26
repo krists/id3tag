@@ -3,56 +3,6 @@ require "spec_helper"
 describe ID3Tag::Tag do
   describe "class method #read"
 
-  context "when file has v2.4.x tag and v.1.x tag" do
-    subject { described_class.read(nil) }
-    before :each do
-      ID3Tag::AudioFile.any_instance.stub(:v2_tag_present?) { true }
-      ID3Tag::AudioFile.any_instance.stub(:v2_tag_major_version_number) { 4 }
-    end
-
-    describe "#artist" do
-      it "reads TPE1 or v1 artist" do
-        subject.should_receive(:get_frame_content).with(:TPE1, :artist).and_return('A')
-        subject.artist.should eq('A')
-      end
-    end
-
-    describe "#title" do
-      it "reads TIT2 or v1 title" do
-        subject.should_receive(:get_frame_content).with(:TIT2, :title).and_return('A')
-        subject.title.should eq('A')
-      end
-    end
-
-    describe "#album" do
-      it "reads TALB or v1 album" do
-        subject.should_receive(:get_frame_content).with(:TALB, :album).and_return('A')
-        subject.album.should eq('A')
-      end
-    end
-
-    describe "#year" do
-      it "reads TDRC or v1 year" do
-        subject.should_receive(:get_frame_content).with(:TDRC, :year).and_return('A')
-        subject.year.should eq('A')
-      end
-    end
-
-    describe "#track_nr" do
-      it "reads TRCK or v1 track_nr" do
-        subject.should_receive(:get_frame_content).with(:TRCK, :track_nr).and_return('A')
-        subject.track_nr.should eq('A')
-      end
-    end
-
-    describe "#genre" do
-      it "reads TCON or v1 genre" do
-        subject.should_receive(:get_frame_content).with(:TCON, :genre).and_return('A')
-        subject.genre.should eq('A')
-      end
-    end
-  end
-
   describe "#get_frame" do
     subject { described_class.read(nil) }
     context "when more that one frame by that ID exists" do

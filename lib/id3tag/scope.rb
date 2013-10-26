@@ -5,8 +5,11 @@ module ID3Tag
 
     def initialize(version)
       raise UnsupportedScopeError unless SUPPORTED_SCOPES.include?(version)
-      @included_versions = [version]
-      @included_versions << :v1 << :v2 if version == :all
+      if version == :all
+        @included_versions = [:v1, :v2]
+      else
+        @included_versions = [version]
+      end
     end
 
     def include?(version)
