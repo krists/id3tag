@@ -1,16 +1,18 @@
 module ID3Tag
   class Tag
-    class MultipleFrameError < StandardError; end
+    MultipleFrameError =  Class.new(StandardError)
 
     class << self
-      def read(source, version = :all)
-        new(source, version)
+      def read(source, scope = :all)
+        new(source, scope)
       end
     end
 
-    def initialize(source, version = :all)
-      @source, @version = source, version
+    def initialize(source, scope = :all)
+      @source, @scope = source, Scope.new(scope)
     end
+
+    attr_reader :source, :scope
 
     def artist
       get_frame_content(frame_id(:v2, :artist), frame_id(:v1, :artist))
@@ -66,7 +68,7 @@ module ID3Tag
     end
 
     def v2_frames
-      if audio_file.v2_tag_present? && [:v2, :all].include?(@version)
+      if audio_file.v2_tag_present? && scope.include?(:v2)
         ID3V2FrameParser.new(audio_file.v2_tag_body, audio_file.v2_tag_major_version_number).frames
       else
         []
@@ -74,7 +76,7 @@ module ID3Tag
     end
 
     def v1_frames
-      if audio_file.v1_tag_present? && [:v1, :all].include?(@version)
+      if audio_file.v1_tag_present? && scope.include?(:v1)
         ID3V1FrameParser.new(audio_file.v1_tag_body).frames
       else
         []

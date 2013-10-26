@@ -9,6 +9,7 @@ require "id3tag/id3_v1_frame_parser"
 require "id3tag/id3_v2_frame_parser"
 require "id3tag/frame_id_advisor"
 require "id3tag/tag"
+require "id3tag/scope"
 require "id3tag/frames/util/genre_names"
 require "id3tag/frames/v1/text_frame"
 require "id3tag/frames/v1/genre_frame"
@@ -27,8 +28,8 @@ require "id3tag/frames/v2/frame_fabricator"
 require "id3tag/frames/v2/frame_flags"
 
 module ID3Tag
-  def self.read(source, version = :all)
-    tag = Tag.read(source, version)
+  def self.read(source, scope = :all)
+    tag = Tag.read(source, scope)
     yield tag if block_given?
     tag
   end
