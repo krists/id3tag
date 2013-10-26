@@ -14,36 +14,10 @@ module ID3Tag
 
     attr_reader :source, :scope
 
-    def artist
-      get_frame_content(frame_id(:v2, :artist), frame_id(:v1, :artist))
-    end
-
-    def title
-      get_frame_content(frame_id(:v2, :title), frame_id(:v1, :title))
-    end
-
-    def album
-      get_frame_content(frame_id(:v2, :album), frame_id(:v1, :album))
-    end
-
-    def year
-      get_frame_content(frame_id(:v2, :year), frame_id(:v1, :year))
-    end
-
-    def track_nr
-      get_frame_content(frame_id(:v2, :track_nr), frame_id(:v1, :track_nr))
-    end
-
-    def genre
-      get_frame_content(frame_id(:v2, :genre), frame_id(:v1, :genre))
-    end
-
-    def comments
-      get_frame_content(frame_id(:v2, :comments), frame_id(:v1, :comments))
-    end
-
-    def unsychronized_transcription
-      get_frame_content(frame_id(:v2, :unsychronized_transcription))
+    [:artist, :title, :album, :year, :track_nr, :genre, :comments, :unsychronized_transcription].each do |name|
+      define_method(name) do
+        get_content_of_first_find_by_name(name)
+      end
     end
 
     def get_frame(frame_id)
@@ -94,17 +68,26 @@ module ID3Tag
 
     private
 
-    def frame_id(version, name)
-      case version
-      when :v2
-        if audio_file.v2_tag_present?
-          FrameIdAdvisor.new(2, audio_file.v2_tag_major_version_number).advise(name)
-        end
-      when :v1
-        FrameIdAdvisor.new(1, 'x').advise(name)
-      else
-        nil
+    def get_content_of_first_find_by_name(name)
+      frame = nil
+      possible_frame_ids_by_name(name).each do |id|
+        frame = get_frame(id)
+        break if frame
       end
+      frame && frame.content
+    end
+
+    def possible_frame_ids_by_name(name)
+      ids = []
+      if scope.include?(:v2) && audio_file.v2_tag_present?
+        id = FrameIdAdvisor.new(2, audio_file.v2_tag_major_version_number).advise(name)
+        ids << id if id
+      end
+      if scope.include?(:v1) && audio_file.v1_tag_present?
+        id = FrameIdAdvisor.new(1, FrameIdAdvisor::ANY_MAJOR_VERSION).advise(name)
+        ids << id if id
+      end
+      ids
     end
 
     def audio_file

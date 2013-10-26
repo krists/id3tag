@@ -1,5 +1,7 @@
 module ID3Tag
   class FrameIdAdvisor
+    ANY_MAJOR_VERSION = 'x'
+
     COMMON_FRAME_IDS_BY_VERSION = {
       'v1.x' => {
         :artist => :artist,
