@@ -1,0 +1,18 @@
+#!/usr/bin/ruby
+#
+$LOAD_PATH.unshift(File.expand_path('../lib', File.dirname(__FILE__)))
+require "id3tag"
+
+ARGV.each do |file|
+  audio_file = ID3Tag.read(File.open(file, "r")).send(:audio_file)
+  if audio_file.v1_tag_present?
+    handle = File.open(file + ".v1_tag_body", "w")
+    handle.write(audio_file.v1_tag_body)
+    handle.close
+  end
+  if audio_file.v2_tag_present?
+    handle = File.open(file + ".v2_#{audio_file.v2_tag_major_version_number}_tag_body", "w")
+    handle.write(audio_file.v2_tag_body)
+    handle.close
+  end
+end
