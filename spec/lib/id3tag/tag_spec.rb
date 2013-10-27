@@ -208,6 +208,9 @@ describe ID3Tag::Tag do
         it "should return eng comment" do
           subject.comments(:eng).should eq("Lisa Jardine compares the contributions of Ada Lovelace and Alan Turing a century later to computer science and contrasts their views on the potential of and limits to machine intelligence. \r\nProducer: Sheila Cook")
         end
+        it "should raise InvalidByteSequenceError when reading unsychronized_transcription" do
+          expect { subject.unsychronized_transcription(:eng) }.to raise_error(Encoding::InvalidByteSequenceError)
+        end
         it "should return blank string for latvian comments" do
           subject.comments(:lav).should be_nil
         end
