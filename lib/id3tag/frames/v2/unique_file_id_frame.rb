@@ -17,7 +17,7 @@ module  ID3Tag
         private
 
         def content_split_apart_by_null_byte
-          usable_content.split("\x00", 2)
+          usable_content.split(StringUtil::NULL_BYTE, 2)
         end
       end
     end

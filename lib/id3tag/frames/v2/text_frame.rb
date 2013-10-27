@@ -2,7 +2,6 @@ module  ID3Tag
   module Frames
     module  V2
       class TextFrame < BasicFrame
-        NULL_BYTE = "\x00"
         UnsupportedTextEncoding = Class.new(StandardError)
         ENCODING_MAP = {
           0b0 => Encoding::ISO8859_1,
@@ -12,14 +11,10 @@ module  ID3Tag
         }
 
         def content
-          @content ||= cut_at_null_byte(content_without_encoding_byte.encode(destination_encoding, source_encoding))
+          @content ||= StringUtil.cut_at_null_byte(content_without_encoding_byte.encode(destination_encoding, source_encoding))
         end
 
         alias inspectable_content content
-
-        def cut_at_null_byte(string)
-          string.split(NULL_BYTE, 2).first
-        end
 
         private
 

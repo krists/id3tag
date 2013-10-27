@@ -13,7 +13,7 @@ module  ID3Tag
         end
 
         def text
-          @text ||= cut_at_null_byte(encoded_text_and_content_parts.last)
+          @text ||= StringUtil.cut_at_null_byte(encoded_text_and_content_parts.last)
         end
 
         def content
@@ -27,7 +27,7 @@ module  ID3Tag
         private
 
         def encoded_text_and_content_parts
-          @encoded_text_and_content_parts ||= encoded_text_and_content.split(NULL_BYTE)
+          @encoded_text_and_content_parts ||= encoded_text_and_content.split(StringUtil::NULL_BYTE)
         end
 
         def encoded_text_and_content
