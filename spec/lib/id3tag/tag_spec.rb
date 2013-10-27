@@ -169,46 +169,53 @@ describe ID3Tag::Tag do
     end
   end
 
-  describe "#get_frame_content" do
-    subject { described_class.read(nil, :all) }
-    let(:frame_1) { ID3Tag::Frames::V1::TextFrame.new(:some_id, 'some content') }
-    let(:frame_2) { ID3Tag::Frames::V1::TextFrame.new(:some_other_id, 'some other content') }
-    context "with one ID as argument" do
-      context "when frame with ID exists" do
-        before :each do
-          subject.stub(:get_frame).with(:some_id) { frame_1 }
-        end
-        it "should return frame" do
-          subject.get_frame_content(:some_id).should == 'some content'
-        end
-      end
-      context "when frame with ID does not exists" do
-        before :each do
-          subject.stub(:get_frame).with(:some_id) { nil }
-        end
-        it "should return none" do
-          subject.get_frame_content(:some_id).should be_nil
-        end
-      end
-    end
+  describe "Tests with real-world tags" do
+    let(:audio_file) { double("Fake Audio file") }
 
-    context "with multiple ID as armguments" do
-      context "when first one does exist" do
-        before :each do
-          subject.stub(:get_frame).with(:some_id) { frame_1 }
-          subject.stub(:get_frame).with(:some_other_id) { frame_2 }
-        end
-        it "should return first existing frame's content" do
-          subject.get_frame_content(:some_id, :some_other_id).should eq 'some content'
-        end
+    context "pov_20131018-2100a.mp3" do
+      before(:each) do
+        subject.stub(:audio_file) { audio_file }
+        audio_file.stub({ 
+          :v1_tag_present? => true,
+          :v2_tag_present? => true,
+          :v1_tag_body => File.read(mp3_fixture("pov_20131018-2100a.mp3.v1_tag_body")),
+          :v2_tag_body => File.read(mp3_fixture("pov_20131018-2100a.mp3.v2_3_tag_body")),
+          :v2_tag_major_version_number => 3
+        })
       end
-      context "when second exists" do
-        before :each do
-          subject.stub(:get_frame).with(:some_id) { nil }
-          subject.stub(:get_frame).with(:some_other_id) { frame_2 }
+      context "Reading only v1" do
+        subject { described_class.new(nil, :v1) }
+        its(:artist) { should eq("") }
+        its(:title) { should eq("pov_20131018-2100a.mp3") }
+        its(:album) { should eq("") }
+        its(:year) { should eq("") }
+        its(:track_nr) { should be_nil }
+        its(:genre) { should eq("Blues") }
+        its(:comments) { should be_nil }
+        its(:frame_ids) { should eq [:title, :artist, :album, :year, :comments, :genre] }
+      end
+      context "Reading only v2" do
+        subject { described_class.new(nil, :v2) }
+        its(:artist) { should eq("BBC Radio 4") }
+        its(:title) { should eq("PoV: Lisa Jardine: Machine Intelligence: 18 Oct 13") }
+        its(:album) { should eq("A Point of View") }
+        its(:year) { should eq("2013") }
+        its(:track_nr) { should be_nil }
+        it "should return nil for genre as this tag have incorect genre frame" do
+          subject.genre.should eq("")
         end
-        it "should return first existing frame's content" do
-          subject.get_frame_content(:some_id, :some_other_id).should eq 'some other content'
+        its(:comments) { should eq("Lisa Jardine compares the contributions of Ada Lovelace and Alan Turing a century later to computer science and contrasts their views on the potential of and limits to machine intelligence. \r\nProducer: Sheila Cook") }
+        it "should return eng comment" do
+          subject.comments(:eng).should eq("Lisa Jardine compares the contributions of Ada Lovelace and Alan Turing a century later to computer science and contrasts their views on the potential of and limits to machine intelligence. \r\nProducer: Sheila Cook")
+        end
+        it "should return blank string for latvian comments" do
+          subject.comments(:lav).should be_nil
+        end
+        its(:frame_ids) { should eq [:TALB, :TPE1, :COMM, :USLT, :TCON, :TIT2, :TYER, :TCOP, :APIC] }
+        it "should have comments frame with short desc and language code" do
+          subject.get_frames(:COMM).size.should eq(1)
+          subject.get_frame(:COMM).language.should eq("eng")
+          subject.get_frame(:COMM).description.should eq("")
         end
       end
     end

@@ -25,8 +25,10 @@ mp3_file = File.open('/path/to/your/favorite_song.mp3')
 tag = ID3Tag.read(mp3_file)
 puts "#{tag.artist} - #{tag.title}"
 ```
-`ID3Tag::Tag` class provides easy accessors to frames like `artist`, `title`, `album`, `year`, `track_nr`, `genre` but you can read any frame by using `get_frame(id)` or `get_frame_content(id)` or browsing all frames by calling `frames`.
+`ID3Tag::Tag` class provides easy accessors to frames like `artist`, `title`, `album`, `year`, `track_nr`, `genre`, `comments` but you can read any frame by using `get_frame(id)` or `get_frames(id)` or browsing all frames by calling `frames`.
 When using easy accessors to frames like `artist` the reader will look for v.2.x tags artist frame first and if it can not find it artist frame from v1.x will be returned (if v1.x tag exists)
+
+There can be more than one `comments` frame in the tag. They differ by language, too access specific comment frame an extra argument can be passed (Default is english). For example `tag.comments(:lav)` will look for comments in Latvian. Language codes can be seen here: `https://en.wikipedia.org/wiki/List_of_ISO_639-2_codes`
 
 ```ruby
 mp3s = Dir.entries("/some/dir").select { |filename| filename =~ /\.mp3/i }
@@ -41,7 +43,9 @@ mp3s.each do |file|
     puts tag.track_nr
     puts tag.genre
     puts "---"
-    puts tag.get_frame_content(:TIT2)
+    puts tag.get_frame(:TIT2).content
+    puts tag.get_frames(:COMM).first.content
+    puts tag.get_frames(:COMM).last.language
   end
 end
 ```

@@ -1,5 +1,7 @@
 module ID3Tag
   module StringUtil
+    NULL_BYTE = "\x00"
+
     def self.blank?(string)
       string !~ /[^[:space:]]/
     end
