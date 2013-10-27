@@ -14,9 +14,24 @@ module ID3Tag
 
     attr_reader :source, :scope
 
-    [:artist, :title, :album, :year, :track_nr, :genre, :comments, :unsychronized_transcription].each do |name|
+    [:artist, :title, :album, :year, :track_nr, :genre].each do |name|
       define_method(name) do
-        get_content_of_first_find_by_name(name)
+        frame = nil
+        possible_frame_ids_by_name(name).each do |id|
+          frame = get_frame(id)
+          break if frame
+        end
+        frame && frame.content
+      end
+    end
+
+    # # TODO: Add Terms of use frame and Synchronised lyrics/text frame
+    [:comments, :unsychronized_transcription].each do |name|
+      define_method(name) do |lang = :eng|
+        frames = []
+        possible_frame_ids_by_name(name).each { |id| frames += get_frames(id) }
+        frame = frames.find { |x| x.language == lang.to_s }
+        frame && frame.content
       end
     end
 
@@ -57,24 +72,8 @@ module ID3Tag
       end
     end
 
-    def get_frame_content(frame_id, *alt_frame_ids)
-      frame = nil
-      alt_frame_ids.unshift(frame_id).each do |frame_id|
-        frame = get_frame(frame_id)
-        break if frame
-      end
-      frame && frame.content
-    end
-
-    private
-
-    def get_content_of_first_find_by_name(name)
-      frame = nil
-      possible_frame_ids_by_name(name).each do |id|
-        frame = get_frame(id)
-        break if frame
-      end
-      frame && frame.content
+    def audio_file
+      @audio_file ||= AudioFile.new(@source)
     end
 
     def possible_frame_ids_by_name(name)
@@ -88,10 +87,6 @@ module ID3Tag
         ids << id if id
       end
       ids
-    end
-
-    def audio_file
-      @audio_file ||= AudioFile.new(@source)
     end
   end
 end

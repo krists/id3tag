@@ -60,4 +60,12 @@ describe ID3Tag::ID3V1FrameParser do
       end
     end
   end
+
+  describe "Test with real-world tag" do
+    let(:tag_body) { File.read mp3_fixture("pov_20131018-2100a.mp3.v1_tag_body") }
+    subject { described_class.new(tag_body) }
+    it "have title" do
+      subject.frames.find { |f| f.id == :title }.content.should eq("pov_20131018-2100a.mp3")
+    end
+  end
 end

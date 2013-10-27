@@ -73,7 +73,7 @@ module ID3Tag
       value = ""
       limit.times do
         char = @input.getc
-        break if char == "\x00"
+        break if char == StringUtil::NULL_BYTE
         value << char
       end
       value
