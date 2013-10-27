@@ -100,6 +100,7 @@ additional_info_byte_count	lib/id3tag/frames/v2/frame_flags.rb	/^        def add
 additional_info_flags_in_effect	lib/id3tag/frames/v2/frame_flags.rb	/^        def additional_info_flags_in_effect$/;"	f	class:ID3Tag.Frames.V2.FrameFlags
 advise	lib/id3tag/frame_id_advisor.rb	/^    def advise(frame_name)$/;"	f	class:ID3Tag.FrameIdAdvisor
 album_frame	lib/id3tag/id3_v1_frame_parser.rb	/^    def album_frame$/;"	f	class:ID3Tag.ID3V1FrameParser
+all_frames_by_id	lib/id3tag/tag.rb	/^    def all_frames_by_id(*ids)$/;"	f	class:ID3Tag
 apply	lib/id3tag/unsynchronization.rb	/^    def apply$/;"	f	class:ID3Tag.Unsynchronization
 artist_frame	lib/id3tag/id3_v1_frame_parser.rb	/^    def artist_frame$/;"	f	class:ID3Tag.ID3V1FrameParser
 audio_file	lib/id3tag/tag.rb	/^    def audio_file$/;"	f	class:ID3Tag
@@ -150,6 +151,7 @@ fabricate	lib/id3tag/frames/v2/frame_fabricator.rb	/^        def fabricate$/;"	f
 final_size	lib/id3tag/frames/v2/basic_frame.rb	/^        def final_size$/;"	f	class:ID3Tag.Frames.V2.BasicFrame
 find_by_id	lib/id3tag/frames/util/genre_names.rb	/^        def self.find_by_id(id)$/;"	F	class:ID3Tag.Frames.Util.GenreNames
 find_position_and_length_for_additional_info	lib/id3tag/frames/v2/frame_flags.rb	/^        def find_position_and_length_for_additional_info(*methods_of_interest)$/;"	f	class:ID3Tag.Frames.V2.FrameFlags
+first_frame_by_id	lib/id3tag/tag.rb	/^    def first_frame_by_id(*ids)$/;"	f	class:ID3Tag
 flag	lib/id3tag/frames/v2/frame_flags.rb	/^        def flag(scope, name)$/;"	f	class:ID3Tag.Frames.V2.FrameFlags
 flags_byte	lib/id3tag/id3_v2_tag_header.rb	/^    def flags_byte$/;"	f	class:ID3Tag.ID3v2TagHeader
 flags_byte_pair	lib/id3tag/frames/v2/frame_header_flags.rb	/^        def flags_byte_pair$/;"	f	class:ID3Tag.Frames.V2.FrameFlags

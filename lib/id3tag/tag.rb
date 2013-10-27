@@ -16,11 +16,7 @@ module ID3Tag
 
     [:artist, :title, :album, :year, :track_nr, :genre].each do |name|
       define_method(name) do
-        frame = nil
-        possible_frame_ids_by_name(name).each do |id|
-          frame = get_frame(id)
-          break if frame
-        end
+        frame = first_frame_by_id(*possible_frame_ids_by_name(name))
         frame && frame.content
       end
     end
@@ -28,10 +24,19 @@ module ID3Tag
     # # TODO: Add Terms of use frame and Synchronised lyrics/text frame
     [:comments, :unsychronized_transcription].each do |name|
       define_method(name) do |lang = :eng|
-        frames = []
-        possible_frame_ids_by_name(name).each { |id| frames += get_frames(id) }
-        frame = frames.find { |x| x.language == lang.to_s }
+        frame = all_frames_by_id(*possible_frame_ids_by_name(name)).find { |x| x.language == lang.to_s }
         frame && frame.content
+      end
+    end
+
+    def first_frame_by_id(*ids)
+      first_existing_id = ids.find { |id| frame_ids.include?(id) }
+      first_existing_id && get_frame(first_existing_id)
+    end
+
+    def all_frames_by_id(*ids)
+      ids.inject([]) do |frames, id|
+        frames += get_frames(id)
       end
     end
 
@@ -49,7 +54,7 @@ module ID3Tag
     end
 
     def frame_ids
-      frames.map { |frame| frame.id }
+      @frame_ids ||= frames.map { |frame| frame.id }
     end
 
     def frames
