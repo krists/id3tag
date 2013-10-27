@@ -17,5 +17,9 @@ module ID3Tag
       unsynch.remove
       unsynch.output
     end
+
+    def self.cut_at_null_byte(string)
+      string.split(NULL_BYTE, 2).first
+    end
   end
 end
