@@ -82,3 +82,7 @@ You can inspect tag by calling `frame_ids` to see available frame ids or `frames
 Copyright (c) 2013 Krists Ozols. See LICENSE.txt for
 further details.
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/krists/id3tag/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
