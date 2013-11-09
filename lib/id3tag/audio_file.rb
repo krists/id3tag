@@ -57,7 +57,13 @@ module ID3Tag
 
     def get_v2_extended_header_size
       if v2_tag_header.extended_header?
-        SynchsafeInteger.decode(NumberUtil.convert_string_to_32bit_integer(v2_extended_header_size_bytes))
+        if v2_tag_major_version_number == 3
+          # ext. header size for 2.3.0 does not include size bytes.
+          # There are only 2 possible sizes - 6 or 10 bytes, which means extended header can take 10 or 14 bytes.
+          4 + NumberUtil.convert_string_to_32bit_integer(v2_extended_header_size_bytes)
+        else
+          SynchsafeInteger.decode(NumberUtil.convert_string_to_32bit_integer(v2_extended_header_size_bytes))
+        end
       else
         0
       end
