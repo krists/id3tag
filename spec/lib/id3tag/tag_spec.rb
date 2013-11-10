@@ -172,10 +172,38 @@ describe ID3Tag::Tag do
   describe "Tests with real-world tags" do
     let(:audio_file) { double("Fake Audio file") }
 
+    context "signals_1.mp3.v2_3_tag_body" do
+      before(:each) do
+        subject.stub(:audio_file) { audio_file }
+        audio_file.stub({
+          :v1_tag_present? => true,
+          :v2_tag_present? => true,
+          :v2_tag_body => File.read(mp3_fixture("signals_1.mp3.v2_3_tag_body")),
+          :v2_tag_major_version_number => 3
+        })
+      end
+      context "Reading only v2" do
+        subject { described_class.new(nil, :v2) }
+        its(:artist) { should eq("Sabled Sun") }
+        its(:title) { should eq("Sabled Sun - Signals I") }
+        its(:album) { should eq("Signals I") }
+        its(:year) { should eq("2013") }
+        its(:track_nr) { should eq "1" }
+        its(:genre) { should eq "Jazz" }
+        its(:comments) { should eq("Visit http://cryochamber.bandcamp.com") }
+        it "should return eng comment" do
+          subject.comments(:eng).should eq("Visit http://cryochamber.bandcamp.com")
+        end
+        it "should read private frames" do
+          subject.get_frames(:PRIV).find { |f| f.owner_identifier == "WM/MediaClassPrimaryID" }.should be_kind_of(ID3Tag::Frames::V2::PrivateFrame)
+        end
+      end
+    end
+
     context "pov_20131018-2100a.mp3" do
       before(:each) do
         subject.stub(:audio_file) { audio_file }
-        audio_file.stub({ 
+        audio_file.stub({
           :v1_tag_present? => true,
           :v2_tag_present? => true,
           :v1_tag_body => File.read(mp3_fixture("pov_20131018-2100a.mp3.v1_tag_body")),

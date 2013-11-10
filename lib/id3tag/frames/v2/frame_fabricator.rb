@@ -20,6 +20,8 @@ module  ID3Tag
           case @id
           when /^(TCON|TCO)$/
             GenreFrame
+          when /^TXX$/
+            UserTextFrame
           when /^T/
             TextFrame
           when /^(COM|COMM)$/
@@ -28,6 +30,10 @@ module  ID3Tag
             UnsychronizedTranscriptionFrame
           when /^UFID$/
             UniqueFileIdFrame
+          when /^(IPL|IPLS)$/
+            InvolvedPeopleListFrame
+          when /^PRIV$/
+            PrivateFrame
           else
             BasicFrame
           end
