@@ -21,7 +21,7 @@ module ID3Tag
       end
     end
 
-    # # TODO: Add Terms of use frame and Synchronised lyrics/text frame
+    # TODO: Add Terms of use frame and Synchronised lyrics/text frame
     [:comments, :unsychronized_transcription].each do |name|
       define_method(name) do |lang = :eng|
         frame = all_frames_by_id(*possible_frame_ids_by_name(name)).find { |x| x.language == lang.to_s }
@@ -43,7 +43,7 @@ module ID3Tag
     def get_frame(frame_id)
       frames = get_frames(frame_id)
       if frames.count > 1
-        raise MultipleFrameError, "Could not return only one frame with id: #{frame_id}. Tag has #{frames.count} of them"
+        raise MultipleFrameError, "Could not return only one frame with id: #{frame_id}. Tag has #{frames.count} of them. Try #get_frames to get all of them"
       else
         frames.first
       end

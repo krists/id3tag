@@ -11,18 +11,21 @@ module  ID3Tag
         }
 
         def content
-          @content ||= StringUtil.cut_at_null_byte(content_without_encoding_byte.encode(destination_encoding, source_encoding))
+          @content ||= StringUtil.cut_at_null_byte(encoded_content)
         end
 
-        alias inspectable_content content
+        def inspectable_content
+          content
+        end
 
         private
 
-        def source_encoding
-          ENCODING_MAP.fetch(get_encoding_byte) { raise UnsupportedTextEncoding }
+        def encoded_content
+          content_without_encoding_byte.encode(destination_encoding, source_encoding)
         end
 
-        def current_encoding_map
+        def source_encoding
+          ENCODING_MAP.fetch(get_encoding_byte) { raise UnsupportedTextEncoding }
         end
 
         def destination_encoding
