@@ -195,7 +195,7 @@ describe ID3Tag::Tag do
           subject.comments(:eng).should eq("Visit http://cryochamber.bandcamp.com")
         end
         it "should read private frames" do
-          subject.get_frames(:PRIV).find { |f| f.owner_identifier == "WM/MediaClassPrimaryID" }.should be_kind_of(ID3Tag::Frames::V2::PrivateFrame)
+          subject.get_frames(:PRIV).find { |f| f.owner_identifier.force_encoding(Encoding::UTF_8) == "WM/MediaClassPrimaryID" }.should be_kind_of(ID3Tag::Frames::V2::PrivateFrame)
         end
       end
     end
