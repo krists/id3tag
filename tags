@@ -285,6 +285,7 @@ remove	lib/id3tag/unsynchronization.rb	/^    def remove$/;"	f	class:ID3Tag.Unsyn
 rewind_input	lib/id3tag/id3_v2_frame_parser.rb	/^    def rewind_input$/;"	f	class:ID3Tag.ID3V2FrameParser
 source_encoding	lib/id3tag/frames/v1/text_frame.rb	/^        def source_encoding$/;"	f	class:ID3Tag.Frames.V1.TextFrame
 source_encoding	lib/id3tag/frames/v2/text_frame.rb	/^        def source_encoding$/;"	f	class:ID3Tag.Frames.V2.TextFrame
+split_by_null_byte	lib/id3tag/string_util.rb	/^    def self.split_by_null_byte(string)$/;"	F	class:ID3Tag.StringUtil
 status_byte_from_flags	lib/id3tag/frames/v2/frame_header_flags.rb	/^        def status_byte_from_flags$/;"	f	class:ID3Tag.Frames.V2.FrameFlags
 tag_size	lib/id3tag/id3_v2_extended_header.rb	/^    def tag_size$/;"	f	class:ID3Tag.ID3v2ExtendedHeader
 tag_size	lib/id3tag/id3_v2_tag_header.rb	/^    def tag_size$/;"	f	class:ID3Tag.ID3v2TagHeader
