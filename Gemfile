@@ -1,9 +1,5 @@
 source "http://rubygems.org"
 
-group :development do
-  gem "debugger", :require => false, :platforms => :mri
-end
-
 group :development, :test do
   gem "jeweler", "~> 1.8.4"
   gem "rake"

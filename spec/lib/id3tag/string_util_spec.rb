@@ -46,4 +46,21 @@ describe ID3Tag::StringUtil do
       it { should eq("\xEE\xEE") }
     end
   end
+
+  describe "split_by_null_byte" do
+    let(:input) { }
+    subject { described_class.split_by_null_byte(input) }
+    context "when content have only 1 null byte" do
+      let(:input) { "a\u0000b" }
+      it { should eq(["a", "b"]) }
+    end
+    context "when content have multiple null bytes" do
+      let(:input) { "a\u0000\u0000b" }
+      it { should eq(["a", "\u0000b"]) }
+    end
+    context "when content have multiple null bytes" do
+      let(:input) { "abc" }
+      it { should eq(["abc", ""]) }
+    end
+  end
 end
