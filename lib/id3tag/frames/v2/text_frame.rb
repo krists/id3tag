@@ -33,11 +33,13 @@ module  ID3Tag
         end
 
         def get_encoding_byte
-          usable_content.getbyte(0)
+          raw_content_io.rewind
+          raw_content_io.getbyte
         end
 
         def content_without_encoding_byte
-          usable_content.byteslice(1, usable_content.bytesize - 1)
+          raw_content_io.seek(1)
+          raw_content_io.read
         end
       end
     end

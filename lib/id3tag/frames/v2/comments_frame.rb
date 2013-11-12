@@ -36,11 +36,13 @@ module  ID3Tag
         end
 
         def content_without_encoding_byte_and_language
-          content_without_encoding_byte.byteslice(LANGUAGE_BYTE_COUNT, content_without_encoding_byte.bytesize - LANGUAGE_BYTE_COUNT)
+          raw_content_io.seek(4)
+          raw_content_io.read
         end
 
         def get_language
-          content_without_encoding_byte[0...LANGUAGE_BYTE_COUNT].downcase
+          raw_content_io.seek(1)
+          raw_content_io.read(LANGUAGE_BYTE_COUNT).downcase
         end
       end
     end
