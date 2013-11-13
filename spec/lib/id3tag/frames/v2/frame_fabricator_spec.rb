@@ -30,6 +30,13 @@ describe ID3Tag::Frames::V2::FrameFabricator do
         subject
       end
     end
+    context "when frame is a user text frame" do
+      let(:id) { "TXX" }
+      it "fabricates user text frame" do
+        ID3Tag::Frames::V2::UserTextFrame.should_receive(:new).with(id, content, flags, major_version_number)
+        subject
+      end
+    end
     context "when frame is a comment frame COM" do
       let(:id) { "COMM" }
       it "fabricates comment frame" do
@@ -41,6 +48,13 @@ describe ID3Tag::Frames::V2::FrameFabricator do
       let(:id) { "UFID" }
       it "fabricates unique id frame" do
         ID3Tag::Frames::V2::UniqueFileIdFrame.should_receive(:new).with(id, content, flags, major_version_number)
+        subject
+      end
+    end
+    context "when frame is a unique id" do
+      let(:id) { "IPLS" }
+      it "fabricates involved people list frame" do
+        ID3Tag::Frames::V2::InvolvedPeopleListFrame.should_receive(:new).with(id, content, flags, major_version_number)
         subject
       end
     end
