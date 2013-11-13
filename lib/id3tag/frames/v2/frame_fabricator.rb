@@ -20,7 +20,7 @@ module  ID3Tag
           case @id
           when /^(TCON|TCO)$/
             GenreFrame
-          when /^TXX$/
+          when /^TXX/
             UserTextFrame
           when /^T/
             TextFrame
