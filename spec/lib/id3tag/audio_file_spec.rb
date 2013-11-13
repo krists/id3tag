@@ -43,6 +43,12 @@ describe ID3Tag::AudioFile do
       it "should return frame and padding bytes" do
         subject.v2_tag_body.should == "ABC"
       end
+      context "when tag verison is v.2.4 and extended header size is calculated differently" do
+        subject { described_class.new(StringIO.new("ID3\u0004\u0000\u0040\u0000\u0000\u0000\u0011" + "\u0000\u0000\u0000\u000A" + ("\u0000" * 6) + "ABC")) }
+        it "should return frame and padding bytes" do
+          subject.v2_tag_body.should == "ABC"
+        end
+      end
     end
   end
 
