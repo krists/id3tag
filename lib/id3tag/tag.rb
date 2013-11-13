@@ -16,17 +16,24 @@ module ID3Tag
 
     [:artist, :title, :album, :year, :track_nr, :genre].each do |name|
       define_method(name) do
-        frame = first_frame_by_id(*possible_frame_ids_by_name(name))
-        frame && frame.content
+        content_of_first_frame(name)
       end
     end
 
-    # TODO: Add Terms of use frame and Synchronised lyrics/text frame
+    def content_of_first_frame(name)
+      frame = first_frame_by_id(*possible_frame_ids_by_name(name))
+      frame && frame.content
+    end
+
     [:comments, :unsychronized_transcription].each do |name|
       define_method(name) do |lang = :eng|
-        frame = all_frames_by_id(*possible_frame_ids_by_name(name)).find { |x| x.language == lang.to_s }
-        frame && frame.content
+        content_of_first_frame_with_language(name, lang)
       end
+    end
+
+    def content_of_first_frame_with_language(name, lang)
+      frame = all_frames_by_id(*possible_frame_ids_by_name(name)).find { |x| x.language == lang.to_s }
+      frame && frame.content
     end
 
     def first_frame_by_id(*ids)
@@ -62,7 +69,7 @@ module ID3Tag
     end
 
     def v2_frames
-      if audio_file.v2_tag_present? && scope.include?(:v2)
+      if should_and_could_read_v2_frames?
         ID3V2FrameParser.new(audio_file.v2_tag_body, audio_file.v2_tag_major_version_number).frames
       else
         []
@@ -70,7 +77,7 @@ module ID3Tag
     end
 
     def v1_frames
-      if audio_file.v1_tag_present? && scope.include?(:v1)
+      if should_and_could_read_v1_frames?
         ID3V1FrameParser.new(audio_file.v1_tag_body).frames
       else
         []
@@ -81,17 +88,35 @@ module ID3Tag
       @audio_file ||= AudioFile.new(@source)
     end
 
+    private
+
     def possible_frame_ids_by_name(name)
       ids = []
-      if scope.include?(:v2) && audio_file.v2_tag_present?
-        id = FrameIdAdvisor.new(2, audio_file.v2_tag_major_version_number).advise(name)
-        ids << id if id
-      end
-      if scope.include?(:v1) && audio_file.v1_tag_present?
-        id = FrameIdAdvisor.new(1, FrameIdAdvisor::ANY_MAJOR_VERSION).advise(name)
-        ids << id if id
-      end
+      id = possible_v1_frame_id_by_name(name)
+      ids << id if id
+      id = possible_v2_frame_id_by_name(name)
+      ids << id if id
       ids
+    end
+
+    def possible_v2_frame_id_by_name(name)
+      if should_and_could_read_v2_frames?
+        FrameIdAdvisor.new(2, audio_file.v2_tag_major_version_number).advise(name)
+      end
+    end
+
+    def possible_v1_frame_id_by_name(name)
+      if should_and_could_read_v1_frames?
+        FrameIdAdvisor.new(1, FrameIdAdvisor::ANY_MAJOR_VERSION).advise(name)
+      end
+    end
+
+    def should_and_could_read_v1_frames?
+      scope.include?(:v1) && audio_file.v1_tag_present?
+    end
+
+    def should_and_could_read_v2_frames?
+      scope.include?(:v2) && audio_file.v2_tag_present?
     end
   end
 end
