@@ -20,7 +20,8 @@ module ID3Tag
         :comments => :COM,
         :genre => :TCO,
         :track_nr => :TRK,
-        :unsychronized_transcription => :ULT
+        :unsychronized_transcription => :ULT,
+        :image => :PIC
       },
       'v2.3' => {
         :artist => :TPE1,
@@ -30,7 +31,8 @@ module ID3Tag
         :comments => :COMM,
         :genre => :TCON,
         :track_nr => :TRCK,
-        :unsychronized_transcription => :USLT
+        :unsychronized_transcription => :USLT,
+        :image => :APIC
       },
       'v2.4' => {
         :artist => :TPE1,
@@ -40,7 +42,8 @@ module ID3Tag
         :comments => :COMM,
         :genre => :TCON,
         :track_nr => :TRCK,
-        :unsychronized_transcription => :USLT
+        :unsychronized_transcription => :USLT,
+        :image => :APIC
       }
     }
 
