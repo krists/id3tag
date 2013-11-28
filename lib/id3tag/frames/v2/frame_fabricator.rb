@@ -32,6 +32,8 @@ module  ID3Tag
             UniqueFileIdFrame
           when /^(IPL|IPLS)$/
             InvolvedPeopleListFrame
+          when /^(PIC|APIC)$/
+            PictureFrame
           when /^PRIV$/
             PrivateFrame
           else
