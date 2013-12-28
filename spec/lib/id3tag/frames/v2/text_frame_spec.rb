@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe ID3Tag::Frames::V2::TextFrame do
   let(:id) { "artist" }
-  let(:raw_content) { text.encode(target_encoding).prepend(encoding_byte.force_encoding(target_encoding)) }
+  let(:raw_content) { text.encode(target_encoding.to_s).prepend(encoding_byte.force_encoding(target_encoding)) }
   let(:flags) { nil }
   let(:major_version_number) { 4 }
 

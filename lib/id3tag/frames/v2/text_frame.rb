@@ -25,11 +25,11 @@ module  ID3Tag
         end
 
         def source_encoding
-          ENCODING_MAP.fetch(get_encoding_byte) { raise UnsupportedTextEncoding }
+          ENCODING_MAP.fetch(get_encoding_byte) { raise UnsupportedTextEncoding }.to_s
         end
 
         def destination_encoding
-          Encoding::UTF_8
+          Encoding::UTF_8.to_s
         end
 
         def get_encoding_byte
