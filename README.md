@@ -58,6 +58,15 @@ ID3Tag.read(file,:v2) # Reads only v2.x tag
 
 You can inspect tag by calling `frame_ids` to see available frame ids or `frames` to return all frames
 
+It is also possible to provide configuration and overwrite default behaviour. Currently only for String#encode which is used in TextFrames.
+
+This way you can avoid Encoding::InvalidByteSequenceError when tag contains invalid data.
+```ruby
+ID3Tag.configuration do |c|
+  c.string_encode_options = { :invalid => :replace, :undef => :replace }
+end
+```
+
 
 ## Features
 
