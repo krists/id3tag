@@ -1,4 +1,5 @@
 require "stringio"
+require "id3tag/configuration"
 require "id3tag/synchsafe_integer"
 require "id3tag/audio_file"
 require "id3tag/id3_v2_tag_header"
@@ -35,5 +36,11 @@ module ID3Tag
     tag = Tag.read(source, scope)
     yield tag if block_given?
     tag
+  end
+
+  def self.configuration
+    @@configuration ||= ID3Tag::Configuration.new
+    yield @@configuration if block_given?
+    @@configuration
   end
 end

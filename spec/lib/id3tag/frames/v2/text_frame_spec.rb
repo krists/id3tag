@@ -56,6 +56,24 @@ describe ID3Tag::Frames::V2::TextFrame do
       let(:encoding_byte) { "\x03" }
       it { should == 'Glāzšķūņrūķīši' }
     end
+
+    context "when UTF-16 and missing BOM" do
+      let(:target_encoding) { Encoding::UTF_8 }
+      let(:raw_content) { "\x01\x00a\x00b\x00c" }
+      it "raises error Encoding::InvalidByteSequenceError" do
+        expect { subject }.to raise_error(Encoding::InvalidByteSequenceError)
+      end
+      context "when using global encode options" do
+        before(:each) do
+          ID3Tag.configuration do |c|
+            c.string_encode_options = { :invalid => :replace, :undef => :replace }
+          end
+        end
+        it "does not raise error" do
+          expect { subject }.not_to raise_error
+        end
+      end
+    end
   end
 
   describe '#inspect' do
