@@ -10,13 +10,6 @@ module  ID3Tag
           0b11 => Encoding::UTF_8
         }
 
-        TERMINATOR_MAP = {
-          0b0 => StringUtil::NULL_BYTE,
-          0b1 => StringUtil::NULL_BYTE*2,
-          0b10 => StringUtil::NULL_BYTE*2,
-          0b11 => StringUtil::NULL_BYTE
-        }
-
         def content
           @content ||= StringUtil.cut_at_null_byte(encoded_content)
         end
@@ -33,10 +26,6 @@ module  ID3Tag
 
         def source_encoding
           ENCODING_MAP.fetch(get_encoding_byte) { raise UnsupportedTextEncoding }.to_s
-        end
-
-        def source_terminator
-          TERMINATOR_MAP.fetch(get_encoding_byte) { raise UnsupportedTextEncoding }
         end
 
         def destination_encoding

@@ -25,6 +25,11 @@ describe ID3Tag::Frames::V2::PictureFrame do
       it { should == :PIC }
     end
 
+    describe "mime_type" do
+      subject { frame.mime_type }
+      it { should eq('png') }
+    end
+
     describe "#data" do
       subject { frame.data }
       it { should == "picture data" }
@@ -33,11 +38,6 @@ describe ID3Tag::Frames::V2::PictureFrame do
     describe "#type" do
       subject { frame.type }
       it { should == :cover_front }
-    end
-
-    describe "#format" do
-      subject { frame.format }
-      it { should == "png" }
     end
 
     describe "#description" do
@@ -88,6 +88,16 @@ describe ID3Tag::Frames::V2::PictureFrame do
     describe "#content" do
       subject { frame.content }
       it { should == "picture data" }
+    end
+
+    context "when frame contains link not actual image data" do
+      let(:raw_content) { "\x02-->\x00\x08\u0000a\u0000b\u0000c" }
+      subject { frame }
+
+      its(:link?) { should be_true }
+      its(:mime_type) { should eq("-->") }
+      its(:description) { should eq("abc") }
+      its(:type) { should eq(:artist) }
     end
   end
 end
