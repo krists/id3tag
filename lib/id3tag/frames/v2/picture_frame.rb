@@ -32,11 +32,15 @@ module  ID3Tag
           usable_content_io.seek(1)
           if @major_version_number > 2
             term_result = ID3Tag::IOUtil.find_terminator(usable_content_io, 1)
-            usable_content_io.read(term_result.byte_count_before_terminator)
+            result = usable_content_io.read(term_result.byte_count_before_terminator)
+            if StringUtil.blank?(result)
+              IMPLIED_MIME_TYPE
+            else
+              result
+            end
           else
-            usable_content_io.read(3)
+            IMPLIED_MIME_TYPE + usable_content_io.read(3)
           end
-          # IMPLIED_MIME_TYPE
         end
 
         def link?
