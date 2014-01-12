@@ -27,7 +27,7 @@ describe ID3Tag::Frames::V2::PictureFrame do
 
     describe "mime_type" do
       subject { frame.mime_type }
-      it { should eq('png') }
+      it { should eq('image/png') }
     end
 
     describe "#data" do
