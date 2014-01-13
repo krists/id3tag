@@ -28,6 +28,10 @@ describe ID3Tag::Frames::V2::PictureFrame do
     describe "mime_type" do
       subject { frame.mime_type }
       it { should eq('image/png') }
+      context "when mime type is blank" do
+        let(:format) { "\x00\x00\x00" }
+        it { should eq('image/') }
+      end
     end
 
     describe "#data" do
