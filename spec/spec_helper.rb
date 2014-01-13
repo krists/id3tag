@@ -2,8 +2,10 @@ if ENV['CI']
   require 'coveralls'
   Coveralls.wear!
 else
-  require 'simplecov'
-  SimpleCov.start
+  unless ENV['RUBY_VERSION'] =~ /rbx/
+    require 'simplecov'
+    SimpleCov.start
+  end
 end
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
