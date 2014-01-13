@@ -1,8 +1,8 @@
-if ENV['CI']
-  require 'coveralls'
-  Coveralls.wear!
-else
-  unless ENV['RUBY_VERSION'] =~ /rbx/
+unless ENV['RUBY_VERSION'] =~ /rbx/
+  if ENV['CI']
+    require 'coveralls'
+    Coveralls.wear!
+  else
     require 'simplecov'
     SimpleCov.start
   end
@@ -18,5 +18,5 @@ require 'id3tag'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
-  
+
 end
