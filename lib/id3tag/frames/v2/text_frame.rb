@@ -25,6 +25,7 @@ module  ID3Tag
         end
 
         def source_encoding
+          return ID3Tag.configuration.string_source_encoding if ID3Tag.configuration.string_source_encoding
           ENCODING_MAP.fetch(get_encoding_byte) { raise UnsupportedTextEncoding }.to_s
         end
 
