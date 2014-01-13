@@ -29,17 +29,10 @@ module  ID3Tag
         }
 
         def mime_type
-          usable_content_io.seek(1)
           if @major_version_number > 2
-            term_result = ID3Tag::IOUtil.find_terminator(usable_content_io, 1)
-            result = usable_content_io.read(term_result.byte_count_before_terminator)
-            if StringUtil.blank?(result)
-              IMPLIED_MIME_TYPE
-            else
-              result
-            end
+            get_gt_v2_2_mime_type
           else
-            IMPLIED_MIME_TYPE + usable_content_io.read(3).downcase
+            get_v2_2_mime_type
           end
         end
 
@@ -71,6 +64,27 @@ module  ID3Tag
         end
 
         private
+
+        def get_v2_2_mime_type
+          usable_content_io.seek(1)
+          image_format = usable_content_io.read(3).downcase
+          if StringUtil.blank?(image_format.strip)
+            IMPLIED_MIME_TYPE
+          else
+            IMPLIED_MIME_TYPE + image_format
+          end
+        end
+
+        def get_gt_v2_2_mime_type
+          usable_content_io.seek(1)
+          term_result = ID3Tag::IOUtil.find_terminator(usable_content_io, 1)
+          result = usable_content_io.read(term_result.byte_count_before_terminator)
+          if StringUtil.blank?(result.strip)
+            IMPLIED_MIME_TYPE
+          else
+            result
+          end
+        end
 
         def usable_content_io
           @usable_content_io ||= StringIO.new(usable_content)
