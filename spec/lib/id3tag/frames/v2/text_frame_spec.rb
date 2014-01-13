@@ -69,6 +69,11 @@ describe ID3Tag::Frames::V2::TextFrame do
             c.string_encode_options = { :invalid => :replace, :undef => :replace }
           end
         end
+        after(:each) do
+          ID3Tag.configuration do |c|
+            c.string_encode_options = {}
+          end
+        end
         it "does not raise error" do
           expect { subject }.not_to raise_error
         end
