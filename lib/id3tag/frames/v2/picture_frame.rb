@@ -39,7 +39,7 @@ module  ID3Tag
               result
             end
           else
-            IMPLIED_MIME_TYPE + usable_content_io.read(3)
+            IMPLIED_MIME_TYPE + usable_content_io.read(3).downcase
           end
         end
 
