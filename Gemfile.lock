@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    id3tag (0.6.0)
+    id3tag (0.7.0)
 
 GEM
   remote: http://rubygems.org/
