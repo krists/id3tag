@@ -30,9 +30,19 @@ module  ID3Tag
 
         def mime_type
           if @major_version_number > 2
-            get_gt_v2_2_mime_type
+            result = parts[:mime_type]
+            if StringUtil.blank?(result.strip)
+              IMPLIED_MIME_TYPE
+            else
+              result
+            end
           else
-            get_v2_2_mime_type
+            image_format = parts[:mime_type].downcase
+            if StringUtil.blank?(image_format.strip)
+              IMPLIED_MIME_TYPE
+            else
+              IMPLIED_MIME_TYPE + image_format
+            end
           end
         end
 
@@ -41,17 +51,12 @@ module  ID3Tag
         end
 
         def type
-          usable_content_io.seek(position_of_type_byte)
-          TYPES[usable_content_io.getbyte]
+          TYPES[parts[:picture_type_byte]]
         end
 
         def description
           encoding = get_encoding
-          terminator_size = get_terminator_size
-          usable_content_io.seek(position_of_start_of_description)
-          term_result = ID3Tag::IOUtil.find_terminator(usable_content_io, terminator_size)
-          text = usable_content_io.read(term_result.byte_count_before_terminator)
-          EncodingUtil.encode(text, encoding)
+          EncodingUtil.encode(parts[:description], encoding)
         end
 
         def content
@@ -59,73 +64,36 @@ module  ID3Tag
         end
 
         def data
-          usable_content_io.seek(position_of_binary_data)
-          usable_content_io.read
+          parts[:data]
         end
 
         private
 
-        def get_v2_2_mime_type
-          usable_content_io.seek(1)
-          image_format = usable_content_io.read(3).downcase
-          if StringUtil.blank?(image_format.strip)
-            IMPLIED_MIME_TYPE
-          else
-            IMPLIED_MIME_TYPE + image_format
-          end
+        def parts
+          @parts ||= read_parts!
         end
 
-        def get_gt_v2_2_mime_type
-          usable_content_io.seek(1)
-          term_result = ID3Tag::IOUtil.find_terminator(usable_content_io, 1)
-          result = usable_content_io.read(term_result.byte_count_before_terminator)
-          if StringUtil.blank?(result.strip)
-            IMPLIED_MIME_TYPE
+        def read_parts!
+          usable_content_io.rewind
+          parts = {}
+          parts[:encoding_byte] = usable_content_io.getbyte
+          if @major_version_number > 2
+            parts[:mime_type] = ID3Tag::IOUtil.read_until_terminator(usable_content_io, 1)
           else
-            result
+            parts[:mime_type] = usable_content_io.read(3)
           end
+          parts[:picture_type_byte] = usable_content_io.getbyte
+          parts[:description] = ID3Tag::IOUtil.read_until_terminator(usable_content_io, EncodingUtil.terminator_size(parts[:encoding_byte]))
+          parts[:data] = usable_content_io.read
+          parts
         end
 
         def usable_content_io
           @usable_content_io ||= StringIO.new(usable_content)
         end
 
-        def position_of_binary_data
-          terminator_size = get_terminator_size
-          usable_content_io.seek(position_of_start_of_description)
-          term_result = ID3Tag::IOUtil.find_terminator(usable_content_io, terminator_size)
-          term_result.end_pos
-        end
-
-        def position_of_type_byte
-          if @major_version_number > 2
-            usable_content_io.seek(1)
-            term_result = ID3Tag::IOUtil.find_terminator(usable_content_io, 1)
-            term_result.byte_count_of_content_and_terminator + 1
-          else
-            4
-          end
-        end
-
-        def position_of_start_of_description
-          position_of_type_byte + 1
-        end
-
         def get_encoding
-          EncodingUtil.find_encoding(encoding_byte)
-        end
-
-        def get_terminator_size
-          EncodingUtil.terminator_size(encoding_byte)
-        end
-
-        def encoding_byte
-          @encoding_byte ||= get_encoding_byte
-        end
-
-        def get_encoding_byte
-          usable_content_io.rewind
-          usable_content_io.getbyte
+          EncodingUtil.find_encoding(parts[:encoding_byte])
         end
       end
     end
