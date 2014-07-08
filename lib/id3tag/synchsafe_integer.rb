@@ -3,10 +3,10 @@ module ID3Tag
     class << self
       def encode(int)
         mask = 0x7F
-        while mask <= 0x7FFFFFFF do
+        while mask <= 0x7FFFFFFF
           out = int & ~mask
           out = out << 1
-          out = out | (int & mask)
+          out |= (int & mask)
           mask = ((mask + 1) << 8) - 1
           int = out
         end
@@ -16,9 +16,9 @@ module ID3Tag
       def decode(synchsafe_int)
         out = 0
         mask = 0x7F000000
-        while mask > 0 do
+        while mask > 0
           out = out >> 1
-          out = out | (synchsafe_int & mask)
+          out |= (synchsafe_int & mask)
           mask = mask >> 8
         end
         out
