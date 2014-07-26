@@ -10,8 +10,12 @@ module ID3Tag
     end
 
     def v1_tag_present?
-      @file.seek(-ID3V1_TAG_SIZE, IO::SEEK_END)
-      @file.read(3) == IDV1_TAG_IDENTIFIER
+      if @file.size >= ID3V1_TAG_SIZE
+        @file.seek(-ID3V1_TAG_SIZE, IO::SEEK_END)
+        @file.read(3) == IDV1_TAG_IDENTIFIER
+      else
+        false
+      end
     end
 
     def v2_tag_present?
@@ -20,7 +24,11 @@ module ID3Tag
     end
 
     def v1_tag_body
-      @file.seek(-ID3V1_TAG_SIZE + IDV1_TAG_IDENTIFIER.size, IO::SEEK_END)
+      if @file.size >= ID3V1_TAG_SIZE
+        @file.seek(-ID3V1_TAG_SIZE + IDV1_TAG_IDENTIFIER.size, IO::SEEK_END)
+      else
+        @file.rewind
+      end
       @file.read
     end
 
