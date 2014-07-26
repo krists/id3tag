@@ -21,7 +21,7 @@ Require the libary and read basic metadata:
 ```ruby
 require "id3tag"
 
-mp3_file = File.open('/path/to/your/favorite_song.mp3')
+mp3_file = File.open('/path/to/your/favorite_song.mp3', "rb")
 tag = ID3Tag.read(mp3_file)
 puts "#{tag.artist} - #{tag.title}"
 ```
@@ -34,7 +34,7 @@ There can be more than one `comments` frame in the tag. They differ by language,
 mp3s = Dir.entries("/some/dir").select { |filename| filename =~ /\.mp3/i }
 
 mp3s.each do |file|
-  ID3Tag.read(File.open(file)) do |tag|
+  ID3Tag.read(File.open(file, "rb")) do |tag|
     puts file
     puts tag.artist
     puts tag.title
@@ -75,7 +75,7 @@ end
 
 
 ## Contributing to id3tag
- 
+
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
 * Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
 * Fork the project.
