@@ -178,7 +178,7 @@ describe ID3Tag::Tag do
         audio_file.stub({
           :v1_tag_present? => true,
           :v2_tag_present? => true,
-          :v2_tag_body => File.read(mp3_fixture("signals_1.mp3.v2_3_tag_body")),
+          :v2_tag_body => mp3_fixture("signals_1.mp3.v2_3_tag_body").read,
           :v2_tag_major_version_number => 3
         })
       end
@@ -206,8 +206,8 @@ describe ID3Tag::Tag do
         audio_file.stub({
           :v1_tag_present? => true,
           :v2_tag_present? => true,
-          :v1_tag_body => File.read(mp3_fixture("pov_20131018-2100a.mp3.v1_tag_body")),
-          :v2_tag_body => File.read(mp3_fixture("pov_20131018-2100a.mp3.v2_3_tag_body")),
+          :v1_tag_body => mp3_fixture("pov_20131018-2100a.mp3.v1_tag_body").read,
+          :v2_tag_body => mp3_fixture("pov_20131018-2100a.mp3.v2_3_tag_body").read,
           :v2_tag_major_version_number => 3
         })
       end
