@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "bundler", "~> 1.3"
   s.add_development_dependency "rake"
-  s.add_development_dependency "rdoc", "~> 3.12"
+  s.add_development_dependency "rdoc", "~> 4.1.1"
   s.add_development_dependency "rspec", "~> 2.13.0"
   s.add_development_dependency "simplecov"
   s.add_development_dependency 'coveralls'
