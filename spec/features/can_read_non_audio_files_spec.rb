@@ -1,7 +1,8 @@
 require 'spec_helper'
+require 'tempfile'
 
 describe 'can read any file and does not raise errors if no tag found' do
-  subject { ID3Tag.read(File.open('/dev/null')) }
+  subject { ID3Tag.read(Tempfile.new('fake_mp3')) }
 
   it 'should return blanks' do
     subject.title.should == nil
