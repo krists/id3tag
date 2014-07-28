@@ -3,6 +3,7 @@ unless ENV['RUBY_VERSION'] =~ /rbx/
     require 'coveralls'
     Coveralls.wear!
   else
+    require 'pry'
     require 'simplecov'
     SimpleCov.start
   end
