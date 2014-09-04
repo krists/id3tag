@@ -92,9 +92,9 @@ module ID3Tag
 
     def possible_frame_ids_by_name(name)
       ids = []
-      id = possible_v1_frame_id_by_name(name)
-      ids << id if id
       id = possible_v2_frame_id_by_name(name)
+      ids << id if id
+      id = possible_v1_frame_id_by_name(name)
       ids << id if id
       ids
     end
