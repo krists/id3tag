@@ -25,7 +25,6 @@ module ID3Tag
       first_frame_by_id(*possible_frame_ids_by_name(name))
     end
 
-
     [:comments, :unsychronized_transcription].each do |name|
       define_method(name) do |lang = :eng|
         content_of_first_frame_with_language(name, lang)
