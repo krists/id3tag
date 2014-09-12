@@ -16,13 +16,13 @@ module ID3Tag
 
     [:artist, :title, :album, :year, :track_nr, :genre].each do |name|
       define_method(name) do
-        content_of_first_frame(name)
+        frame = first_frame(name)
+        frame && frame.content
       end
     end
 
-    def content_of_first_frame(name)
-      frame = first_frame_by_id(*possible_frame_ids_by_name(name))
-      frame && frame.content
+    def first_frame(name)
+      first_frame_by_id(*possible_frame_ids_by_name(name))
     end
 
     [:comments, :unsychronized_transcription].each do |name|
