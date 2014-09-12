@@ -14,7 +14,7 @@ module ID3Tag
 
     attr_reader :source, :scope
 
-    [:artist, :title, :album, :year, :track_nr, :genre].each do |name|
+    [:artist, :title, :album, :year, :track_nr, :genre, :image].each do |name|
       define_method(name) do
         content_of_first_frame(name)
       end
