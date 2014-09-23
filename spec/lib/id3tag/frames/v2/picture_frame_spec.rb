@@ -82,6 +82,11 @@ describe ID3Tag::Frames::V2::PictureFrame do
     describe "#mime_type" do
       subject { frame.mime_type }
       it { should == "image/png" }
+      context "when mime type is omitted" do
+        let(:mime_type) { "\x00" }
+        subject { frame.mime_type }
+        it { should == "image/" }
+      end
     end
 
     describe "#description" do

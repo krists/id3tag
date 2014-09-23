@@ -26,10 +26,10 @@ module ID3Tag
     def v1_tag_body
       if @file.size >= ID3V1_TAG_SIZE
         @file.seek(-ID3V1_TAG_SIZE + IDV1_TAG_IDENTIFIER.size, IO::SEEK_END)
+        @file.read
       else
-        @file.rewind
+        nil
       end
-      @file.read
     end
 
     def v2_tag_body
