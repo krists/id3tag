@@ -21,8 +21,12 @@ module ID3Tag
     end
 
     def content_of_first_frame(name)
-      frame = first_frame_by_id(*possible_frame_ids_by_name(name))
-      frame && frame.content
+      possible_frame_ids_by_name(name).each do |frame_id|
+        first_frame_by_id(frame_id).try do |frame|
+          return frame.content unless frame.content.strip.empty?
+        end
+      end
+      nil
     end
 
     [:comments, :unsychronized_transcription].each do |name|
