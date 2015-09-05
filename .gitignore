@@ -1,6 +1,7 @@
 coverage
-./Gemfile.lock
+Gemfile.lock
 .bundle
 tags
 vendor/bundle
 bin
+
