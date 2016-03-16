@@ -19,27 +19,27 @@ describe ID3Tag::Frames::V2::CommentsFrame do
 
   describe '#id' do
     subject { frame.id }
-    it { should == :COMM }
+    it { is_expected.to eq(:COMM) }
   end
 
   describe '#content' do
     subject { frame.content }
-    it { should == 'Glāzšķūņrūķīši' }
+    it { is_expected.to eq('Glāzšķūņrūķīši') }
   end
 
   describe '#language' do
     subject { frame.language }
-    it { should == 'lav' }
+    it { is_expected.to eq('lav') }
   end
 
   describe '#description' do
     subject { frame.description }
-    it { should == 'bob once said' }
+    it { is_expected.to eq('bob once said') }
   end
 
   describe '#inspect' do
     it 'should be pretty inspectable' do
-      frame.inspect.should eq('<ID3Tag::Frames::V2::CommentsFrame COMM: Glāzšķūņrūķīši>')
+      expect(frame.inspect).to eq('<ID3Tag::Frames::V2::CommentsFrame COMM: Glāzšķūņrūķīši>')
     end
   end
 end

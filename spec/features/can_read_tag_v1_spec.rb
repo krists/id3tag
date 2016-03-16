@@ -5,11 +5,11 @@ describe 'can read v1 info from file' do
   subject { ID3Tag.read(mp3_with_v1_1_tag) }
 
   it 'reading file with only v1 tag' do
-    subject.title.should == "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaA"
-    subject.artist.should == "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbB"
-    subject.album.should == "cccccccccccccccccccccccccccccC"
-    subject.genre.should == "Blues"
-    subject.year.should == "2003"
-    subject.track_nr.should == "1"
+    expect(subject.title).to eq("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaA")
+    expect(subject.artist).to eq("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbB")
+    expect(subject.album).to eq("cccccccccccccccccccccccccccccC")
+    expect(subject.genre).to eq("Blues")
+    expect(subject.year).to eq("2003")
+    expect(subject.track_nr).to eq("1")
   end
 end

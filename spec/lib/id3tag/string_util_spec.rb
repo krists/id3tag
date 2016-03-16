@@ -5,17 +5,17 @@ describe ID3Tag::StringUtil do
     subject { described_class.blank?(test_string) }
     context "when test string is like ''" do
       let(:test_string) { "" }
-      it { should be_true }
+      it { is_expected.to eq(true) }
     end
 
     context "when test string is like '   '" do
       let(:test_string) { "    " }
-      it { should be_true }
+      it { is_expected.to eq(true) }
     end
 
     context "when test string is like 'foo'" do
       let(:test_string) { "foo" }
-      it { should be_false }
+      it { is_expected.to eq(false) }
     end
   end
 
@@ -25,11 +25,11 @@ describe ID3Tag::StringUtil do
 
     context "when a false synchronization is present" do
       let(:input) { "\xFF\xEE" }
-      it { should eq("\xFF\x00\xEE") }
+      it { is_expected.to eq("\xFF\x00\xEE") }
     end
     context "when a false synchronization is not present" do
       let(:input) { "\xEE\xEE" }
-      it { should eq("\xEE\xEE") }
+      it { is_expected.to eq("\xEE\xEE") }
     end
   end
 
@@ -39,11 +39,11 @@ describe ID3Tag::StringUtil do
 
     context "when unsynchronization in present" do
       let(:input) { "\xFF\x00\xEE\xEE" }
-      it { should eq("\xFF\xEE\xEE") }
+      it { is_expected.to eq("\xFF\xEE\xEE") }
     end
     context "when unsynchronization in not present" do
       let(:input) { "\xEE\xEE" }
-      it { should eq("\xEE\xEE") }
+      it { is_expected.to eq("\xEE\xEE") }
     end
   end
 
@@ -52,15 +52,15 @@ describe ID3Tag::StringUtil do
     subject { described_class.split_by_null_byte(input) }
     context "when content have only 1 null byte" do
       let(:input) { "a\u0000b" }
-      it { should eq(["a", "b"]) }
+      it { is_expected.to eq(["a", "b"]) }
     end
     context "when content have multiple null bytes" do
       let(:input) { "a\u0000\u0000b" }
-      it { should eq(["a", "\u0000b"]) }
+      it { is_expected.to eq(["a", "\u0000b"]) }
     end
     context "when content have multiple null bytes" do
       let(:input) { "abc" }
-      it { should eq(["abc", ""]) }
+      it { is_expected.to eq(["abc", ""]) }
     end
   end
 end

@@ -14,7 +14,7 @@ describe ID3Tag::Frames::V2::TextFrame do
 
   describe '#id' do
     subject { frame.id }
-    it { should == :artist }
+    it { is_expected.to eq(:artist) }
   end
 
   describe '#content' do
@@ -24,7 +24,7 @@ describe ID3Tag::Frames::V2::TextFrame do
       let(:target_encoding) { Encoding::UTF_8 }
       let(:encoding_byte) { "\x03" }
       let(:text) { "Glāzšķūņrūķīši\x00" }
-      it { should == 'Glāzšķūņrūķīši' }
+      it { is_expected.to eq('Glāzšķūņrūķīši') }
     end
 
     context "when encoding byte is not present" do
@@ -36,25 +36,25 @@ describe ID3Tag::Frames::V2::TextFrame do
       let(:target_encoding) { Encoding::ISO8859_1 }
       let(:encoding_byte) { "\x00" }
       let(:text) { "some fancy artist" }
-      it { should == 'some fancy artist' }
+      it { is_expected.to eq('some fancy artist') }
     end
 
     context "when encoding is UTF_16" do
       let(:target_encoding) { Encoding::UTF_16 }
       let(:encoding_byte) { "\x01" }
-      it { should == 'Glāzšķūņrūķīši' }
+      it { is_expected.to eq('Glāzšķūņrūķīši') }
     end
 
     context "when encoding is UTF_16BE" do
       let(:target_encoding) { Encoding::UTF_16BE }
       let(:encoding_byte) { "\x02" }
-      it { should == 'Glāzšķūņrūķīši' }
+      it { is_expected.to eq('Glāzšķūņrūķīši') }
     end
 
     context "when encoding is UTF_8" do
       let(:target_encoding) { Encoding::UTF_8 }
       let(:encoding_byte) { "\x03" }
-      it { should == 'Glāzšķūņrūķīši' }
+      it { is_expected.to eq('Glāzšķūņrūķīši') }
     end
 
     context "when UTF-16 and missing BOM" do
@@ -83,7 +83,7 @@ describe ID3Tag::Frames::V2::TextFrame do
 
   describe '#inspect' do
     it 'should be pretty inspectable' do
-      frame.inspect.should eq('<ID3Tag::Frames::V2::TextFrame artist: Glāzšķūņrūķīši>')
+      expect(frame.inspect).to eq('<ID3Tag::Frames::V2::TextFrame artist: Glāzšķūņrūķīši>')
     end
   end
 end

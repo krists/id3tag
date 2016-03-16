@@ -10,7 +10,7 @@ describe ID3Tag::Frames::V2::GenreFrame do
 
   describe '#id' do
     subject { frame.id }
-    it { should == :TCON }
+    it { is_expected.to eq(:TCON) }
   end
 
   describe '#content' do
@@ -21,26 +21,26 @@ describe ID3Tag::Frames::V2::GenreFrame do
 
       context "when one genre" do
         before do
-          ID3Tag::Frames::V2::GenreFrame::GenreParserPre24.any_instance.stub(:genres) { ['A'] }
+          allow_any_instance_of(ID3Tag::Frames::V2::GenreFrame::GenreParserPre24).to receive(:genres) { ['A'] }
         end
 
-        it { should eq('A') }
+        it { is_expected.to eq('A') }
       end
       context "when two genres" do
         before do
-          ID3Tag::Frames::V2::GenreFrame::GenreParserPre24.any_instance.stub(:genres) { ['A', 'B'] }
+          allow_any_instance_of(ID3Tag::Frames::V2::GenreFrame::GenreParserPre24).to receive(:genres) { ['A', 'B'] }
         end
 
-        it { should eq('A, B') }
+        it { is_expected.to eq('A, B') }
       end
     end
 
     context "when tag major version is 4" do
       let(:major_version_number) { 4 }
       before do
-        ID3Tag::Frames::V2::GenreFrame::GenreParser24.any_instance.stub(:genres) { ['B'] }
+        allow_any_instance_of(ID3Tag::Frames::V2::GenreFrame::GenreParser24).to receive(:genres) { ['B'] }
       end
-      it { should eq('B') }
+      it { is_expected.to eq('B') }
     end
     context "when tag major version is 232" do
       let(:major_version_number) { 232 }
@@ -52,11 +52,11 @@ describe ID3Tag::Frames::V2::GenreFrame do
 
   describe '#inspect' do
     before do
-      frame.stub(:content) { 'Rock' }
+      allow(frame).to receive(:content) { 'Rock' }
     end
 
     it 'should be pretty inspectable' do
-      frame.inspect.should eq('<ID3Tag::Frames::V2::GenreFrame TCON: Rock>')
+      expect(frame.inspect).to eq('<ID3Tag::Frames::V2::GenreFrame TCON: Rock>')
     end
   end
 end

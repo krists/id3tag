@@ -22,36 +22,36 @@ describe ID3Tag::Frames::V2::PictureFrame do
 
     describe '#id' do
       subject { frame.id }
-      it { should == :PIC }
+      it { is_expected.to eq(:PIC) }
     end
 
     describe "mime_type" do
       subject { frame.mime_type }
-      it { should eq('image/png') }
+      it { is_expected.to eq('image/png') }
       context "when mime type is blank" do
         let(:format) { "\x00\x00\x00" }
-        it { should eq('image/') }
+        it { is_expected.to eq('image/') }
       end
     end
 
     describe "#data" do
       subject { frame.data }
-      it { should == "picture data" }
+      it { is_expected.to eq("picture data") }
     end
 
     describe "#type" do
       subject { frame.type }
-      it { should == :cover_front }
+      it { is_expected.to eq(:cover_front) }
     end
 
     describe "#description" do
       subject { frame.description }
-      it { should == "picture description" }
+      it { is_expected.to eq("picture description") }
     end
 
     describe "#content" do
       subject { frame.content }
-      it { should == "picture data" }
+      it { is_expected.to eq("picture data") }
     end
   end
 
@@ -66,47 +66,62 @@ describe ID3Tag::Frames::V2::PictureFrame do
 
     describe '#id' do
       subject { frame.id }
-      it { should == :APIC }
+      it { is_expected.to eq(:APIC) }
     end
 
     describe "#data" do
       subject { frame.data }
-      it { should == "picture data" }
+      it { is_expected.to eq("picture data") }
     end
 
     describe "#type" do
       subject { frame.type }
-      it { should == :cover_front }
+      it { is_expected.to eq(:cover_front) }
     end
 
     describe "#mime_type" do
       subject { frame.mime_type }
-      it { should == "image/png" }
+      it { is_expected.to eq("image/png") }
       context "when mime type is omitted" do
         let(:mime_type) { "\x00" }
         subject { frame.mime_type }
-        it { should == "image/" }
+        it { is_expected.to eq("image/") }
       end
     end
 
     describe "#description" do
       subject { frame.description }
-      it { should == "picture description" }
+      it { is_expected.to eq("picture description") }
     end
 
     describe "#content" do
       subject { frame.content }
-      it { should == "picture data" }
+      it { is_expected.to eq("picture data") }
     end
 
     context "when frame contains link not actual image data" do
       let(:raw_content) { "\x02-->\x00\x08\u0000a\u0000b\u0000c" }
       subject { frame }
 
-      its(:link?) { should be_true }
-      its(:mime_type) { should eq("-->") }
-      its(:description) { should eq("abc") }
-      its(:type) { should eq(:artist) }
+      describe '#link?' do
+        subject { super().link? }
+        it { is_expected.to eq(true) }
+      end
+
+      describe '#mime_type' do
+        subject { super().mime_type }
+        it { is_expected.to eq("-->") }
+      end
+
+      describe '#description' do
+        subject { super().description }
+        it { is_expected.to eq("abc") }
+      end
+
+      describe '#type' do
+        subject { super().type }
+        it { is_expected.to eq(:artist) }
+      end
     end
   end
 end

@@ -10,22 +10,22 @@ describe ID3Tag::Frames::V2::UniqueFileIdFrame do
 
   describe '#id' do
     subject { frame.id }
-    it { should == :UFID }
+    it { is_expected.to eq(:UFID) }
   end
 
   describe '#owner_identifier' do
     subject { frame.owner_identifier }
-    it { should == 'ZXC' }
+    it { is_expected.to eq('ZXC') }
   end
 
   describe '#content' do
     subject { frame.content }
-    it { should == 'foobar' }
+    it { is_expected.to eq('foobar') }
   end
 
   describe '#inspect' do
     it 'should be pretty inspectable' do
-      frame.inspect.should eq('<ID3Tag::Frames::V2::UniqueFileIdFrame UFID: ZXC>')
+      expect(frame.inspect).to eq('<ID3Tag::Frames::V2::UniqueFileIdFrame UFID: ZXC>')
     end
   end
 end

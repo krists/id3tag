@@ -9,15 +9,15 @@ describe ID3Tag::Frames::V2::GenreFrame::GenreParser24 do
     context "when version is 2.4" do
       context "with remix and cover" do
         let(:genre_string) { "RX\x00CR" }
-        it { should == ['Remix', 'Cover'] }
+        it { is_expected.to eq(['Remix', 'Cover']) }
       end
       context "with refinement and number" do
         let(:genre_string) { "ABC\x0017" }
-        it { should == ['ABC', 'Rock'] }
+        it { is_expected.to eq(['ABC', 'Rock']) }
       end
       context "with one genre" do
         let(:genre_string) { "17" }
-        it { should == ['Rock'] }
+        it { is_expected.to eq(['Rock']) }
       end
     end
 

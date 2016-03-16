@@ -12,8 +12,23 @@ describe ID3Tag::Frames::V2::UserTextFrame do
   let(:text) { "SUPER_FRAME\x00Glāzšķūņrūķīši" }
   subject { described_class.new(id, raw_content, flags, major_version_number) }
 
-  its(:id) { should == :TXX }
-  its(:content) { should == 'Glāzšķūņrūķīši' }
-  its(:description) { should == 'SUPER_FRAME' }
-  its(:inspect) { should eq('<ID3Tag::Frames::V2::UserTextFrame TXX: Glāzšķūņrūķīši>') }
+  describe '#id' do
+    subject { super().id }
+    it { is_expected.to eq(:TXX) }
+  end
+
+  describe '#content' do
+    subject { super().content }
+    it { is_expected.to eq('Glāzšķūņrūķīši') }
+  end
+
+  describe '#description' do
+    subject { super().description }
+    it { is_expected.to eq('SUPER_FRAME') }
+  end
+
+  describe '#inspect' do
+    subject { super().inspect }
+    it { is_expected.to eq('<ID3Tag::Frames::V2::UserTextFrame TXX: Glāzšķūņrūķīši>') }
+  end
 end

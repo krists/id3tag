@@ -11,22 +11,22 @@ describe ID3Tag::ID3V1FrameParser do
 
       it "should contain title frame" do
         frame = subject.select { |frame| frame.id == :title }.first
-        frame.content.should == "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaA"
+        expect(frame.content).to eq("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaA")
       end
 
       it "should contain artist frame" do
         frame = subject.select { |frame| frame.id == :artist }.first
-        frame.content.should == "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbB"
+        expect(frame.content).to eq("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbB")
       end
 
       it "should contain album frame" do
         frame = subject.select { |frame| frame.id == :album }.first
-        frame.content.should == "cccccccccccccccccccccccccccccC"
+        expect(frame.content).to eq("cccccccccccccccccccccccccccccC")
       end
 
       it "should contain year frame" do
         frame = subject.select { |frame| frame.id == :year }.first
-        frame.content.should == "2003"
+        expect(frame.content).to eq("2003")
       end
     end
 
@@ -34,28 +34,28 @@ describe ID3Tag::ID3V1FrameParser do
       context "when reading v1.0 tag" do
         it "should contain comments frame" do
           frame = subject.select { |frame| frame.id == :comments }.first
-          frame.content.should == "dddddddddddddddddddddddddddddD"
+          expect(frame.content).to eq("dddddddddddddddddddddddddddddD")
         end
 
         it "should contain genre frame" do
           frame = subject.select { |frame| frame.id == :genre }.first
-          frame.content.should == "Blues"
+          expect(frame.content).to eq("Blues")
         end
 
         it "should not contain track nr frame" do
-          subject.select { |frame| frame.id == :track_nr }.first.should be_nil
+          expect(subject.select { |frame| frame.id == :track_nr }.first).to be_nil
         end
       end
       context "when reading v1.1 tag" do
         subject { described_class.new(frame_bytes_v1_1).frames }
         it "should contain comments frame" do
           frame = subject.select { |frame| frame.id == :comments }.first
-          frame.content.should == "dddddddddddddddddddddddddddD"
+          expect(frame.content).to eq("dddddddddddddddddddddddddddD")
         end
 
         it "should contain track nr frame" do
           frame = subject.select { |frame| frame.id == :track_nr }.first
-          frame.content.should == "1"
+          expect(frame.content).to eq("1")
         end
       end
     end
@@ -65,7 +65,7 @@ describe ID3Tag::ID3V1FrameParser do
     let(:tag_body) { File.read mp3_fixture("pov_20131018-2100a.mp3.v1_tag_body") }
     subject { described_class.new(tag_body) }
     it "have title" do
-      subject.frames.find { |f| f.id == :title }.content.should eq("pov_20131018-2100a.mp3")
+      expect(subject.frames.find { |f| f.id == :title }.content).to eq("pov_20131018-2100a.mp3")
     end
   end
 end

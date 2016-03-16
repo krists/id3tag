@@ -7,12 +7,12 @@ describe ID3Tag::Frames::Util::GenreNames do
 
     context "when calling with id 0 what represents Blues" do
       let(:id) { 0 }
-      it { should eq('Blues') }
+      it { is_expected.to eq('Blues') }
     end
 
     context "when calling with id 17 what represents Rock" do
       let(:id) { 17 }
-      it { should eq('Rock') }
+      it { is_expected.to eq('Rock') }
     end
   end
 end
