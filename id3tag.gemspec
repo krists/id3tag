@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.required_ruby_version = Gem::Requirement.new(">= 1.9.2")
 
-  s.add_development_dependency "bundler", "~> 1.11.2"
+  s.add_development_dependency "bundler"
   s.add_development_dependency "rake", "~> 11.1.1"
   s.add_development_dependency "rdoc", "~> 4.2.2"
   s.add_development_dependency "rspec", "~> 3.4.0"
