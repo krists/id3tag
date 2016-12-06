@@ -19,19 +19,19 @@ module ID3Tag
     end
 
     def unsynchronisation?
-      flags_byte[7] == 1
+      0b1000_0000 & flags_byte > 0
     end
 
     def extended_header?
-      flags_byte[6] == 1
+      0b100_0000 & flags_byte > 0
     end
 
     def experimental?
-      flags_byte[5] == 1
+      0b10_0000 & flags_byte > 0
     end
 
     def footer_present?
-      flags_byte[4] == 1
+      0b1_0000 & flags_byte > 0
     end
 
     def tag_size
