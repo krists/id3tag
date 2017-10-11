@@ -18,9 +18,20 @@ describe ID3Tag::AudioFile do
         it { is_expected.to eq(true) }
       end
 
+      describe '#v1_tag_size' do
+        subject { super().v1_tag_size }
+        it { is_expected.to eq(125) }
+      end
+
+
       describe '#v2_tag_present?' do
         subject { super().v2_tag_present? }
         it { is_expected.to eq(false) }
+      end
+
+      describe '#v2_tag_size' do
+        subject { super().v2_tag_size }
+        it { is_expected.to eq(0) }
       end
     end
 
@@ -32,9 +43,19 @@ describe ID3Tag::AudioFile do
         it { is_expected.to eq(false) }
       end
 
+      describe '#v1_tag_size' do
+        subject { super().v1_tag_size }
+        it { is_expected.to eq(0) }
+      end
+
       describe '#v2_tag_present?' do
         subject { super().v2_tag_present? }
         it { is_expected.to eq(true) }
+      end
+
+      describe '#v2_tag_size' do
+        subject { super().v2_tag_size }
+        it { is_expected.to eq(246) }
       end
     end
 

@@ -112,11 +112,11 @@ module ID3Tag
     end
 
     def should_and_could_read_v1_frames?
-      scope.include?(:v1) && audio_file.v1_tag_present?
+      scope.include?(:v1) && audio_file.v1_tag_present? && audio_file.v1_tag_size > 0
     end
 
     def should_and_could_read_v2_frames?
-      scope.include?(:v2) && audio_file.v2_tag_present?
+      scope.include?(:v2) && audio_file.v2_tag_present? && audio_file.v2_tag_size > 0
     end
   end
 end

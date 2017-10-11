@@ -12,5 +12,6 @@ describe 'can read any file and does not raise errors if no tag found' do
     expect(subject.year).to eq(nil)
     expect(subject.track_nr).to eq(nil)
     expect(subject.frames).to eq([])
+    expect(subject.frame_ids).to eq([])
   end
 end

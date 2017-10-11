@@ -24,17 +24,35 @@ module ID3Tag
     end
 
     def v1_tag_body
-      if @file.size >= ID3V1_TAG_SIZE
-        @file.seek(-ID3V1_TAG_SIZE + IDV1_TAG_IDENTIFIER.size, IO::SEEK_END)
+      if v1_tag_present?
+        @file.seek(-v1_tag_size, IO::SEEK_END)
         @file.read
       else
         nil
       end
     end
 
+    def v1_tag_size
+      if v1_tag_present?
+        ID3V1_TAG_SIZE - IDV1_TAG_IDENTIFIER.size
+      else
+        0
+      end
+    end
+
     def v2_tag_body
-      @file.seek(v2_tag_frame_and_padding_position)
-      @file.read(v2_tag_frame_and_padding_size)
+      if v2_tag_size > 0
+        @file.seek(v2_tag_frame_and_padding_position)
+        @file.read(v2_tag_frame_and_padding_size)
+      end
+    end
+
+    def v2_tag_size
+      if v2_tag_present?
+        v2_tag_header.tag_size
+      else
+        0
+      end
     end
 
     def v2_tag_version

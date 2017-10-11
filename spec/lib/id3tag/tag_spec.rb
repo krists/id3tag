@@ -123,6 +123,7 @@ describe ID3Tag::Tag do
         before do
           allow_any_instance_of(ID3Tag::AudioFile).to receive(:v2_tag_present?) { true }
           allow_any_instance_of(ID3Tag::AudioFile).to receive(:v2_tag_body) { '' }
+          allow_any_instance_of(ID3Tag::AudioFile).to receive(:v2_tag_size) { 120 }
           allow_any_instance_of(ID3Tag::ID3V2FrameParser).to receive(:frames) { [:v2_frame] }
         end
         it "reads v2 tags" do
@@ -160,6 +161,7 @@ describe ID3Tag::Tag do
         before do
           allow_any_instance_of(ID3Tag::AudioFile).to receive(:v2_tag_present?) { true }
           allow_any_instance_of(ID3Tag::AudioFile).to receive(:v2_tag_body) { '' }
+          allow_any_instance_of(ID3Tag::AudioFile).to receive(:v2_tag_size) { 120 }
           allow_any_instance_of(ID3Tag::ID3V2FrameParser).to receive(:frames) { [:v2_frame] }
         end
         it "reads v2 tags" do
@@ -183,7 +185,9 @@ describe ID3Tag::Tag do
                           :v1_tag_present?             => v1_tag_present_flag,
                           :v2_tag_present?             => v2_tag_present_flag,
                           :v1_tag_body                 => v1_tag_body,
+                          :v1_tag_size                 => v1_tag_body.to_s.size,
                           :v2_tag_body                 => v2_tag_body,
+                          :v2_tag_size                 => v2_tag_body.to_s.size,
                           :v2_tag_major_version_number => v2_tag_major_version_number
                       })
     end

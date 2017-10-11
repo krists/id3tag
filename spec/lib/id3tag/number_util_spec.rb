@@ -14,6 +14,14 @@ describe ID3Tag::NumberUtil do
         end.to raise_error(ArgumentError)
       end
     end
+
+    context "when non-string argument is given" do
+      it "should raise Argument error" do
+        expect do
+          described_class.convert_string_to_32bit_integer(Object.new)
+        end.to raise_error(ArgumentError)
+      end
+    end
   end
 
   describe "#convert_32bit_integer_to_string" do
