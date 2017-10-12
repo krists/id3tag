@@ -19,10 +19,10 @@ Gem::Specification.new do |s|
   s.required_ruby_version = Gem::Requirement.new(">= 1.9.2")
 
   s.add_development_dependency "bundler"
-  s.add_development_dependency "rake", "~> 11.1.1"
-  s.add_development_dependency "rdoc", "~> 4.2.2"
-  s.add_development_dependency "rspec", "~> 3.4.0"
-  s.add_development_dependency "simplecov", "~> 0.11.2"
-  s.add_development_dependency 'coveralls', "~> 0.8.13"
-  s.add_development_dependency 'pry', "~> 0.10.3"
+  s.add_development_dependency "rake", "~> 12.1.0"
+  s.add_development_dependency "rdoc", "~> 5.1.0"
+  s.add_development_dependency "rspec", "~> 3.6.0"
+  s.add_development_dependency "simplecov", "~> 0.14.1"
+  s.add_development_dependency 'coveralls', "~> 0.8.21"
+  s.add_development_dependency 'pry', "~> 0.11.1"
 end
