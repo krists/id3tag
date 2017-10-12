@@ -3,7 +3,7 @@ Native Ruby ID3 tag reader that aims for 100% covarage of ID3v2.x and ID3v1.x st
 
 ## Install
 
-Make sure you are using ruby 1.9.2 or greater
+Make sure you are using ruby 2.2 or greater
 
 Install ID3Tag at the command prompt:
 ```
@@ -88,5 +88,5 @@ end
 [![Code Climate](https://codeclimate.com/github/krists/id3tag.png)](https://codeclimate.com/github/krists/id3tag) [![Build Status](https://travis-ci.org/krists/id3tag.png?branch=master)](https://travis-ci.org/krists/id3tag) [![Coverage Status](https://coveralls.io/repos/krists/id3tag/badge.png?branch=master)](https://coveralls.io/r/krists/id3tag) [![Gem Version](https://badge.fury.io/rb/id3tag.png)](http://badge.fury.io/rb/id3tag)
 ## Copyright
 
-Copyright (c) 2013 Krists Ozols. See LICENSE.txt for
+Copyright (c) 2017 Krists Ozols. See LICENSE.txt for
 further details.
