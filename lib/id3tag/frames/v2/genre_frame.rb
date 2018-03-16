@@ -1,12 +1,15 @@
 module ID3Tag
   module Frames
     module  V2
-      class GenreFrame < BasicFrame
+      class GenreFrame < TextFrame
         class MissingGenreParser < StandardError; end
 
         def genres
           @genres ||= get_genres
         end
+
+        alias text_frame_content content
+        private :text_frame_content
 
         def content
           genres.join(", ")
@@ -17,7 +20,7 @@ module ID3Tag
         private
 
         def get_genres
-          genre_parser.new(usable_content).genres
+          genre_parser.new(text_frame_content).genres
         end
 
         def genre_parser
@@ -27,7 +30,7 @@ module ID3Tag
           when 4
             GenreParser24
           else
-            raise(MissingGenreParser,"Missing genre parser for tag version v.2.#{@major_version_number}")
+            raise(MissingGenreParser, "Missing genre parser for tag version v.2.#{@major_version_number}")
           end
         end
       end

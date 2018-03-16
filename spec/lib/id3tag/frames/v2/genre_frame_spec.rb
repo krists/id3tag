@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe ID3Tag::Frames::V2::GenreFrame do
   let(:id) { "TCON" }
-  let(:raw_content) { "(17)" }
+  let(:raw_content) { "\x03(17)" }
   let(:flags) { nil }
   let(:major_version_number) { 3 }
   let(:frame) { described_class.new(id, raw_content, flags, major_version_number) }
@@ -16,14 +16,13 @@ describe ID3Tag::Frames::V2::GenreFrame do
   describe '#content' do
     subject { frame.content }
 
-    context "when tag major version is pre 3" do
+    context "when tag major version is pre 4" do
       let(:major_version_number) { 3 }
 
       context "when one genre" do
         before do
           allow_any_instance_of(ID3Tag::Frames::V2::GenreFrame::GenreParserPre24).to receive(:genres) { ['A'] }
         end
-
         it { is_expected.to eq('A') }
       end
       context "when two genres" do
