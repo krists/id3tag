@@ -1,24 +1,10 @@
-#!/usr/bin/env rake
 require "bundler/gem_tasks"
-require 'rspec/core/rake_task'
+require "rake/testtask"
 
-RSpec::Core::RakeTask.new(:spec) do |spec|
-  spec.pattern = FileList['spec/**/*_spec.rb']
+Rake::TestTask.new(:test) do |t|
+  t.libs << "test"
+  t.libs << "lib_next"
+  t.test_files = FileList["test/**/*_test.rb"]
 end
 
-RSpec::Core::RakeTask.new(:rcov) do |spec|
-  spec.pattern = 'spec/**/*_spec.rb'
-  spec.rcov = true
-end
-
-task :default => :spec
-
-require 'rdoc/task'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "id3tag #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
+task :default => :test

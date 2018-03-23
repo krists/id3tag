@@ -16,13 +16,10 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.extra_rdoc_files = ["LICENSE.txt", "README.md"]
   s.require_paths = ["lib"]
-  s.required_ruby_version = Gem::Requirement.new(">= 1.9.2")
+  s.required_ruby_version = Gem::Requirement.new(">= 2.3.0")
 
   s.add_development_dependency "bundler"
-  s.add_development_dependency "rake", "~> 12.1.0"
-  s.add_development_dependency "rdoc", "~> 5.1.0"
-  s.add_development_dependency "rspec", "~> 3.6.0"
-  s.add_development_dependency "simplecov", "~> 0.14.1"
-  s.add_development_dependency 'coveralls', "~> 0.8.21"
-  s.add_development_dependency 'pry', "~> 0.11.1"
+  s.add_development_dependency 'minitest', '~> 5.11'
+  s.add_development_dependency "rake", "~> 12.3.1"
+  s.add_development_dependency 'pry', "~> 0.11.3"
 end
