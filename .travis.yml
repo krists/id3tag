@@ -4,9 +4,10 @@ before_install:
 rvm:
   - ruby-head
   - jruby-head
-  - 2.4.2
-  - 2.3.5
-  - 2.2.8
+  - 2.5.1
+  - 2.4.4
+  - 2.3.7
+  - 2.2.10
   - jruby-9.1.13.0
 matrix:
   allow_failures:
