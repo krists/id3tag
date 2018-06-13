@@ -47,6 +47,21 @@ describe ID3Tag::StringUtil do
     end
   end
 
+  describe "cut_at_null_byte" do
+    let(:input) { }
+    subject { described_class.cut_at_null_byte(input) }
+
+    context 'when content is empty' do
+      let(:input) { '' }
+      it { is_expected.to eq('') }
+    end
+
+    context 'when content is present' do
+      let(:input) { "a\u0000b" }
+      it { is_expected.to eq('a') }
+    end
+  end
+
   describe "split_by_null_byte" do
     let(:input) { }
     subject { described_class.split_by_null_byte(input) }

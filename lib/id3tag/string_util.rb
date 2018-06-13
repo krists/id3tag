@@ -20,7 +20,7 @@ module ID3Tag
     end
 
     def self.cut_at_null_byte(string)
-      string.split(NULL_BYTE, 2).first
+      string.split(NULL_BYTE, 2).first.to_s
     end
 
     def self.split_by_null_byte(string)
