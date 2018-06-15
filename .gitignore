@@ -1,8 +1,5 @@
-coverage
-Gemfile.lock
-.bundle
-tags
-vendor/bundle
-bin
-doc
-pkg
+/.bundle/
+/Gemfile.lock
+/pkg/
+/rdoc/
+/coverage/

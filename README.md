@@ -1,5 +1,5 @@
 # ID3Tag
-Native Ruby ID3 tag reader that aims for 100% covarage of ID3v2.x and ID3v1.x standards
+Native Ruby ID3 tag reader that aims for 100% coverage of ID3v2.x and ID3v1.x standards
 
 ## Install
 
@@ -12,7 +12,7 @@ gem install id3tag
 
 Or add the gem to your Gemfile:
 ```
-gem 'id3tag', '~> 0.10.0'
+gem 'id3tag', '~> 0.11.0'
 ```
 
 ## How to use
@@ -58,12 +58,23 @@ ID3Tag.read(file,:v2) # Reads only v2.x tag
 
 You can inspect tag by calling `frame_ids` to see available frame ids or `frames` to return all frames
 
-It is also possible to provide configuration and overwrite default behaviour. Currently only for String#encode which is used in TextFrames.
+## Configuration
 
-This way you can avoid Encoding::InvalidByteSequenceError when tag contains invalid data.
+It is also possible to provide configuration and overwrite default behaviour.
+ 
 ```ruby
 ID3Tag.configuration do |c|
+
+  # This way you can avoid Encoding::InvalidByteSequenceError when tag contains invalid data.
+  # Currently only for String#encode which is used in TextFrames.
+  # default: {} 
   c.string_encode_options = { :invalid => :replace, :undef => :replace }
+  
+  # You might want to set v2.x tag read limit in bytes to avoid reading too much data into memory
+  # v2 tags will be extracted until end of tag or limit is reached.
+  # default: 0 (There are no limit) 
+  c.v2_tag_read_limit = 1048576 # 1 megabyte
+  
 end
 ```
 
@@ -88,5 +99,5 @@ end
 [![Code Climate](https://codeclimate.com/github/krists/id3tag.png)](https://codeclimate.com/github/krists/id3tag) [![Build Status](https://travis-ci.org/krists/id3tag.png?branch=master)](https://travis-ci.org/krists/id3tag) [![Coverage Status](https://coveralls.io/repos/krists/id3tag/badge.png?branch=master)](https://coveralls.io/r/krists/id3tag) [![Gem Version](https://badge.fury.io/rb/id3tag.png)](http://badge.fury.io/rb/id3tag)
 ## Copyright
 
-Copyright (c) 2017 Krists Ozols. See LICENSE.txt for
+Copyright (c) 2018 Krists Ozols. See LICENSE.txt for
 further details.

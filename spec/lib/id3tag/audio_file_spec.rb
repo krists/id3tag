@@ -108,6 +108,26 @@ describe ID3Tag::AudioFile do
         end
       end
     end
+
+
+    context "when v2 tag read limit is set in configuration" do
+      subject { described_class.new(StringIO.new("ID3\u0004\u0000\u0040\u0000\u0000\u0000\u0011" + "\u0000\u0000\u0000\u000A" + ("\u0000" * 6) + "ABC")) }
+
+      it "reads whole body if limit is larget than tag size" do
+        ID3Tag.configuration.v2_tag_read_limit = 4
+        expect(subject.v2_tag_body).to eq("ABC")
+      end
+
+      it "reads tag body untill the limit if tag size is larget than limit" do
+        ID3Tag.configuration.v2_tag_read_limit = 2
+        expect(subject.v2_tag_body).to eq("AB")
+      end
+
+      it "reads whole tag body if limit is 0 (unlimited)" do
+        ID3Tag.configuration.v2_tag_read_limit = 0
+        expect(subject.v2_tag_body).to eq("ABC")
+      end
+    end
   end
 
   context "when reading file with v2.3.0 tag" do

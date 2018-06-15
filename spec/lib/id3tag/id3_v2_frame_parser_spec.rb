@@ -29,4 +29,14 @@ describe ID3Tag::ID3V2FrameParser do
       subject.frames
     end
   end
+
+  context "using truncated tag body" do
+    let(:tag_major_version) { 4 }
+    let(:frame_bytes) { "TIT2\u0000\u0000\u0000\u0004\u0000\u0000\u0000ABC" + "TIT1\u0000\u0000\u0000\u0004\u0000\u0000" }
+    it "should fabricate frames until unexpected eof" do
+      frames = subject.frames
+      expect(frames.size).to eq(1)
+      expect(frames[0].id).to eq(:TIT2)
+    end
+  end
 end

@@ -4,6 +4,7 @@ module ID3Tag
     ID3V2_TAG_HEADER_SIZE = 10
     IDV1_TAG_IDENTIFIER = "TAG"
     IDV2_TAG_IDENTIFIER = "ID3"
+    BLANK_STRING = ""
 
     def initialize(file)
       @file = file
@@ -43,7 +44,12 @@ module ID3Tag
     def v2_tag_body
       if v2_tag_size > 0
         @file.seek(v2_tag_frame_and_padding_position)
-        @file.read(v2_tag_frame_and_padding_size)
+        bytes_to_read = v2_tag_frame_and_padding_size
+        limit = ID3Tag.configuration.v2_tag_read_limit
+        if (limit > 0) && (bytes_to_read > limit)
+          bytes_to_read = limit
+        end
+        @file.read(bytes_to_read) || BLANK_STRING
       end
     end
 

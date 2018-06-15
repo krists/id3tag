@@ -13,13 +13,15 @@ module ID3Tag
     def get_frames
       frames = []
       rewind_input
-      loop do
-        frame_id = read_next_frame_id
-        frame_size = read_next_frame_size
-        frame_flags = read_next_frame_flags
-        frame_content = read_next_bytes(frame_size)
-        frames << Frames::V2::FrameFabricator.fabricate(frame_id, frame_content, frame_flags, @major_version_number)
-        break if padding_or_eof_reached?
+      catch(:unexpected_eof) do
+        loop do
+          frame_id = read_next_frame_id
+          frame_size = read_next_frame_size
+          frame_flags = read_next_frame_flags
+          frame_content = read_next_bytes(frame_size)
+          frames << Frames::V2::FrameFabricator.fabricate(frame_id, frame_content, frame_flags, @major_version_number)
+          break if padding_or_eof_reached?
+        end
       end
       frames
     end
@@ -52,7 +54,9 @@ module ID3Tag
     end
 
     def read_next_bytes(limit)
-      @input.read(limit)
+      bytes = @input.read(limit)
+      throw(:unexpected_eof) unless bytes && bytes.bytesize == limit
+      bytes
     end
 
     def rewind_input

@@ -41,9 +41,16 @@ module ID3Tag
     tag
   end
 
-  def self.configuration
-    @@configuration ||= ID3Tag::Configuration.new
-    yield @@configuration if block_given?
-    @@configuration
+  class << self
+    def configuration
+      @configuration ||= reset_configuration
+      yield @configuration if block_given?
+      @configuration
+    end
+
+    def reset_configuration(configuration = ID3Tag::Configuration.new)
+      raise ArgumentError, "Passed argument must be a ID3Tag::Configuration class object" unless configuration.is_a?(ID3Tag::Configuration)
+      @configuration = configuration
+    end
   end
 end

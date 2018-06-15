@@ -1,24 +1,19 @@
 #!/usr/bin/env rake
 require "bundler/gem_tasks"
 require 'rspec/core/rake_task'
+require 'rdoc/task'
+
+require File.expand_path('../lib/id3tag/version', __FILE__)
 
 RSpec::Core::RakeTask.new(:spec) do |spec|
   spec.pattern = FileList['spec/**/*_spec.rb']
 end
 
-RSpec::Core::RakeTask.new(:rcov) do |spec|
-  spec.pattern = 'spec/**/*_spec.rb'
-  spec.rcov = true
-end
-
-task :default => :spec
-
-require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
   rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "id3tag #{version}"
+  rdoc.title = "id3tag #{ID3Tag::VERSION}"
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+task :default => :spec
