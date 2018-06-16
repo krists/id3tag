@@ -60,9 +60,9 @@ You can inspect tag by calling `frame_ids` to see available frame ids or `frames
 
 ## Configuration
 
-It is also possible to provide configuration and overwrite default behaviour.
- 
+
 ```ruby
+# Configuration could be set using a block syntax.
 ID3Tag.configuration do |c|
 
   # This way you can avoid Encoding::InvalidByteSequenceError when tag contains invalid data.
@@ -76,6 +76,29 @@ ID3Tag.configuration do |c|
   c.v2_tag_read_limit = 1048576 # 1 megabyte
   
 end
+
+ID3Tag.configuration.v2_tag_read_limit # 1048576
+
+ID3Tag.configuration.v2_tag_read_limit = 1024
+
+ID3Tag.configuration.v2_tag_read_limit # 1024
+
+
+# In case you would like to set configuration temporally you could use `local_configuration` method.
+# Within this block you can read and modify configuration and it wont affect global or layers above.
+
+ID3Tag.local_configuration do
+  ID3Tag.configuration.v2_tag_read_limit # 1024
+  ID3Tag.configuration.v2_tag_read_limit = 9999
+  # ...
+  ID3Tag.configuration.v2_tag_read_limit # 9999 
+end
+
+ID3Tag.configuration.v2_tag_read_limit # 1024
+
+ID3Tag.reset_configuration # Resets global configuration to defaults
+
+ID3Tag.configuration.v2_tag_read_limit # 0
 ```
 
 

@@ -1,4 +1,6 @@
 require "stringio"
+require "singleton"
+require "id3tag/configuration_struct"
 require "id3tag/configuration"
 require "id3tag/synchsafe_integer"
 require "id3tag/audio_file"
@@ -42,15 +44,16 @@ module ID3Tag
   end
 
   class << self
-    def configuration
-      @configuration ||= reset_configuration
-      yield @configuration if block_given?
-      @configuration
+    def configuration(&blk)
+      ID3Tag::Configuration.configuration(&blk)
     end
 
-    def reset_configuration(configuration = ID3Tag::Configuration.new)
-      raise ArgumentError, "Passed argument must be a ID3Tag::Configuration class object" unless configuration.is_a?(ID3Tag::Configuration)
-      @configuration = configuration
+    def local_configuration(&blk)
+      ID3Tag::Configuration.local_configuration(&blk)
+    end
+
+    def reset_configuration
+      ID3Tag::Configuration.reset
     end
   end
 end
