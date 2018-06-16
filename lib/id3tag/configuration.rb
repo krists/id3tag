@@ -1,7 +1,7 @@
 module ID3Tag
   class Configuration
-    ResetError = Class.new(StandardError)
     include Singleton
+    ResetError = Class.new(StandardError)
     StackItem = Struct.new(:configuration)
 
     class << self
@@ -10,7 +10,9 @@ module ID3Tag
       end
 
       def configuration
-        value = instance.instance_variable_get(:@stack).last&.configuration || instance.instance_variable_get(:@global_configuration)
+        value_from_stack = instance.instance_variable_get(:@stack).last
+        value = value_from_stack && value_from_stack.configuration
+        value ||= instance.instance_variable_get(:@global_configuration)
         yield value if block_given?
         value
       end
@@ -21,7 +23,9 @@ module ID3Tag
     end
 
     def local_configuration
-      stack_item = StackItem.new((@stack.last&.configuration || @global_configuration).dup)
+      instance_to_copy = @stack.last && @stack.last.configuration
+      instance_to_copy ||= @global_configuration
+      stack_item = StackItem.new(instance_to_copy.dup)
       stack_backup = @stack.dup
       @stack << stack_item
       begin
