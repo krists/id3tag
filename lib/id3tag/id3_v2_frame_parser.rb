@@ -60,7 +60,7 @@ module ID3Tag
     end
 
     def rewind_input
-      @input.rewind
+      @input.seek(0)
     end
 
     def padding_or_eof_reached?

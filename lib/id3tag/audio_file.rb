@@ -20,14 +20,14 @@ module ID3Tag
     end
 
     def v2_tag_present?
-      @file.rewind
+      @file.seek(0)
       @file.read(3) == IDV2_TAG_IDENTIFIER
     end
 
     def v1_tag_body
       if v1_tag_present?
         @file.seek(-v1_tag_size, IO::SEEK_END)
-        @file.read
+        @file.read(v1_tag_size)
       else
         nil
       end
@@ -111,7 +111,7 @@ module ID3Tag
     end
 
     def get_v2_tag_header
-      @file.rewind
+      @file.seek(0)
       ID3v2TagHeader.new(@file.read(ID3V2_TAG_HEADER_SIZE))
     end
   end
