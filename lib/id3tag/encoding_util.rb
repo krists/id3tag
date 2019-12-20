@@ -27,7 +27,7 @@ module ID3Tag
     end
 
     def self.encode(text, source_encoding)
-      text.encode(DESTINATION_ENCODING, source_encoding, ID3Tag.configuration.string_encode_options)
+      text.encode(DESTINATION_ENCODING, source_encoding, **ID3Tag.configuration.string_encode_options)
     end
   end
 end

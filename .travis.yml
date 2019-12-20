@@ -3,14 +3,8 @@ cache: bundler
 before_install:
   - gem install bundler
 rvm:
-  - ruby-head
-  - jruby-head
-  - 2.5.1
-  - 2.4.4
-  - 2.3.7
-  - 2.2.10
-  - jruby-9.1.13.0
-matrix:
-  allow_failures:
-    - rvm: jruby-head
-    - rvm: ruby-head
+  - 2.7.0-preview3
+  - 2.6
+  - 2.5
+  - 2.4
+  - jruby
