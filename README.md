@@ -67,14 +67,20 @@ ID3Tag.configuration do |c|
 
   # This way you can avoid Encoding::InvalidByteSequenceError when tag contains invalid data.
   # Currently only for String#encode which is used in TextFrames.
-  # default: {} 
+  # default: {}
   c.string_encode_options = { :invalid => :replace, :undef => :replace }
-  
+
   # You might want to set v2.x tag read limit in bytes to avoid reading too much data into memory
   # v2 tags will be extracted until end of tag or limit is reached.
-  # default: 0 (There are no limit) 
+  # default: 0 (There are no limit)
   c.v2_tag_read_limit = 1048576 # 1 megabyte
-  
+
+  # In some situations, it's not possible to recognize what is the encoding of a
+  # text frame. The default behavior is to raise UnsupportedTextEncoding, but
+  # it's possible to set a fallback to avoid it.
+  # default: nil
+  c.fallback_source_encoding = Encoding::UTF_8
+
 end
 
 ID3Tag.configuration.v2_tag_read_limit # 1048576
@@ -91,7 +97,7 @@ ID3Tag.local_configuration do
   ID3Tag.configuration.v2_tag_read_limit # 1024
   ID3Tag.configuration.v2_tag_read_limit = 9999
   # ...
-  ID3Tag.configuration.v2_tag_read_limit # 9999 
+  ID3Tag.configuration.v2_tag_read_limit # 9999
 end
 
 ID3Tag.configuration.v2_tag_read_limit # 1024
