@@ -79,7 +79,7 @@ ID3Tag.configuration do |c|
   # text frame. The default behavior is to raise UnsupportedTextEncoding, but
   # it's possible to set a fallback to avoid it.
   # default: nil
-  c.fallback_source_encoding = Encoding::UTF_8
+  c.source_encoding_fallback = Encoding::UTF_8
 
 end
 
