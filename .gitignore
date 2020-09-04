@@ -3,3 +3,4 @@
 /pkg/
 /rdoc/
 /coverage/
+.ruby-version

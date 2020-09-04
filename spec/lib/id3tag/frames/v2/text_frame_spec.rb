@@ -28,8 +28,16 @@ describe ID3Tag::Frames::V2::TextFrame do
     end
 
     context "when encoding byte is not present" do
-      let(:encoding_byte) { "" }
-      it { expect { subject }.to raise_error(ID3Tag::Frames::V2::TextFrame::UnsupportedTextEncoding) }
+      context "when config.source_encoding_fallback is not set" do
+        let(:encoding_byte) { "" }
+        it { expect { subject }.to raise_error(ID3Tag::Frames::V2::TextFrame::UnsupportedTextEncoding) }
+      end
+
+      context "when config.source_encoding_fallback is set" do
+        let(:encoding_byte) { "" }
+        before { ID3Tag.configuration.source_encoding_fallback = Encoding::UTF_8 }
+        it { is_expected.to eq('lāzšķūņrūķīši') }
+      end
     end
 
     context "when encoding is ISO08859_1" do

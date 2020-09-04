@@ -25,7 +25,9 @@ module  ID3Tag
         end
 
         def source_encoding
-          ENCODING_MAP.fetch(get_encoding_byte) { raise UnsupportedTextEncoding }.to_s
+          ENCODING_MAP.fetch(get_encoding_byte) do
+            ID3Tag.configuration.source_encoding_fallback || raise(UnsupportedTextEncoding)
+          end.to_s
         end
 
         def destination_encoding
