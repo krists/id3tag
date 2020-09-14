@@ -15,7 +15,7 @@ module ID3Tag
         end
 
         def content
-          @content.encode(destination_encoding, source_encoding)
+          EncodingUtil.encode(@content, source_encoding)
         end
       end
     end

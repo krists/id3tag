@@ -21,7 +21,7 @@ module  ID3Tag
         private
 
         def encoded_content
-          content_without_encoding_byte.encode(destination_encoding, source_encoding, **ID3Tag.configuration.string_encode_options)
+          EncodingUtil.encode(content_without_encoding_byte, source_encoding)
         end
 
         def source_encoding
