@@ -30,10 +30,6 @@ module  ID3Tag
           end.to_s
         end
 
-        def destination_encoding
-          Encoding::UTF_8.to_s
-        end
-
         def get_encoding_byte
           raw_content_io.rewind
           raw_content_io.getbyte
