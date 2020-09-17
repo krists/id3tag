@@ -1,7 +1,16 @@
 require "spec_helper"
 
 describe ID3Tag::Tag do
-  describe "class method #read"
+  describe ".read" do
+    it 'does not raise an error when it has duplicated frames' do
+      file = mp3_fixture('duplicated_frames.mp3')
+      result = described_class.read(file)
+
+      expect(result.artist).to eq('wetransfer')
+      expect(result.title).to eq('wetransfer')
+      expect(result.album).to eq('Format Parser')
+    end
+  end
 
   describe "#get_frame" do
     subject { described_class.read(nil) }
