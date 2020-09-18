@@ -21,17 +21,13 @@ module  ID3Tag
         private
 
         def encoded_content
-          content_without_encoding_byte.encode(destination_encoding, source_encoding, **ID3Tag.configuration.string_encode_options)
+          EncodingUtil.encode(content_without_encoding_byte, source_encoding)
         end
 
         def source_encoding
           ENCODING_MAP.fetch(get_encoding_byte) do
             ID3Tag.configuration.source_encoding_fallback || raise(UnsupportedTextEncoding)
           end.to_s
-        end
-
-        def destination_encoding
-          Encoding::UTF_8.to_s
         end
 
         def get_encoding_byte

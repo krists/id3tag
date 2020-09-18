@@ -32,7 +32,7 @@ module  ID3Tag
         end
 
         def encoded_content
-          content_without_encoding_byte_and_language.encode(destination_encoding, source_encoding)
+          EncodingUtil.encode(content_without_encoding_byte_and_language, source_encoding)
         end
 
         def content_without_encoding_byte_and_language

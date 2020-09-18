@@ -9,14 +9,10 @@ module ID3Tag
         end
 
         def content
-          @content.encode(destination_encoding, source_encoding)
+          EncodingUtil.encode(@content, source_encoding)
         end
 
         private
-
-        def destination_encoding
-          Encoding::UTF_8
-        end
 
         def source_encoding
           Encoding::ISO8859_1
