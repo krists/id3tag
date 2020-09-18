@@ -38,7 +38,7 @@ module ID3Tag
 
     def first_frame_by_id(*ids)
       first_existing_id = ids.find { |id| frame_ids.include?(id) }
-      first_existing_id && get_frame(first_existing_id)
+      first_existing_id && get_frames(first_existing_id).first
     end
 
     def all_frames_by_id(*ids)
