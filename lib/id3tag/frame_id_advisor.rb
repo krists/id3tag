@@ -20,7 +20,7 @@ module ID3Tag
         :comments => :COM,
         :genre => :TCO,
         :track_nr => :TRK,
-        :disc => :TPA,
+        :disc_nr => :TPA,
         :unsychronized_transcription => :ULT,
         :image => :PIC
       },
@@ -32,7 +32,7 @@ module ID3Tag
         :comments => :COMM,
         :genre => :TCON,
         :track_nr => :TRCK,
-        :disc => :TPOS,
+        :disc_nr => :TPOS,
         :unsychronized_transcription => :USLT,
         :image => :APIC
       },
@@ -44,7 +44,7 @@ module ID3Tag
         :comments => :COMM,
         :genre => :TCON,
         :track_nr => :TRCK,
-        :disc => :TPOS,
+        :disc_nr => :TPOS,
         :unsychronized_transcription => :USLT,
         :image => :APIC
       }
