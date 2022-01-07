@@ -18,9 +18,9 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "bundler"
   s.add_development_dependency "rake", "~> 13.0.1"
-  s.add_development_dependency "rdoc", "~> 6.2.1"
-  s.add_development_dependency "rspec", "~> 3.9.0"
+  s.add_development_dependency "rdoc", ">= 6.3.1"
+  s.add_development_dependency "rspec", "~> 3.10.0"
   s.add_development_dependency "simplecov", "~> 0.16.1"
   s.add_development_dependency 'coveralls', "~> 0.8.23"
-  s.add_development_dependency 'pry', "~> 0.13.1"
+  s.add_development_dependency 'pry'
 end
