@@ -45,6 +45,7 @@ module ID3Tag
       if v2_tag_size > 0
         @file.seek(v2_tag_frame_and_padding_position)
         bytes_to_read = v2_tag_frame_and_padding_size
+        return BLANK_STRING if bytes_to_read < 0
         limit = ID3Tag.configuration.v2_tag_read_limit
         if (limit > 0) && (bytes_to_read > limit)
           bytes_to_read = limit
