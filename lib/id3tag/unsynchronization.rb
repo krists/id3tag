@@ -10,7 +10,7 @@ module ID3Tag
         current_byte = input_bytes.next
         output_bytes << current_byte
         next_byte = input_bytes.peek
-        if (current_byte == 255) && (next_byte > 224)
+        if (current_byte == 255) && ((next_byte >= 224) || (next_byte == 0))
           output_bytes << 0
         end
       end
@@ -20,8 +20,8 @@ module ID3Tag
       prev_byte = nil
       loop do
         current_byte = input_bytes.next
-        next_byte = input_bytes.peek rescue 0
-        unless (prev_byte == 255) && (current_byte == 0) && (next_byte > 224)
+        next_byte = input_bytes.peek rescue nil
+        unless (prev_byte == 255) && (current_byte == 0) && (next_byte != nil) && ((next_byte >= 224) || (next_byte == 0))
           output_bytes << current_byte
         end
         prev_byte = current_byte
