@@ -89,6 +89,19 @@ describe ID3Tag::Frames::V2::TextFrame do
     end
   end
 
+  describe '#contents' do
+    subject { frame.contents }
+
+    context "when single value is present" do
+      it { is_expected.to eq(["Glāzšķūņrūķīši"]) }
+    end
+
+    context "when multiple values are present" do
+      let(:text) { "Glāzšķūņrūķīši\x00Glāzšķūņrūķīši" }
+      it { is_expected.to eq(["Glāzšķūņrūķīši", "Glāzšķūņrūķīši"]) }
+    end
+  end
+
   describe '#inspect' do
     it 'should be pretty inspectable' do
       expect(frame.inspect).to eq('<ID3Tag::Frames::V2::TextFrame artist: Glāzšķūņrūķīši>')

@@ -40,5 +40,9 @@ module ID3Tag
       end
       [before.pack(UTF_8_DIRECTIVE), after.pack(UTF_8_DIRECTIVE)]
     end
+
+    def self.split_by_null_bytes(string)
+      string.split(NULL_BYTE)
+    end
   end
 end

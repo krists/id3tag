@@ -27,6 +27,19 @@ describe ID3Tag::Frames::V2::CommentsFrame do
     it { is_expected.to eq('Glāzšķūņrūķīši') }
   end
 
+  describe '#contents' do
+    subject { frame.contents }
+
+    context "when single value is present" do
+      it { is_expected.to eq(["Glāzšķūņrūķīši"]) }
+    end
+
+    context "when multiple values are present" do
+      let(:text) { "Glāzšķūņrūķīši\x00Glāzšķūņrūķīši" }
+      it { is_expected.to eq(["Glāzšķūņrūķīši", "Glāzšķūņrūķīši"]) }
+    end
+  end
+
   describe '#language' do
     subject { frame.language }
     it { is_expected.to eq('lav') }

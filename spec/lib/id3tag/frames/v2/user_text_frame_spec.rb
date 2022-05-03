@@ -22,6 +22,19 @@ describe ID3Tag::Frames::V2::UserTextFrame do
     it { is_expected.to eq('Glāzšķūņrūķīši') }
   end
 
+  describe '#contents' do
+    subject { super().contents }
+
+    context "when single value is present" do
+      it { is_expected.to eq(["Glāzšķūņrūķīši"]) }
+    end
+
+    context "when multiple values are present" do
+      let(:text) { "SUPER_FRAME\x00Glāzšķūņrūķīši\x00Glāzšķūņrūķīši" }
+      it { is_expected.to eq(["Glāzšķūņrūķīši", "Glāzšķūņrūķīši"]) }
+    end
+  end
+
   describe '#description' do
     subject { super().description }
     it { is_expected.to eq('SUPER_FRAME') }

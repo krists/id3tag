@@ -7,6 +7,10 @@ module  ID3Tag
           StringUtil.cut_at_null_byte(content_parts.last)
         end
 
+        def contents
+          StringUtil.split_by_null_bytes(content_parts.last)
+        end
+
         def description
           content_parts.first
         end

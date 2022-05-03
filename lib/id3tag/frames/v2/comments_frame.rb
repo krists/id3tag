@@ -21,6 +21,14 @@ module  ID3Tag
           text
         end
 
+        def texts
+          @texts ||= StringUtil.split_by_null_bytes(parts.last)
+        end
+
+        def contents
+          texts
+        end
+
         def inspectable_content
           content
         end

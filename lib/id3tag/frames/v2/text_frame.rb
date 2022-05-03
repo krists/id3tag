@@ -14,6 +14,10 @@ module  ID3Tag
           @content ||= StringUtil.cut_at_null_byte(encoded_content)
         end
 
+        def contents
+          @contents ||= StringUtil.split_by_null_bytes(encoded_content)
+        end
+
         def inspectable_content
           content
         end
