@@ -1,3 +1,3 @@
 module ID3Tag
-  VERSION = "0.14.2"
+  VERSION = "1.0.0"
 end
