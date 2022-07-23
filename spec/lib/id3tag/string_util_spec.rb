@@ -24,12 +24,20 @@ describe ID3Tag::StringUtil do
     subject { described_class.do_unsynchronization(input) }
 
     context "when a false synchronization is present" do
-      let(:input) { "\xFF\xEE" }
-      it { is_expected.to eq("\xFF\x00\xEE") }
+      let(:input) { "\xFF\xE0" }
+      it { is_expected.to eq("\xFF\x00\xE0") }
+    end
+    context "when an unsynchronization marker is present" do
+      let(:input) { "\xFF\x00" }
+      it { is_expected.to eq("\xFF\x00\x00") }
+    end
+    context "when \\xFF is at the end of the data" do
+      let(:input) { "\xFF" }
+      it { is_expected.to eq("\xFF") }
     end
     context "when a false synchronization is not present" do
-      let(:input) { "\xEE\xEE" }
-      it { is_expected.to eq("\xEE\xEE") }
+      let(:input) { "\xFF\x01" }
+      it { is_expected.to eq("\xFF\x01") }
     end
   end
 
@@ -38,12 +46,24 @@ describe ID3Tag::StringUtil do
     subject { described_class.undo_unsynchronization(input) }
 
     context "when unsynchronization in present" do
-      let(:input) { "\xFF\x00\xEE\xEE" }
-      it { is_expected.to eq("\xFF\xEE\xEE") }
+      let(:input) { "\xFF\x00\xE0" }
+      it { is_expected.to eq("\xFF\xE0") }
+    end
+    context "when false unsynchronization in present" do
+      let(:input) { "\xFF\x00" }
+      it { is_expected.to eq("\xFF\x00") }
+    end
+    context "when an unsynchronization marker is present" do
+      let(:input) { "\xFF\x00\x00" }
+      it { is_expected.to eq("\xFF\x00") }
+    end
+    context "when \\xFF is at the end of the data" do
+      let(:input) { "\xFF" }
+      it { is_expected.to eq("\xFF") }
     end
     context "when unsynchronization in not present" do
-      let(:input) { "\xEE\xEE" }
-      it { is_expected.to eq("\xEE\xEE") }
+      let(:input) { "\xFF\x01" }
+      it { is_expected.to eq("\xFF\x01") }
     end
   end
 
