@@ -87,6 +87,36 @@ describe ID3Tag::Frames::V2::TextFrame do
         end
       end
     end
+
+    context "when multiple values are present" do
+      let(:text) { "Glāzšķūņrūķīši\x00Glāzšķūņrūķīši" }
+      it { is_expected.to eq("Glāzšķūņrūķīši\x00Glāzšķūņrūķīši") }
+    end
+
+    context "when multiple values are present in older tag" do
+      let(:major_version_number) { 3 }
+      let(:text) { "Glāzšķūņrūķīši\x00Glāzšķūņrūķīši" }
+      it { is_expected.to eq("Glāzšķūņrūķīši") }
+    end
+  end
+
+  describe '#contents' do
+    subject { frame.contents }
+
+    context "when single value is present" do
+      it { is_expected.to eq(["Glāzšķūņrūķīši"]) }
+    end
+
+    context "when multiple values are present" do
+      let(:text) { "Glāzšķūņrūķīši\x00Glāzšķūņrūķīši" }
+      it { is_expected.to eq(["Glāzšķūņrūķīši", "Glāzšķūņrūķīši"]) }
+    end
+
+    context "when multiple values are present is older tag" do
+      let(:major_version_number) { 3 }
+      let(:text) { "Glāzšķūņrūķīši\x00Glāzšķūņrūķīši" }
+      it { is_expected.to eq(["Glāzšķūņrūķīši"]) }
+    end
   end
 
   describe '#inspect' do

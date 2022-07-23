@@ -11,7 +11,15 @@ module  ID3Tag
         }
 
         def content
-          @content ||= StringUtil.cut_at_null_byte(encoded_content)
+          @content ||= if @major_version_number >= 4
+            StringUtil.chomp_null_byte(encoded_content)
+          else
+            StringUtil.cut_at_null_byte(encoded_content)
+          end
+        end
+
+        def contents
+          @contents ||= StringUtil.split_by_null_bytes(content)
         end
 
         def inspectable_content
