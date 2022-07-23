@@ -73,9 +73,39 @@ describe ID3Tag::StringUtil do
       let(:input) { "a\u0000\u0000b" }
       it { is_expected.to eq(["a", "\u0000b"]) }
     end
-    context "when content have multiple null bytes" do
+    context "when content have no null bytes" do
       let(:input) { "abc" }
       it { is_expected.to eq(["abc", ""]) }
+    end
+  end
+
+  describe "split_by_null_bytes" do
+    let(:input) { }
+    subject { described_class.split_by_null_bytes(input) }
+    context "when content have only 1 null byte" do
+      let(:input) { "a\u0000b" }
+      it { is_expected.to eq(["a", "b"]) }
+    end
+    context "when content have multiple null bytes" do
+      let(:input) { "a\u0000\u0000b" }
+      it { is_expected.to eq(["a", "", "b"]) }
+    end
+    context "when content have no null bytes" do
+      let(:input) { "abc" }
+      it { is_expected.to eq(["abc"]) }
+    end
+  end
+
+  describe "chomp_null_byte" do
+    let(:input) { }
+    subject { described_class.chomp_null_byte(input) }
+    context "when content has trailing null byte" do
+      let(:input) { "a\u0000b\u0000" }
+      it { is_expected.to eq("a\u0000b") }
+    end
+    context "when content have no trailing null bytes" do
+      let(:input) { "a\u0000b" }
+      it { is_expected.to eq("a\u0000b") }
     end
   end
 end
