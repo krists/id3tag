@@ -36,6 +36,10 @@ module  ID3Tag
             PictureFrame
           when /^PRIV$/
             PrivateFrame
+          when /^CHAP$/
+            ChapterFrame
+          when /^CTOC$/
+            TableOfContentsFrame
           else
             BasicFrame
           end
