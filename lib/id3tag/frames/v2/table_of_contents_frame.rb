@@ -2,19 +2,23 @@ module ID3Tag
   module Frames
     module V2
       class TableOfContentsFrame < BasicFrame
-        TOP_LEVEL_BIT_POSITION = 1
-        ORDERED_BIT_POSITION = 0
+        FLAG_A_TOP_LEVEL_BIT = "00000001".to_i(2)
+        FLAG_B_ORDERED_BIT = "00000010".to_i(2)
 
         def element_id
           @element_id ||= StringUtil.split_by_null_byte(raw_content).first
         end
 
+        def flags
+          parts[:flags].unpack1("C")
+        end
+
         def top_level?
-          @top_level ||= parts[:flags].unpack1("C") & 1 << TOP_LEVEL_BIT_POSITION != 0
+          flags & FLAG_A_TOP_LEVEL_BIT > 0
         end
 
         def ordered?
-          @ordered ||= parts[:flags].unpack1("C") & 1 << ORDERED_BIT_POSITION != 0
+          flags & FLAG_B_ORDERED_BIT > 0
         end
 
         def entry_count
