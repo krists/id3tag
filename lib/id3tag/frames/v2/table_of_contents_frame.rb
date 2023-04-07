@@ -40,7 +40,7 @@ module ID3Tag
           raw_content_io.seek(element_id.size + 1)
           parts[:flags] = raw_content_io.read(1)
           parts[:entry_count] = raw_content_io.read(1)
-          parts[:child_element_ids] = StringUtil.split_by_null_bytes(raw_content[raw_content_io.pos..])
+          parts[:child_element_ids] = StringUtil.split_by_null_bytes(raw_content_io.read)
           parts
         end
       end
