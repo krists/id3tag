@@ -3,44 +3,42 @@ module ID3Tag
     module V2
       class ChapterFrame < BasicFrame
         def element_id
-          @element_id ||= StringUtil.split_by_null_byte(raw_content).first
+          unpacked[:element_id]
         end
 
         def start_time
-          @start_time ||= parts[:start_time].unpack1("N")
+          unpacked[:start_time]
         end
 
         def end_time
-          @end_time ||= parts[:end_time].unpack1("N")
+          unpacked[:end_time]
         end
 
         def start_offset
-          @start_offset ||= parts[:start_offset].unpack1("N")
+          unpacked[:start_offset]
         end
 
         def end_offset
-          @end_offset ||= parts[:end_offset].unpack1("N")
+          unpacked[:end_offset]
         end
 
         def subframes
-          @subframes ||= parts[:subframes]
+          unpacked[:subframes]
         end
 
         private
 
-        def parts
-          @parts ||= read_parts!
-        end
-
-        def read_parts!
-          parts = {}
-          raw_content_io.seek(element_id.size + 1)
-          parts[:start_time] = raw_content_io.read(4)
-          parts[:end_time] = raw_content_io.read(4)
-          parts[:start_offset] = raw_content_io.read(4)
-          parts[:end_offset] = raw_content_io.read(4)
-          parts[:subframes] = ID3V2FrameParser.new(raw_content[raw_content_io.pos..], @major_version_number).frames
-          parts
+        def unpacked
+          return @unpacked if defined?(@unpacked)
+          @unpacked = {}
+          raw_content_io.rewind
+          @unpacked[:element_id] = IOUtil.read_until_terminator(raw_content_io, 1)
+          @unpacked[:start_time] = raw_content_io.read(4).unpack1("N")
+          @unpacked[:end_time] = raw_content_io.read(4).unpack1("N")
+          @unpacked[:start_offset] = raw_content_io.read(4).unpack1("N")
+          @unpacked[:end_offset] = raw_content_io.read(4).unpack1("N")
+          @unpacked[:subframes] = ID3V2FrameParser.new(raw_content_io.read, @major_version_number).frames
+          @unpacked
         end
       end
     end

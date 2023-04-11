@@ -6,42 +6,36 @@ module ID3Tag
         FLAG_B_ORDERED_BIT = "00000010".to_i(2)
 
         def element_id
-          @element_id ||= StringUtil.split_by_null_byte(raw_content).first
-        end
-
-        def flags
-          parts[:flags].unpack1("C")
+          unpacked[:element_id]
         end
 
         def top_level?
-          flags & FLAG_A_TOP_LEVEL_BIT > 0
+          unpacked[:flags] & FLAG_A_TOP_LEVEL_BIT > 0
         end
 
         def ordered?
-          flags & FLAG_B_ORDERED_BIT > 0
+          unpacked[:flags] & FLAG_B_ORDERED_BIT > 0
         end
 
         def entry_count
-          @entry_count ||= parts[:entry_count].unpack1("C")
+          unpacked[:entry_count]
         end
 
         def child_element_ids
-          @child_element_ids ||= parts[:child_element_ids]
+          unpacked[:child_element_ids]
         end
 
         private
 
-        def parts
-          @parts ||= read_parts!
-        end
-
-        def read_parts!
-          parts = {}
-          raw_content_io.seek(element_id.size + 1)
-          parts[:flags] = raw_content_io.read(1)
-          parts[:entry_count] = raw_content_io.read(1)
-          parts[:child_element_ids] = StringUtil.split_by_null_bytes(raw_content_io.read)
-          parts
+        def unpacked
+          return @unpacked if defined?(@unpacked)
+          @unpacked = {}
+          raw_content_io.rewind
+          @unpacked[:element_id] = IOUtil.read_until_terminator(raw_content_io, 1)
+          @unpacked[:flags] = raw_content_io.read(1).unpack1("C")
+          @unpacked[:entry_count] = raw_content_io.read(1).unpack1("C")
+          @unpacked[:child_element_ids] = StringUtil.split_by_null_bytes(raw_content_io.read)
+          @unpacked
         end
       end
     end
