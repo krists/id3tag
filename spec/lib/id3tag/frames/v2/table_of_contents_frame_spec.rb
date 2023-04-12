@@ -81,7 +81,7 @@ describe ID3Tag::Frames::V2::TableOfContentsFrame do
   end
 
   describe "#inspectable_content" do
-    subject { frame.content }
+    subject { frame.inspectable_content }
     it { is_expected.to eq(["chp0", "chp1", "chp2"]) }
   end
 
