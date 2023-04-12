@@ -25,6 +25,9 @@ module ID3Tag
           unpacked[:child_element_ids]
         end
 
+        alias_method :content, :child_element_ids
+        alias_method :inspectable_content, :content
+
         def subframes
           unpacked[:subframes]
         end
