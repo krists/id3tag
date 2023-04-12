@@ -67,6 +67,8 @@ describe ID3Tag::Frames::V2::TableOfContentsFrame do
 
   describe "#subframes" do
     subject { frame.subframes }
+    it { is_expected.to be_an(Array) }
+
     it "parses subsequent frames" do
       expect(ID3Tag::Frames::V2::TextFrame).to receive(:new).with("TIT2", raw_subframe_content, raw_subframe_flags, major_version_number)
       subject

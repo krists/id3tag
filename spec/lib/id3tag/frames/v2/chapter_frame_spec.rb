@@ -9,7 +9,8 @@ describe ID3Tag::Frames::V2::ChapterFrame do
       [start_time].pack("N"),
       [end_time].pack("N"),
       [start_offset].pack("N"),
-      [end_offset].pack("N")
+      [end_offset].pack("N"),
+      raw_subframe
     ].join
   end
   let(:flags) { nil }
@@ -22,7 +23,17 @@ describe ID3Tag::Frames::V2::ChapterFrame do
   let(:start_offset) { 4294967295 }
   let(:end_offset) { 4294967295 }
 
-  let(:text) { "Intro" }
+  let(:raw_subframe_content) {
+    encoding = "\x03"
+    text = "Intro"
+    encoding + text + separator
+  }
+  let(:raw_subframe_flags) { "\x00\x00" }
+  let(:raw_subframe) {
+    size = [raw_subframe_content.size].pack("N")
+    "TIT2" + size + raw_subframe_flags + raw_subframe_content
+  }
+
   let(:frame) { described_class.new(id, raw_content, flags, major_version_number) }
 
   describe "#id" do
@@ -57,6 +68,11 @@ describe ID3Tag::Frames::V2::ChapterFrame do
 
   describe "#subframes" do
     subject { frame.subframes }
-    it { is_expected.to eq([]) }
+    it { is_expected.to be_an(Array) }
+
+    it "parses subsequent frames" do
+      expect(ID3Tag::Frames::V2::TextFrame).to receive(:new).with("TIT2", raw_subframe_content, raw_subframe_flags, major_version_number)
+      subject
+    end
   end
 end
