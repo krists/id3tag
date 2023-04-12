@@ -75,4 +75,14 @@ describe ID3Tag::Frames::V2::ChapterFrame do
       subject
     end
   end
+
+  describe "#inspectable_content" do
+    subject { frame.inspectable_content }
+    it { is_expected.to eq("chp0") }
+  end
+
+  describe "#inspect" do
+    subject { frame.inspect }
+    it { is_expected.to eq("<ID3Tag::Frames::V2::ChapterFrame CHAP: chp0>") }
+  end
 end
