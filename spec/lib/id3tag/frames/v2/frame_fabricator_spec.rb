@@ -58,6 +58,20 @@ describe ID3Tag::Frames::V2::FrameFabricator do
         subject
       end
     end
+    context "when frame is a chapter" do
+      let(:id) { "CHAP" }
+      it "fabricates chapter frame" do
+        expect(ID3Tag::Frames::V2::ChapterFrame).to receive(:new).with(id, content, flags, major_version_number)
+        subject
+      end
+    end
+    context "when frame is a table of contents" do
+      let(:id) { "CTOC" }
+      it "fabricates chapter frame" do
+        expect(ID3Tag::Frames::V2::TableOfContentsFrame).to receive(:new).with(id, content, flags, major_version_number)
+        subject
+      end
+    end
     context "when frame is a unknown" do
       let(:id) { "unknown" }
       it "fabricates basic frame" do
