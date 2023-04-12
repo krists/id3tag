@@ -8,7 +8,8 @@ describe ID3Tag::Frames::V2::TableOfContentsFrame do
       separator,
       flags,
       [entry_count].pack("C"),
-      *child_element_ids.map { |c| c + separator }
+      *child_element_ids.map { |c| c + separator },
+      raw_subframe
     ].join
   end
   let(:flags) { [top_level, ordered].join.to_i(2).to_s(16) }
@@ -20,6 +21,17 @@ describe ID3Tag::Frames::V2::TableOfContentsFrame do
   let(:ordered) { 1 }
   let(:entry_count) { 3 }
   let(:child_element_ids) { ["chp0", "chp1", "chp2"] }
+
+  let(:raw_subframe_content) {
+    encoding = "\x03"
+    text = "Part 1"
+    encoding + text + separator
+  }
+  let(:raw_subframe_flags) { "\x00\x00" }
+  let(:raw_subframe) {
+    size = [raw_subframe_content.size].pack("N")
+    "TIT2" + size + raw_subframe_flags + raw_subframe_content
+  }
 
   let(:frame) { described_class.new(id, raw_content, flags, major_version_number) }
 
@@ -51,5 +63,13 @@ describe ID3Tag::Frames::V2::TableOfContentsFrame do
   describe "#child_element_ids" do
     subject { frame.child_element_ids }
     it { is_expected.to eq(["chp0", "chp1", "chp2"]) }
+  end
+
+  describe "#subframes" do
+    subject { frame.subframes }
+    it "parses subsequent frames" do
+      expect(ID3Tag::Frames::V2::TextFrame).to receive(:new).with("TIT2", raw_subframe_content, raw_subframe_flags, major_version_number)
+      subject
+    end
   end
 end

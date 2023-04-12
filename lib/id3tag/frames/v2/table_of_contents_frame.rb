@@ -25,6 +25,10 @@ module ID3Tag
           unpacked[:child_element_ids]
         end
 
+        def subframes
+          unpacked[:subframes]
+        end
+
         private
 
         def unpacked
@@ -34,7 +38,16 @@ module ID3Tag
           @unpacked[:element_id] = IOUtil.read_until_terminator(raw_content_io, 1)
           @unpacked[:flags] = raw_content_io.read(1).unpack1("C")
           @unpacked[:entry_count] = raw_content_io.read(1).unpack1("C")
-          @unpacked[:child_element_ids] = StringUtil.split_by_null_bytes(raw_content_io.read)
+
+          @unpacked[:child_element_ids] = []
+          current_entry = 0
+          while current_entry < @unpacked[:entry_count]
+            @unpacked[:child_element_ids].push(IOUtil.read_until_terminator(raw_content_io, 1))
+            current_entry += 1
+          end
+
+          @unpacked[:subframes] = ID3V2FrameParser.new(raw_content_io.read, @major_version_number).frames
+
           @unpacked
         end
       end
