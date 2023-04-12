@@ -24,6 +24,8 @@ module  ID3Tag
             UserTextFrame
           when /^T/
             TextFrame
+          when /^WXXX$/
+            UserUrlFrame
           when /^(COM|COMM)$/
             CommentsFrame
           when /^(ULT|USLT)$/
