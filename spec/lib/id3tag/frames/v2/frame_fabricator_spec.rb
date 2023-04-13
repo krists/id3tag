@@ -44,6 +44,13 @@ describe ID3Tag::Frames::V2::FrameFabricator do
         subject
       end
     end
+    context "when frame is a URL frame" do
+      let(:id) { "W" }
+      it "fabricates user text frame" do
+        expect(ID3Tag::Frames::V2::UrlFrame).to receive(:new).with(id, content, flags, major_version_number)
+        subject
+      end
+    end
     context "when frame is a comment frame COM" do
       let(:id) { "COMM" }
       it "fabricates comment frame" do
