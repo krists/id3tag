@@ -26,6 +26,18 @@ module ID3Tag
           unpacked[:subframes]
         end
 
+        def title
+          subframes.find { |frame| frame.id == :TIT2 }&.content
+        end
+
+        def url
+          subframes.find { |frame| frame.id =~ /^W/ }&.content
+        end
+
+        def picture
+          subframes.find { |frame| frame.id == :APIC }&.content
+        end
+
         alias_method :inspectable_content, :element_id
 
         private
