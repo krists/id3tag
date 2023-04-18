@@ -34,4 +34,13 @@ describe ID3Tag::Frames::V2::UrlFrame do
     subject { frame.inspect }
     it { is_expected.to eq("<ID3Tag::Frames::V2::UrlFrame #{id}: http://example.com>") }
   end
+
+  context "with additional information after URL termination" do
+    let(:raw_content) { url + "\x00additional info" }
+
+    describe "#url" do
+      subject { frame.url }
+      it { is_expected.to eq("http://example.com") }
+    end
+  end
 end
