@@ -88,14 +88,6 @@ module ID3Tag
       @audio_file ||= AudioFile.new(@source)
     end
 
-    def table_of_contents
-      get_frames(:CTOC)
-    end
-
-    def chapters
-      get_frames(:CHAP)
-    end
-
     private
 
     def possible_frame_ids_by_name(name)
