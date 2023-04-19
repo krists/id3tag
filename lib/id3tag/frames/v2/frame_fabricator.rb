@@ -24,6 +24,10 @@ module  ID3Tag
             UserTextFrame
           when /^T/
             TextFrame
+          when /^WXXX$/
+            UserUrlFrame
+          when /^W/
+            UrlFrame
           when /^(COM|COMM)$/
             CommentsFrame
           when /^(ULT|USLT)$/
@@ -36,6 +40,10 @@ module  ID3Tag
             PictureFrame
           when /^PRIV$/
             PrivateFrame
+          when /^CHAP$/
+            ChapterFrame
+          when /^CTOC$/
+            TableOfContentsFrame
           else
             BasicFrame
           end

@@ -37,6 +37,20 @@ describe ID3Tag::Frames::V2::FrameFabricator do
         subject
       end
     end
+    context "when frame is a user URL frame" do
+      let(:id) { "WXXX" }
+      it "fabricates user text frame" do
+        expect(ID3Tag::Frames::V2::UserUrlFrame).to receive(:new).with(id, content, flags, major_version_number)
+        subject
+      end
+    end
+    context "when frame is a URL frame" do
+      let(:id) { "W" }
+      it "fabricates user text frame" do
+        expect(ID3Tag::Frames::V2::UrlFrame).to receive(:new).with(id, content, flags, major_version_number)
+        subject
+      end
+    end
     context "when frame is a comment frame COM" do
       let(:id) { "COMM" }
       it "fabricates comment frame" do
@@ -58,6 +72,20 @@ describe ID3Tag::Frames::V2::FrameFabricator do
         subject
       end
     end
+    context "when frame is a chapter" do
+      let(:id) { "CHAP" }
+      it "fabricates chapter frame" do
+        expect(ID3Tag::Frames::V2::ChapterFrame).to receive(:new).with(id, content, flags, major_version_number)
+        subject
+      end
+    end
+    context "when frame is a table of contents" do
+      let(:id) { "CTOC" }
+      it "fabricates chapter frame" do
+        expect(ID3Tag::Frames::V2::TableOfContentsFrame).to receive(:new).with(id, content, flags, major_version_number)
+        subject
+      end
+    end
     context "when frame is a unknown" do
       let(:id) { "unknown" }
       it "fabricates basic frame" do
@@ -67,4 +95,3 @@ describe ID3Tag::Frames::V2::FrameFabricator do
     end
   end
 end
-
