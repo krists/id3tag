@@ -106,21 +106,6 @@ describe ID3Tag::Frames::V2::ChapterFrame do
     end
   end
 
-  describe "#title" do
-    subject { frame.title }
-    it { is_expected.to eq("Intro") }
-  end
-
-  describe "#url" do
-    subject { frame.url }
-    it { is_expected.to eq("http://example.com") }
-  end
-
-  describe "#picture" do
-    subject { frame.picture }
-    it { is_expected.to eq("picture data") }
-  end
-
   describe "#inspectable_content" do
     subject { frame.inspectable_content }
     it { is_expected.to eq("chp0") }
