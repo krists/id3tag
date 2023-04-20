@@ -12,7 +12,7 @@ gem install id3tag
 
 Or add the gem to your Gemfile:
 ```
-gem 'id3tag', '~> 0.14.0'
+bundler add id3tag
 ```
 
 ## How to use
