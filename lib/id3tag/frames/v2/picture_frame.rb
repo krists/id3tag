@@ -11,7 +11,7 @@ module  ID3Tag
           0x03 => :cover_front, # Cover (front)
           0x04 => :cover_back, # Cover (back)
           0x05 => :leaflet_page, # Leaflet page
-          0x06 => :media, # Media (e.g. lable side of CD)
+          0x06 => :media, # Media (e.g. label side of CD)
           0x07 => :lead_artist, # Lead artist/lead performer/soloist
           0x08 => :artist, # Artist/performer
           0x09 => :conductor, # Conductor
